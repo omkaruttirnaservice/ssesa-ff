@@ -1,0 +1,216 @@
+extends layout_index_new
+block css_link
+	link(rel="stylesheet" href="/assets/css/new-registration/new-registration.css")
+block inline_css
+
+block js_link
+	script(src="/assets/js/new-registration.js" type="module" defer)
+
+block content
+	div.container-fluid
+
+		div.container-base
+
+			div.side-navbar
+
+				a.active-step(href="/new-registration") 
+					span.step-no 1
+					span.step-name 
+						i.fa-regular.fa-file-lines.me-2
+						| Registration
+						br
+						| (नोंदणी)
+					//- i(class="fa-solid fa-play active-arrow")
+				a.pending-step(href="#")
+					span.step-no 2
+					span.step-name 
+						i.fa-solid.fa-road-barrier.me-2
+						| Entry Qualification 
+						br
+						| (प्रवेश पात्रता)
+				a.pending-step(href="#")
+					span.step-no 3
+					span.step-name
+						i.fa-solid.fa-user.me-2
+						| Candidate Profile 
+						br
+						| (उमेदवाराची प्रोफाईल)
+				a.pending-step(href="#")
+					span.step-no 4
+					span.step-name 
+						i.fa-solid.fa-graduation-cap.me-2
+						| Education Details
+						br
+						| (शैक्षणिक तपशील)
+				a.pending-step(href="#") 
+					span.step-no 5
+					span.step-name 
+						i.fa-solid.fa-brain.me-2
+						| Experience Details
+						br
+						| (अनुभव तपशील)
+				a.pending-step(href="#")
+					span.step-no 6
+					span.step-name 
+						i.fa-solid.fa-graduation-cap.me-2
+						| Accomplishments
+						br
+						| (गुणवत्ता तपशील)
+				a.pending-step(href="#")
+					span.step-no 7
+					span.step-name 
+						i.fa-solid.fa-upload.me-2
+						| Document Upload
+						br
+						| (कागदपत्रे अपलोड)
+
+				a.pending-step(href="#")
+					span.step-no 8
+					span.step-name 
+						i.fa-solid.fa-paperclip.me-2
+						| Application Preview
+						br
+						| (अर्ज पूर्वावलोकन)
+
+
+			div.main-content
+
+				form#newRegDetails
+
+					div.input-card
+						h1.input-card-heading
+							i.fa-solid.fa-user 
+							| About you 
+						div.about-you-grid
+							div.grid-el.position-relative
+								//- first name i/p
+								label.input-label(for="") 
+									| First Name&nbsp;*
+									br
+									| (पहिले नाव)&nbsp;*
+								input.input-element#newFname.setToUpperCase.onlyalpha.setFullName.form-control.d-inline.input-width(type='text' name='newFname' autocomplete="off")
+							div.grid-el.position-relative
+								//- fname confirm i/p
+								label.input-label(for="") 
+									| Re-enter First Name&nbsp;*
+									br
+									| (पहिले नाव)&nbsp;*
+								input.input-element.setToUpperCase.check_confimation.onlyalpha.form-control.d-inline.input-width(type='text' name='checkNewFname' data-confirmWith="newFname" autocomplete="off")
+
+							div.grid-el.position-relative
+								//- mname i/p
+								label.input-label(for="") 
+									| Middle Name&nbsp;*
+									br
+									| (मधले नाव)&nbsp;*
+								input.input-element#newMname.setToUpperCase.setFullName.onlyalpha.form-control.d-inline.input-width(type='text' name='newMname' autocomplete="off")
+							div.grid-el.position-relative
+								//- mname confirm i/p
+								label.input-label(for="") 
+									| Re-enter Middle Name 
+									br
+									| (मधले नाव)*
+								input.input-element.setToUpperCase.check_confimation.onlyalpha.form-control.d-inline.input-width(type='text' name='checkNewMname' data-confirmWith="newMname" autocomplete="off")
+
+							div.grid-el.position-relative
+								//- lname i/p
+								label.input-label(for="") 
+									| Last Name&nbsp;*
+									br
+									| (आडनाव)&nbsp;*
+								input.input-element.setToUpperCase#newLname.setFullName.onlyalpha.form-control.d-inline.input-width(type='text' name='newLname' autocomplete="off")
+							div.grid-el.position-relative
+								//- lname confirm i/p
+								label.input-label(for="") 
+									| Re-enter Last Name&nbsp;*
+									br 
+									| (आडनाव)&nbsp;*
+								input.input-element.setToUpperCase.check_confimation.onlyalpha.form-control.d-inline.input-width(type='text' name='checkNewLname' data-confirmWith="newLname" autocomplete="off")
+
+							div.grid-el.namePrintHallticket
+								//- name to be printed on hallticket i/p
+								label.input-label(for="") 
+									|&nbsp;* Note : This name will be considered on hall ticket
+									br
+									|&nbsp;* नोट : खालील नाव हाल तिकीट वर प्रिंट केले जाईल.
+								input.input-element#fullName.fw-bold.form-control(type="text" readonly placeholder="Hallticket Name" tabindex="-1")
+
+
+					div.input-card
+						h1.input-card-heading
+							i.fa-solid.fa-phone
+							span Contact Details
+
+						div.contact-details-grid
+
+							div.grid-el.position-relative
+								//- aadhar input
+								label.input-label(for="") 
+									| Aadhaar Number&nbsp;*
+									br
+									| (आधार क्र)&nbsp;*
+								input.input-element#newAadharNumber.setToUpperCase.numaric.form-control.d-inline.input-width.required(type='text' name='newAadharNumber' data-limiter="12" autocomplete="off" )
+
+							div.grid-el.position-relative
+								//- confirm aadhar input
+								label.input-label(for="") 
+									| Re-enter Aadhaar Number&nbsp;*
+									br
+									| (आधार क्र)&nbsp;*
+								input.input-element.check_confimation.numaric.form-control.d-inline.input-width(type='text' name='checkAddhar' data-confirmWith="newAadharNumber" data-limiter="12" autocomplete="off" )
+
+							div.grid-el.position-relative
+								//- mobile no i/p
+								label.input-label(for="") 
+									| Mobile Number&nbsp;*
+									br
+									| (मोबाईल क्र)&nbsp;*
+								input.input-element#newMobileNumber.numaric.input-width.form-control.d-inline(type='text' name='newMobileNumber' data-limiter="10" data-toggle="tooltip" autocomplete="off")
+
+							div.grid-el.position-relative
+								//- cmob no i/p
+								label.input-label(for="") 
+									| Re-enter Mobile Number&nbsp;*
+									br
+									| (मोबाईल क्र)&nbsp;*
+								input.input-element.check_confimation.numaric.form-control.d-inline.input-width(type='text' name='checkNewMobileNumber' data-confirmWith="newMobileNumber" data-limiter="10" autocomplete="off")
+
+							div.grid-el.position-relative.alternative-mobile
+								//- alternative mob no i/p
+								label.input-label(for="") 
+									| Alternate Mobile Number
+									br
+									| (दुय्यम मोबाईल क्र)
+								input.input-element#newAlternativeMobileNumber.numaric.form-control.d-inline.input-width(type='text' name='newAlternativeMobileNumber' data-limiter="10" autocomplete="off")
+							div.grid-el.position-relative
+								label.input-label(for="") 
+									| Email ID&nbsp;*
+									br 
+									| (ईमैल आयडी)&nbsp;*
+								input.input-element.skip-caps-letter#newMailPartOne.form-control.d-inline.input-width(type='text' name='newMailPartOne' placeholder='eg. jhon@mail.com' autocomplete="off")
+							div.grid-el.position-relative
+								label.input-label(for="") 
+									| Re-enter Email ID&nbsp;*
+									br 
+									| (ईमैल आयडी)&nbsp;*
+								input.input-element.skip-caps-letter.check_confimation.form-control.d-inline.input-width#checkNewMailPartOne(type='text' name='checkNewMailPartOne' placeholder='eg. jhon@mail.com' data-confirmWith="newMailPartOne" autocomplete="off")
+
+				div.d-flex.align-items-center.gap-2.p-3
+					input(type='checkbox' style="width: 2rem; height: 2rem;" id='reg-decleration-confirm' name='reg-decleration-confirm')
+					div
+						label.input-label.mb-0(for="reg-decleration-confirm") 
+							| I verify that all the details I’ve provided are accurate to the best of my knowledge and acknowledge that no modifications can be made.
+							br
+							| मी खात्री देतो की माझी दिलेली सर्व माहिती माझ्या माहितीनुसार अचूक आहे आणि मला समजते की कोणतेही बदल केले जाऊ शकत नाहीत.
+				div.row.px-3
+					//- info para
+					p.col-md-6.note-card Note&nbsp;:&nbsp;
+						| Make sure that the name you enter on your online application matches exactly with the name on your identification documents (e.g., photo ID). Any mismatch will result in disqualification from the selection process, and no requests for changes will be entertained. Additionally, the mobile number and email address you provide must be valid and active, as they will be used for important updates throughout the selection process.
+
+					p.col-md-6.note-card
+						| नोट&nbsp;:&nbsp;कृपया सुनिश्चित करा की तुमचे ऑनलाइन अर्जावर दिलेले नाव तुमच्या ओळखपत्रावरील नावाशी (उदाहरणार्थ, फोटो आयडी) पूर्णपणे जुळते. कोणताही तफावत निवड प्रक्रियेतून वगळल्या जाईल, आणि नावातील बदलांसाठी कोणतेही विनंती स्वीकारले जाणार नाही. त्याचप्रमाणे, तुम्ही दिलेली मोबाइल नंबर आणि ईमेल आयडी वैध आणि सक्रिय असावी, कारण ती निवड प्रक्रियेतील महत्त्वाच्या अद्यतनांसाठी वापरली जातील.
+
+
+				.d-flex.justify-content-center.gap-1.mb-2
+					button#verifyNewRegistration.c-button.c-btn-primary.fw-bold Validate Details 
+					button#saveNewRegistration.c-button.c-btn-success.fw-bold Save

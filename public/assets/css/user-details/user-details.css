@@ -1,0 +1,91 @@
+/* POST DETAILS */
+.departmentDetails,
+#generalDetailsForm,
+.generalDetailsContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.grid-el {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.nationailtycontainer,
+.ageDetailsContainer,
+.address-container {
+	grid-column: 1 / -1;
+}
+
+.addressBox {
+	grid-row: 9 / 10;
+	grid-column: 1 / -1;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+	row-gap: 2.4rem;
+	column-gap: 2.4rem;
+}
+
+.postDetails {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+	margin-bottom: 2.4rem;
+}
+
+.nationailtycontainer,
+.ageDetailsContainer {
+	display: flex;
+	gap: 2.4rem;
+}
+
+.inputMainContainer {
+	width: 100%;
+	display: flex;
+	gap: 1rem;
+
+	position: relative;
+}
+
+.checkBoxInputContainer {
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+}
+
+.checkBoxInputContainer .input-label {
+	margin: 0;
+}
+
+/* SUB CATEGORY */
+.categoryTypeSub {
+	display: flex;
+	flex-direction: column;
+}
+.input-sm {
+	padding: 0.4rem;
+	width: 100%;
+}
+
+/* LANGUGAES */
+
+.languageContainer {
+	display: grid;
+	grid-template-columns: 0.2fr 1fr;
+
+	margin-bottom: 1.8rem;
+}
+.languageContainer:last-child {
+	margin-bottom: 0;
+}
+
+/* BUTTONS ( VERIFY DETAILS ) */
+#personalDetailsBtn {
+	grid-row: 5 / 6;
+	grid-column: 1 / -1;
+	width: 100%;
+}

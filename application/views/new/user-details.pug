@@ -1,0 +1,285 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/user-details/user-details.css")
+
+block inline_js
+    script.
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        var form_id = Number(#{form_id});
+        var updateData  = '!{updateResult}';
+        var sammanter = !{sammanter};
+        var postList = !{postList};
+        console.log(postList,'==postList')
+        updateData = JSON.parse(updateData);
+        console.log(updateData,'==updateData')
+        var is_new = true;
+        const statesList = !{JSON.stringify((statesList))}
+        const districtsList = !{JSON.stringify((districtsList))}
+        if(updateData.length > 0){
+            is_new = false;
+        }
+block js_link
+    script(src="/assets/js/verify-details.js" type="module" defer)
+block content
+
+    div.container-fluid
+        div.container-base
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+
+                a.done-step(href="/new-registration")
+                    span.step-no 1
+                    span.step-name
+                        i.fa-regular.fa-file-lines.me-2
+                        | Registration
+                        br
+                        | (नोंदणी)
+
+                a.done-step(href="/user-eligibility/"+regIDString)
+                    span.step-no 2
+                    span.step-name
+                        i.fa-solid.fa-road-barrier.me-2
+                        | Entry Qualification 
+                        br
+                        | (प्रवेश पात्रता)
+                a.active-step(href="/user-details/"+regIDString)
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-user.me-2
+                        | Candidate Profile 
+                        br
+                        | (उमेदवाराची प्रोफाईल)
+                    i(class="fa-solid fa-play active-arrow")
+                a.pending-step(href="#")
+                    span.step-no 4
+                    span.step-name
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Education Details
+                        br
+                        | (शैक्षणिक तपशील)
+                a.pending-step(href="#")
+                    span.step-no 5
+                    span.step-name
+                        i.fa-solid.fa-brain.me-2
+                        | Experience Details
+                        br
+                        | (अनुभव तपशील)
+                a.pending-step(href="#")
+                    span.step-no 6
+                    span.step-name
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Accomplishments
+                        br
+                        | (गुणवत्ता तपशील)
+                a.pending-step(href="#")
+                    span.step-no 7
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 8
+                    span.step-name
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application Preview
+                        br
+                        | (अर्ज पूर्वावलोकन)
+
+            div.main-content
+                form#generalDetailsForm
+                    div.input-card(style="grid-column: 1/-1")
+                        h1.input-card-heading
+                            i.fa-solid.fa-file-lines
+                            | Applied post details (अर्जाची माहिती)
+                        div.departmentDetails
+                            div.grid-el
+                                label.input-label(for="" ) Bank Name (बँकचे नाव)
+                                label.input-label(id="PrePostMain")
+                            div.grid-el
+                                label.input-label(for="" ) Post (पोस्ट)
+                                label.input-label(id="PrePost")
+
+                    div.input-card(style="grid-column: 1/ -1")
+                        h1.input-card-heading
+                            i.fa-solid.fa-user
+                            | User general details (उमेदवाराचा तपशील)	
+
+                        .generalDetailsContainer
+
+                            div(class="ageDetailsContainer border-bottom" )
+                                div.grid-el
+                                    span.input-label Birth Date (जन्म तारिक) &nbsp;*&nbsp;
+                                    span.input-label#dob
+
+                                div.grid-el
+                                    span.input-label Age (वय) &nbsp;*&nbsp; (Age As On #{data.ageAsOn}) 
+                                    //- span.input-label#age-as-on
+                                    span.input-label#age 
+
+
+                                div(class="candidateGender position-relative grid-el")
+                                    label.input-label(for="") Gender (लिंग)&nbsp;*&nbsp;
+
+                                    div.inputMainContainer
+                                        div(class="checkBoxInputContainer ")
+                                            input#male.detailsGender(type='radio' name='candidateGender' placeholder='' value='male')
+                                            label(class="input-label" for="male") Male(पुरुष)
+                                        div(class="checkBoxInputContainer")
+                                            input#female.detailsGender(type='radio' name='candidateGender' placeholder='' value='female')
+                                            label(class="input-label" for="female") Female(स्त्री)
+                                        div(class="checkBoxInputContainer")
+                                            input#other.detailsGender(type='radio' name='candidateGender' placeholder='' value='other')
+                                            label(class="input-label" for="other") Other(इतर)
+
+
+                            div.border-bottom.d-flex.gap-5(style="grid-column: span 2")
+                                div(class="candidateMaritalStartus position-relative " )
+                                    div.materialStatuBoxInput
+                                        label.input-label(for="") Marital Status (वैवाहिक स्तिथी)&nbsp;*&nbsp;
+                                    div.inputMainContainer.position-relative
+                                        div(class="checkBoxInputContainer")
+                                            input#unmarried.detailsMarital(type='radio' name='candidateMaritalStartus' placeholder='' value='unmarried')
+                                            label(class="input-label" for="unmarried") Unmarried (अवैवाहिक)
+                                        div(class="checkBoxInputContainer")
+                                            input#married.detailsMarital(type='radio' name='candidateMaritalStartus' placeholder='' value='married')
+                                            label(class="input-label" for="married") Married  (वैवाहिक)
+                                        div(class="checkBoxInputContainer")
+                                            input#other-1.detailsMarital(type='radio' name='candidateMaritalStartus' placeholder='' value='other-1')
+                                            label(class="input-label" for="other-1") Other (इतर)
+
+                                div(class=" position-relative spouce-name-container")
+                                    label(for="detailsSpouse" class="input-label") Spouse's Name (पती/पत्नी चे नाव)
+                                    input#detailsSpouse.onlyalphawithdash.input-element.setToUpperCase(type='text' name='detailsSpouse' placeholder="Spouses Name" readonly)
+
+                            div.border-bottom(class="nationailtycontainer")
+
+                                div(class="candidateNationality grid-el position-relative")
+                                    label.input-label(for="") 
+                                        | Nationality / Citizenship Indian ? *
+                                        br
+                                        | (राष्ट्रीयत्व / नागरिकत्व भारतीय ?) *
+                                    div.inputMainContainer
+                                        div(class="checkBoxInputContainer")
+                                            input#nationalityYes.detailsNationality(type='radio' name='candidateNationality' placeholder='' value='Yes')
+                                            label(class="input-label" for="nationalityYes") Yes
+                                        div(class="checkBoxInputContainer")
+                                            input#nationalityNo.detailsNationality.ml-3(type='radio' name='candidateNationality' placeholder='' value='No')
+                                            label(class="input-label" for="nationalityNo") No
+
+                                div(class="candidateDomicile grid-el position-relative")
+                                    label.input-label(for="") 
+                                        | Maharashtra Domiciled ? *
+                                        br
+                                        | (महाराष्ट्र अधिवासित?)&nbsp;*&nbsp;
+                                    div.inputMainContainer
+                                        div(class="checkBoxInputContainer")
+                                            input#domicileYes.detailsDomicile(type='radio' name='candidateDomicile' placeholder='' value='Yes')
+                                            label(class="input-label" for="domicileYes") Yes
+                                        div(class="checkBoxInputContainer")
+                                            input#domicileNo.detailsDomicile(type='radio' name='candidateDomicile' placeholder='' value='No')
+                                            label(class="input-label" for="domicileNo") No
+
+                                div(class="candidateDetailsNonCreamyLayer grid-el position-relative")
+                                    label.input-label(for="") 
+                                        | Non Creamy Layer *
+                                        br
+                                        | (नॉन क्रीमी लेयर)
+                                    div.inputMainContainer
+                                        div(class="checkBoxInputContainer")
+                                            input#detailsNonCreamyLayer1.detailsNonCreamyLayer(type='radio' name='candidateDetailsNonCreamyLayer' placeholder='' value='1')
+                                            label(class="input-label" for="detailsNonCreamyLayer1") Yes
+                                        div(class="checkBoxInputContainer")
+                                            input#detailsNonCreamyLayer0.detailsNonCreamyLayer(type='radio' name='candidateDetailsNonCreamyLayer' placeholder='' value='0')
+                                            label(class="input-label" for="detailsNonCreamyLayer0") No
+
+
+                            div(class="grid-el position-relative")
+                                label.input-label(for="detailsFather") 
+                                    | Father's Name / Husband's Name (वडिलांचे /पतीचे नाव)&nbsp;*&nbsp;
+                                input.input-element#detailsFather.onlyalpha.setToUpperCase(type='text' name='detailsFather' placeholder='Father\'s Name / Husband\'s Name' value='')
+
+                            div(class="grid-el position-relative")
+                                label.input-label(for="detailsMother") Mother's Name&nbsp;*&nbsp;
+                                input#detailsMother.onlyalpha.input-element.setToUpperCase(type='text' name='detailsMother' placeholder='Mother\'s Name')
+
+                    div.input-card
+                        h1.input-card-heading
+                            i.fa-solid.fa-divide
+                            | Caste details (कास्ट तपशील)	
+                        div.grid-el.gap-1
+                            div(class="categoryTypeMain")
+                                label.input-label Caste (कास्ट)&nbsp;*&nbsp;
+                                input.input-element.setToUpperCase(id='detailsCategory' disabled)
+                            div(class="categoryTypeSub  position-relative")
+                                label.input-label(for="") Sub Caste (सब कास्ट)&nbsp;*&nbsp;
+                                input#detailsSubCategory.onlyalpha.input-element.setToUpperCase(type='text' placeholder="Sub Caste (सब कास्ट)" name='candidateSubCategory')
+                            div(class="position-relative candidateReligion ")
+                                label(class='input-label' for="floatingSelect") Religion (धर्म)&nbsp;*&nbsp;
+                                select.input-element#detailsReligion(name='candidateReligion')
+
+                    //- languages known dynamically
+                    div.input-card
+                        h1.input-card-heading
+                            i.fa-solid.fa-language
+                            | Languages (भाषा तपशील)
+                        div.d-flex.flex-column
+                            div#languagesKnown.mt-4
+
+
+                    div.input-card.address-container
+                        h1.input-card-heading
+                            i.fa-solid.fa-map-location-dot
+                            | User address details (उमेदवाराचा पत्ता तपशील)
+
+
+                        //- address box 
+                        div.row.g-4
+                            .col-md-6
+                                div.position-relative
+                                    label(for="detailsAddress" class="input-label") Address Line 1 (पत्ता लाईन १) &nbsp;*&nbsp;
+                                    input#detailsAddress.input-element.setToUpperCase(type='text' name='detailsAddress' placeholder='Address Line 1 (लाईन १)')
+
+                            .col-md-6
+                                div.position-relative
+                                    label(for="detailsLineTwo" class="input-label") Address Line 2 (पत्ता लाईन २)
+                                    input#detailsLineTwo.input-element.setToUpperCase(type='text' name='' placeholder='Address Line 2 (लाईन २)')
+                            .col-md-6
+                                div.position-relative
+                                    label(for="detailsLineThree" class="input-label") Address Line 3  (पत्ता लाईन ३)
+                                    input#detailsLineThree.input-element.setToUpperCase(type='text' name='' placeholder='Address Line 3 (लाईन ३)')
+
+                            .col-md-6
+                            .col-md-3
+                                div.position-relative.detailsState
+                                    <label for="detailsState" class="input-label">State (राज्य) &nbsp;*&nbsp;</label>
+                                    select#detailsState(placeholder='State &nbsp;*&nbsp;' name="detailsState")
+                                        option(value='') -- Select State --
+
+                            .col-md-3
+                                div(class="position-relative")
+                                    //- this is rendered in javascript when user select state and as per selected state districts are loaded
+                                    <label class='input-label' for='detailsDistrict'>District (जिल्हा) &nbsp;*&nbsp;</label>
+                                    <select id='detailsDistrict' name="detailsDistrict" class="detailsDistrict">
+
+
+                                    </select>
+
+
+                            .col-md-3
+                                div.position-relative
+                                    label(for="detailsTaluka" class="input-label") Taluka (तालुका) &nbsp;*&nbsp;
+                                    input#detailsTaluka.onlyalpha.input-element.setToUpperCase(type='text' name='detailsTaluka' placeholder='Taluka')
+
+                            .col-md-3
+                                div.position-relative
+                                    label(for="detailsPin" class="input-label") Pincode (पिन कोड)&nbsp;*&nbsp;
+                                    input#detailsPin.numaric.input-element.setToUpperCase(type='text' name='detailsPin' placeholder='Pincode' data-limiter="6")
+
+                    //- submit button 
+                    section#personalDetailsBtn.mx-auto.mb-4.d-flex.gap-1
+                        button.c-button.c-btn-primary#verifyPersonalDetails(type="button") Verify Details
+                        button.c-button.c-btn-success.d-none#submitPersonalDetails Submit

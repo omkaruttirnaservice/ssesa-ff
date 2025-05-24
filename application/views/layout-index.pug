@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(http-equiv='Cache-control' content='no-cache')
+    meta(http-equiv='Expires' content='-1')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0')
+    title #{title}
+
+
+    link(rel="stylesheet" href='/plugins/bs-532/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/assets/css/home-page.css')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css")
+    block css_link
+
+    block aggrement_page_css_link
+    block inline_css
+    style(type='text/css').
+
+    // javascripts
+    script(src='/plugins/jquery/jquery.min.js')
+    script(src='/plugins/popper/popper.min.js')
+    script(src='/plugins/bs-532/js/bootstrap.bundle.min.js')
+    script(src='/plugins/sweetalert/sweetalert.min.js')
+    script(src='/assets/js/common.js')
+    script(src='/plugins/jquery_validation/jquery.validate.min.js')
+    script(src='/plugins/jquery_validation/additional-methods.js')
+    script(src='/assets/js/common-validation.js')
+script(src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js")
+  script.
+    $('input').tooltip();
+    $(function(){
+      $(document).on('keyup','input',function(){
+        var text = $(this).val();
+        text = text.toUpperCase();
+        $(this).val(text)
+      });
+      $(document).on('keyup','textarea',function(){
+        var text = $(this).val();
+        text = text.toUpperCase();
+        $(this).val(text)
+      });
+      $('input').bind('copy paste cut',function(e) { 
+        e.preventDefault(); //disable cut,copy,paste
+        });
+      $('textarea').bind('copy paste cut',function(e) { 
+        e.preventDefault(); //disable cut,copy,paste
+      });
+      $(document).on('blur','#gPercent',function(){
+        var value = Number($(this).val());
+        if(value < 45){
+          alertjs.warning(
+            {
+              t: "Warning",
+
+              m: "Invalid graduation criteria",
+            },
+
+            function () {
+              $('#gPercent').val('');
+            }
+          );
+
+        }
+      });
+    })
+  block inline_js
+
+  block js_link
+
+  body.welcome(oncontextmenu="return false;" ondragstart='return false;' ondrop='return false;')
+    block content

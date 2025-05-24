@@ -1,0 +1,25 @@
+.login-form-container {
+	max-width: 400px !important;
+	margin-inline: auto;
+}
+.grid-el {
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+}
+.loginFormLinks {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	gap: 1.2rem;
+	font-size: 1.4rem;
+	letter-spacing: 0.7px;
+}
+.loginFormButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	gap: 2rem;
+}

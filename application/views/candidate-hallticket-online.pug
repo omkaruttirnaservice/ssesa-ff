@@ -1,0 +1,209 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Hallticket | Online Exam
+    link(rel='stylesheet' href='/assets/css/hallticket/online-hallticket.css')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js")
+    script(src="/assets/js/hallticket-handler.js" type="module" defer)
+    script.
+      const ht = !{JSON.stringify(ht)}
+      const slot = !{JSON.stringify(slot)}
+
+      console.log(ht, slot,'-')
+
+    style.
+      @media print {
+        @page {
+          border: 1px solid #eee;
+          border-radius: 8px;
+        }
+      }
+      .no-page-break {
+        page-break-inside : avoid;
+      }
+      .page-break-before {
+        page-break-before: always;
+      }
+      .page-break-after {
+        page-break-after: always;
+      }
+
+  body 
+    .container
+      .hall-ticket
+        //- Header Section
+        .header
+          //- .logo-container
+          //-   .logo
+          //-     span MF
+          .title
+            //- h1 MAHATMA FULE URBAN CO-OP. BANK LTD.
+            //- p.subtitle महात्मा फुले अर्बन को-ऑप. बैंक लि. अमरावती
+            //- p.recruitment Recruitment - 2024-25
+            img(src="/assets/images/brand-name.jpg" alt="header-image" class="header-image")
+          .admit-badge E-Admit Card
+
+        //- Candidate Information - New Layout
+        .main-content
+          //- Left Side - 70%
+          .left-section
+            .info-row
+              .info-item
+                p.label Seat No (बैठक क्र.)
+                p.value #{ht.ca_roll_number}
+              .info-item
+                p.label Form No (फॉर्म क्र.)
+                p.value #{ht.id}
+            .info-row
+              .info-item
+                p.label User ID (युजर आय. डी.)
+                p.value #{ht.ca_roll_number}
+              .info-item
+                p.label Password (पासवर्ड)
+                p.value #{ht.birth_pass}
+
+            .candidate-details
+              h2 Candidate Details (उमेदवार तपशील)
+              .details-grid
+                .detail-item
+                  p.label Full Name (पूर्ण नाव)
+                  p.value #{ca.ub_first_name} #{ca.ub_middle_name} #{ca.ub_last_name}
+                .detail-item
+                  p.label Gender (लिंग)
+                  p.value #{ht.ca_gender.toUpperCase()}
+                .detail-item
+                  p.label Date of Birth (जन्मतारीख)
+                  p.value #{ht.birth_date}
+
+            //- Exam Details
+            .exam-details
+              h2 Exam Details (परीक्षेचे तपशील)
+              .exam-box
+                .exam-item
+                  p.label Exam Date (परीक्षेची तारीख)
+                  p.value #{ht.exam_date}
+                .exam-item
+                  p.label Exam Time (परीक्षेची वेळ)
+                  p.value #{ht.ca_batch_time}
+              .exam-box
+                .exam-item
+                  p.label Entry Time (प्रवेश वेळ)
+                  p.value #{slot.entry_time}
+                .exam-item
+                  p.label Gate Close Time (गेट बंद होण्याची वेळ)
+                  p.value #{slot.gate_close_time}
+              .exam-box
+                .exam-item.full-width
+                  p.label Exam Center (परीक्षा केंद्र)
+                  p.value #{ht.ca_center_name}
+                  p.address 
+                    | #{ht.ca_center_address} 
+
+          //- Right Side - 30%
+          .right-section
+            .id-container
+              .photo-signature
+                .photo-box
+                  p.photo-label Photograph
+                  .photo
+                    - var photo = s3BucketUrl+"/"+ht.ca_photo;
+                    img(src=photo alt="user photo" width='100%' height='100%')
+
+                .signature-box
+                  p.photo-label Signature
+                  .signature
+                    - var sign = s3BucketUrl+"/"+ht.ca_sign;
+                    img(src=sign alt="user sign" width='100%' height='100%')
+                .qr-code-box
+                  p.photo-label QR Code
+                  .qr-code#qr-code
+
+                //- .signature-box
+                //-   p.label Candidate Signature
+                //-   .signature-line
+                //- .signature-box
+                //-   p.label Invigilator Signature
+                //-   .signature-line
+
+        //- Signatures
+        .signatures
+          .signature-box
+            p.label Candidate Signature
+            .signature-line
+            p.label Note : To be signed infront of invigilator only
+            p.label टीप: फक्त पर्यवेक्षकांसमोर स्वाक्षरी करावी
+          .signature-box
+            p.label Invigilator Signature
+            .signature-line
+
+        //- Exam Details - Box Format
+        .exam-details-new
+          h2 Exam Details (परीक्षेचे तपशील)
+          .exam-boxes
+            .exam-box
+              i.fas.fa-calendar
+              div
+                p.label Exam Date
+                p.value 27/10/2024
+                p.time 11:00 AM to 12:30 PM
+            .exam-box
+              i.fas.fa-clock
+              div
+                p.label Reporting Time
+                p.value 08:00 AM
+                p.gate-close Gate Closes at 10:30 AM
+            .exam-box
+              i.fas.fa-map-marker-alt
+              div
+                p.label Exam Center
+                p.value VIDHYABHARATI MAHAVIDYALAY
+                p.address AMRAVATI, CAMP ROAD, AMRAVATI (MAIN BUILDING), 444602
+
+        //- Aadhaar Card Section
+        .aadhaar-section.page-break-before
+          h2 
+            i.fas.fa-id-card
+            | Aadhaar Card Details
+
+          if p[0].p_is_ht_aadhaar_required === 1
+            .aadhaar-container
+              .aadhaar-image
+                - var photo = s3BucketUrl+"/"+ht.ca_aadhar_card;
+                img(src=photo alt="user photo" height="100%")
+            .aadhaar-details
+              .aadhaar-item
+                p.label Aadhaar Number
+                p.value #{ca.ub_aadhar_number}
+              .aadhaar-item
+                p.value Security Check Stamp
+                p.value.verified 
+
+        //- Instructions - Marathi First, then English
+        .instructions-new.page-break-before
+          h2 
+            i.fas.fa-info-circle
+            | Important Instructions (महत्वाच्या सूचना)
+
+          //- Marathi Instructions
+          .instructions-box
+            h3 सूचना
+            ol
+              each rule in rulesList
+                li #{rule.rules.marathi}
+
+
+          //- English Instructions
+          .instructions-box
+            h3 Instructions
+            ol
+              each rule in rulesList
+                li #{rule.rules.english}
+
+
+
+        //- Footer
+        //- .footer
+        //-   p © 2024 Mahatma Fule Urban Co-op. Bank Ltd. All Rights Reserved.

@@ -1,0 +1,22 @@
+/* ********************** */
+/* EXTRA DOCS UPLOAD PAGE */
+/* ********************** */
+
+/* for hiding the html input fiels for selecting photo, sign and image	 */
+#imageUpload,
+#aadharUpload,
+#signUpload {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+}
+
+.select-photo-btn {
+	/* padding: 1rem !important; */
+	/* font-size: 1.2rem !important; */
+	/* font-weight: 500; */
+	width: 35%;
+}

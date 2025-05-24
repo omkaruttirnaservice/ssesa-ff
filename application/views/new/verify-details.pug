@@ -1,0 +1,118 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/user-details/user-details.css")
+
+block inline_js
+    script.
+        const candidateInfo = !{JSON.stringify(candidateInfo)}
+        console.log(candidateInfo)
+
+block js_link
+    script(src="/assets/js/verify-details.js" type="module" defer)
+block content
+
+    div.container-fluid
+        div.container-base
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+                a.active-step(href="#")
+                    span.step-no 1
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Verify Details
+                        br
+                        | (तपशिल पडताळणी)
+
+                a.pending-step(href="#")
+                    span.step-no 2
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application View
+                        br
+                        | (अर्ज)
+
+            div.main-content
+                form(id="candidate-form" class="container mt-5")
+                    .row
+                        .col-md-3.mb-3
+                            label.form-label(for="name") Form No.
+                            input#name.form-control.no-edit(type="text" value=candidateInfo.f_id disabled )
+                        .col-md-3.mb-3
+                            label.form-label(for="name") Post Name
+                            input#name.form-control.no-edit(type="text" value=candidateInfo.ca_post_name disabled )
+
+                        .col-md-6.mb-3
+
+                        .col-md-6.mb-3
+                            label.form-label(for="name") Full Name
+                            input#name.form-control(type="text" name="name"  value=candidateInfo.ub_first_name)
+
+                        .col-md-3.mb-3
+                            label.form-label(for="dob") Date of Birth
+                            input#dob.form-control(type="date" name="dob"  value=candidateInfo.dob)
+                        .col-md-3.mb-3
+                            label.form-label(for="gender") Gender
+                            select#gender.form-select(name="gender" )
+                                - let gender = candidateInfo.ca_gender.toLowerCase()
+                                option(value="") Select Gender
+                                option(value="male" selected=gender == 'male' ) Male
+                                option(value="female" selected=gender == 'female') Female
+                                option(value="other" selected=gender == 'other') Other
+
+
+                    .row
+
+                        .col-md-4.mb-3
+                            label.form-label(for="email") Email
+                            input#email.form-control.skip-caps-letter(type="email" name="email"  value=candidateInfo.ub_email_id)
+
+                        .col-md-4.mb-3
+                            label.form-label(for="mobile") Mobile
+                            input#mobile.form-control(type="tel" name="primary-mobile"   value=candidateInfo.ub_mobile_number)
+
+                        .col-md-4.mb-3
+                            label.form-label(for="mobile") Alternate Mobile
+                            input#mobile.form-control(type="tel" name="alternate-mobile"  )
+
+
+                    .row
+
+                    .row
+                        .col-md-6.mb-3
+                            label.form-label(for="caste") Caste
+                            select#caste.form-select(name="caste")
+                                - const caste = candidateInfo.ca_catagory?.toUpperCase() || ''
+                                option(value="") Select Caste
+                                option(value="SC" selected=caste === 'SC') SC
+                                option(value="ST" selected=caste === 'ST') ST
+                                option(value="VJ-A" selected=caste === 'VJ-A') VJ-A
+                                option(value="NT-B" selected=caste === 'NT-B') NT-B
+                                option(value="NT-C" selected=caste === 'NT-C') NT-C
+                                option(value="NT-D" selected=caste === 'NT-D') NT-D
+                                option(value="OBC" selected=caste === 'OBC') OBC
+                                option(value="SBC" selected=caste === 'SBC') SBC
+                                option(value="EWS" selected=caste === 'EWS') EWS
+                                option(value="OPEN" selected=caste === 'OPEN') OPEN
+
+
+                        .col-md-6.mb-3
+                            label.form-label(for="subcaste") Subcaste
+                            input#subcaste.form-control(type="text" name="subcaste" value=candidateInfo.ca_detailsSubCategory)
+
+                        .col-md-12.mb-3
+                            label.form-label(for="address") Address
+                            textarea#address.form-control(type="text" name="address") #{candidateInfo.ca_address}
+
+                    .row
+                        .col-12.d-flex.gap-2
+                            button.btn.btn-danger(id="edit-btn" type="button") Edit
+                            button.btn.btn-primary(id="candidate-form-submit-btn" type="submit") Submit

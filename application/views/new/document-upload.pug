@@ -1,0 +1,186 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/document-upload/document-upload.css")
+
+block inline_js
+    script.
+        const images = !{JSON.stringify(images)}
+        const p = !{JSON.stringify(p)}
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        const candidateDocumentDetails = !{JSON.stringify(candidateDocumentDetails)}
+
+        var form_id = Number(#{form_id});
+        var isP = #{images.isP};
+        var isS = #{images.isS};
+        var isA = #{images.isA}
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js")
+block js_link
+    script(src="/plugins/browser-image-compress/browserImgCompress.js")
+    script(src="/assets/js/document-upload.js" type="module" defer)
+
+block content
+    #loadMyPage.d-none
+        .loader
+
+    div.container-fluid.mt-1
+        div.container-base
+
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+                a.done-step(href="#")
+                    span.step-no 1
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Verify Details
+                        br
+                        | (तपशिल पडताळणी)
+
+                a.active-step(href="#")
+                    span.step-no 2
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application View
+                        br
+                        | (अर्ज)
+
+            div.main-content
+                div(class="d-flex align-items-center justify-content-between my-4")
+                    label(for="addNewDetails" class="input-label-title") 
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload (कागदपत्रे अपलोड)
+                <section>
+                    div.d-flex
+                        p.note-card
+                            | NOTE&nbsp;:&nbsp;Candidates must upload a recent passport-sized signature in the online application form. The signature should be clear and legible. Any issues or doubts regarding the photograph or signature at any stage of the process may result in disqualification.
+                        p.note-card
+                            | नोट&nbsp;:&nbsp;उमेदवारांनी ऑनलाइन अर्ज फॉर्ममध्ये अलीकडील पासपोर्ट आकाराच्या स्वाक्षरी अपलोड कराव्या. स्वाक्षरी स्पष्ट आणि वाचनीय असावी. प्रक्रिया कोणत्याही टप्प्यावर छायाचित्र किंवा स्वाक्षरी संदर्भातील कोणत्याही समस्या किंवा शंका डिस्क्वालीफिकेशनला कारणीभूत ठरू शकतात.
+                    form#uploadImage
+                        .row.g-4
+                            div.col-md-12
+                                if candidateDocumentDetails.isAadharRequired == 'yes'
+                                    div.row
+                                        div.col-md-12
+                                            div.fileInput
+                                                span.input-label Aadhaar Card Photo*
+                                                span.input-label (आधार कार्ड फोटो अपलोड)
+                                                .d-flex.align-items-center.gap-3
+                                                    input#aadharUpload.input-element.input-sm.w-50(type='file' name='aadharCard' placeholder='' aria-describedby='fileHelpId')
+                                                    if images.aadharCard
+                                                        //- button.c-button.c-btn-success#delete-document.select-photo-btn(type="button" data-img-type="aadharCard" data-img-name=images.aadharCard) Delete
+                                                    if !images.aadharCard
+                                                        //- label.c-button.c-btn-primary.select-photo-btn(for="aadharUpload") Select Photo
+                                                        //- button.c-button.c-btn-success#upload-document.select-photo-btn(type="button" data-img-type="aadharCard") Upload
+                                        div.col-md-6
+                                            div.imagePreviewBox.d-flex.flex-column.align-items-center.gap-2
+                                                div
+                                                    span.input-label Sample Aadhaar Photo(आधार नमुना फोटो)*
+                                                img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/aadhar-dummy-image.jpg' alt='' style='width:280px;height:150px' )
+
+                                        div.col-md-6
+
+                                            div.d-flex.flex-column.align-items-center.gap-2
+                                                div
+                                                    span.input-label Your Uploaded Aadhaar Photo(तुमचा अपलोड केलेला फोटो)*
+                                                img#aadharUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.aadharCard alt='' style='width:280px;height:150px' )
+
+                                            .d-flex.align-items-center.justify-content-center.gap-1.mt-2
+                                                if images.aadharCard
+                                                    button.c-button.c-btn-success#delete-document.select-photo-btn(type="button" data-img-type="aadharCard" data-img-name=images.aadharCard) Delete
+                                                if !images.aadharCard
+                                                    label.c-button.c-btn-primary.select-photo-btn(for="aadharUpload" ) Select Photo
+                                                    button.c-button.c-btn-success#upload-document.select-photo-btn(type="button" data-img-type="aadharCard") Upload
+
+                            hr
+
+                            div.col-md-12
+                                div.row
+                                    div.col-md-12
+                                        div.fileInput
+                                            span.input-label Upload Photo*
+                                            span.input-label (फोटो अपलोड)
+                                            .d-flex.align-items-center.gap-3
+                                                input#imageUpload.input-element.input-sm.w-50(type='file' name='photo' placeholder='' data-img-type="photo")
+                                                if images.photo
+                                                    //- button.c-button.c-btn-success#delete-document.select-photo-btn(type="button" data-img-type="photo" data-img-name=images.photo) Delete
+                                                if !images.photo
+                                                    //- label.c-button.c-btn-primary.select-photo-btn(for="imageUpload") Select Photo
+                                                    //- button.c-button.c-btn-success#upload-document.select-photo-btn(type="button" data-img-type="photo") Upload
+                                                .note-card This will get printed on your hall-ticket.
+                                    div.col-md-6
+                                        div.imagePreviewBox.d-flex.flex-column.align-items-center.gap-2
+                                            div
+                                                span.input-label Sample photo(नमुना फोटो )*
+                                            img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/profile-photo-demo.jpg' alt='' style='width:270px;height:220px' )
+
+                                    div.col-md-6
+
+                                        div.d-flex.flex-column.align-items-center.gap-2
+                                            div
+                                                span.input-label Your uploaded photo(तुमचा अपलोड केलेला फोटो)*
+                                            img#imageUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.photo alt='' style='width:220px;height:220px')
+
+                                        .d-flex.align-items-center.justify-content-center.gap-1.mt-2
+                                            if images.photo
+                                                button.c-button.c-btn-success#delete-document.select-photo-btn(type="button" data-img-type="photo" data-img-name=images.photo) Delete
+                                            if !images.photo
+                                                label.c-button.c-btn-primary.select-photo-btn(for="imageUpload" ) Select Photo
+                                                button.c-button.c-btn-success#upload-document.select-photo-btn(type="button" data-img-type="photo") Upload
+
+
+
+                            hr
+
+                            div.col-md-12
+                                div.row
+                                    div.col-md-12
+                                        div.fileInput
+                                            span.input-label Upload Signature*
+                                            span.input-label (सही अपलोड)
+                                            .d-flex.align-items-center.gap-3
+                                                input#signUpload.input-element.input-sm.w-50(type='file' name='sign' placeholder='' aria-describedby='fileHelpId')
+                                                if images.sign
+                                                    //- button.c-button.c-btn-success#delete-document.select-photo-btn(type="button" data-img-type="sign" data-img-name=images.sign) Delete
+                                                if !images.sign
+                                                    //- label.c-button.c-btn-primary.select-photo-btn(for="signUpload") Select Photo
+                                                    //- button.c-button.c-btn-success#upload-document.select-photo-btn(type="button" data-img-type="sign") Upload
+                                                .note-card This will get printed on your hall-ticket.
+                                    div.col-md-6
+                                        div.imagePreviewBox.d-flex.flex-column.align-items-center.gap-2
+                                            div
+                                                span.input-label Sample sign(नमुना सही)*
+                                            img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/demo-signature.jpg' alt='' style='background-color: #fff !important; width:220px;height:130px')
+
+                                    div.col-md-6
+
+                                        div.d-flex.flex-column.align-items-center.gap-2
+                                            div
+                                                span.input-label Your uploaded sign(तुमची अपलोड केलेली सही)*
+                                            img#signUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.sign alt='' style='width:220px;height:130px')
+
+                                        .d-flex.align-items-center.justify-content-center.gap-1.mt-2
+                                            input#signUpload.input-element.input-sm.w-50(type='file' name='sign' placeholder='' aria-describedby='fileHelpId')
+                                            if images.sign
+                                                button.c-button.c-btn-success#delete-document.select-photo-btn(type="button" data-img-type="sign" data-img-name=images.sign) Delete
+                                            if !images.sign
+                                                label.c-button.c-btn-primary.select-photo-btn(for="signUpload" ) Select Photo
+                                                button.c-button.c-btn-success#upload-document.select-photo-btn(type="button" data-img-type="sign") Upload
+
+
+                        hr
+
+                        div.d-flex.justify-content-center.my-4
+                            button#submituploadDetails.c-button.c-btn-primary.pl-5.pr-5.ml-2 Save
+
+
+                </section>

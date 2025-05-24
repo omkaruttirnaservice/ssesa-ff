@@ -1,0 +1,124 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+block js_link
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+block content
+    <!-- section one -->
+    #loadMyPage.d-none
+        .loader
+    .modal.fade#transactionModal(tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true")
+        .modal-dialog.modal-lg(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title.text-primary Payment Receipt Preview
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                .modal-body.row
+                    .form-group.col-12 
+                        img(width="100%" height="100%")#img-transaction
+    <section class="row">
+        <div class="col-3 ps-0">
+            <div class="set-static-1">
+                <div class="list-group rounded-0">
+                    <a href="#" class="list-group-item bg-purple" aria-current="true">
+                        | Important Links
+                    </a>
+                </div>
+                div(class="list-group rounded-0")
+                    a.list-group-item.list-group-item-action(href="/home" aria-current="true") Home
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#" aria-current="true")  User Registration
+                        div 
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") User Eligibility 
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") User Profile
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") Education Details
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") Experience Details
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") Achievements Details
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") Document Uploading
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.bg-light-green.disabled(href="#") Application Preview
+                        div
+                            span.fa.fa-check.position-relative(style="left:16px;top:5px" aria-hidden="true")
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action.active(href="#") Payment
+                        div
+                            span.fa.fa-check(aria-hidden="true")
+                    a.list-group-item.list-group-item-action(href="#") Application Form
+                </div>
+            </div>
+        </div>
+        <div class="col-9 bg-white mt-2 ">
+            nav.set-static-1.align-items-center.mt-2.d-flex.justify-content-between.border-1.border.p-2.bg-light.rounded.rounded-1(aria-label="breadcrumb")
+                ol.breadcrumb.mb-0.text-primary
+                    li.breadcrumb-item(aria-current="page").h4 User
+                    li.breadcrumb-item(aria-current="page").h4 Payment
+                div.d-flex.text-end.align-items-center
+                    div.d-flex.flex-column.text-end
+                        span.text-success.fw-bold 
+                            i.fa.fa-user.mx-2.text-primary
+                            |[#{userData.reg_id}] #{userData.full_name}
+                        span.fw-bold -#{userData.post}
+                    button#logout.fw-bold.c-button.c-btn-success.btn-sm.ms-2 Logout
+            <!-- Ongoing Events -->
+            <section>
+
+                table.table.table-bordered
+                    tbody
+                        tr
+                            td.bg-secondary.text-light.text-center.font-weight-bold(colspan='6') Payment Done Details 1
+                        tr
+                            th(width='25%') Application Id
+                            td #{userData.form_id}
+                        tr
+                            th(width='userName%') Full Name
+                            td  #{userData.full_name}
+                        tr
+                            th(width='25%') Post
+                            td  #{userData.post}
+                        tr
+                            th(width='25%') Amount
+                            td  #{pay.amount / 100} /-
+                        tr
+                            th(width='25%') Payment Status
+                            td  #{pay.state}
+                        if(pay.state !== 'PENDING')
+                            tr
+                                th(width='25%') Payment Done Status
+                                td #{pay.responseCode}
+                            tr
+                                th(width='25%') Token ID 
+                                td  #{pay.token}
+                            tr
+                                th(width='25%') Transaction ID 
+                                td #{pay.transactionId}
+                            tr
+                                th(width='25%') Payment Type
+                                td #{pay.fullPayDetails.data.paymentInstrument.type}
+                            tr
+                                th(width='15%') Service Transaction Id
+                                td #{pay.fullPayDetails.data.paymentInstrument.pgServiceTransactionId}                                                                                    
+                            tr
+                                td(colspan='2')
+                                    center
+                                        - let v = `/application?r=${userData.reg_id}&f=${userData.form_id}`;
+                                        a(href=v).btn.btn-primary.pl-5.pr-5
+                                            i.fa.fa-thumb-up.mr-2(aria-hidden='true')
+                                            | View Application Form

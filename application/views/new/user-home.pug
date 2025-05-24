@@ -1,0 +1,189 @@
+extends layout_index_new
+block css_link
+block inline_css
+    style.
+        .result-table {
+            margin: 15px 0;
+            & td {
+                padding: 5px;
+            }
+
+        }
+        .section-heading {
+            font-weight: 500;
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.3rem 0 0 0 !important;
+        }
+
+        th {
+            font-size: var(--para-label-2-font-size) !important;
+            padding: 0.2rem !important;
+            font-weight: 500;
+        }
+
+        td {
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.2rem !important;
+        }
+
+block inline_js
+    script.
+        let regID = Number(#{regIDInt});
+        let impDates = !{JSON.stringify(impDates)}
+        console.log(impDates,'==impDates')
+        let regString = '#{regIDString}';
+        const p = !{JSON.stringify(p)};
+        const isResultGenerated = '#{isResultGenerated}'
+        const isInterviewLetterGenerated = '#{isInterviewLetterGenerated}'
+
+        let updateData  = !{JSON.stringify(applicationList)};
+
+        let payment_mode = Number(#{payment_mode});
+        let ht = Number(#{hall_ticket});
+
+block js_link 
+    script(src='./assets/js/candidate-home.js' type="module" defer)
+
+block content
+    .container-base
+        .row.m-0.p-0
+            include ./includes/profile-icon.pug
+
+            div.mt-3
+                label(for="" class="input-label-title") 
+                    i.fa-solid.fa-money-bill-1-wave
+                    |&nbsp;My Applications (माझे अर्ज)
+
+            div(class="container mt-3")
+
+                div(class="row justify-content-start")
+
+                    each app in applicationList
+                        div(class="col-md-4")
+                            div(class="card shadow-lg border-0 rounded-4")
+                                div(class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4")
+                                    h5(class="mb-0") 
+                                        i(class="bi bi-person-circle me-2")
+                                        | Post : #{app.applied_post}
+                                    span(class="badge bg-light text-dark") #{created_date}
+                                div(class="card-body p-4")
+                                    ul(class="list-group list-group-flush")
+                                        li(class="list-group-item border-0 ps-0 pe-0 pb-2")
+                                            strong Name: 
+                                            span(class="text-secondary ms-2") #{userName}
+                                        li(class="list-group-item border-0 ps-0 pe-0 pb-2")
+                                            strong Registration ID: 
+                                            span(class="text-secondary ms-2") #{regIDInt}
+                                        li(class="list-group-item border-0 ps-0 pe-0 pb-2")
+                                            strong Application ID: 
+                                            span(class="text-secondary ms-2") #{app.id}
+                                        li(class="list-group-item border-0 ps-0 pe-0 pb-2")
+                                            strong Applied Post: 
+                                            span(class="ms-2 fw-semibold text-dark") #{app.applied_post}
+                                        li(class="list-group-item border-0 ps-0 pe-0 pb-2")
+                                            strong Main Post: 
+                                            span(class="ms-2 text-muted") #{app.ca_detailsMainPost}
+                                        li(class="list-group-item border-0 ps-0 pe-0 pb-2")
+                                            strong Payment Done:
+                                                span(class="badge bg-success ms-2") Yes
+                                div(class="card-footer bg-light d-flex justify-content-end rounded-bottom-4")
+                                    a(class="btn btn-danger btn-sm px-4" href="/verify-info?r="+regIDInt+'&f='+app.id) Verify Details
+
+
+                .row.m-0.p-0.d-none
+                    include ./includes/profile-icon.pug
+
+                        button#idApplyForNewPost.c-button.c-btn-primary Apply For New Post
+
+
+
+                    div.col-md-12.p-0.m-0
+                        if isResultGenerated !== 1 && isInterviewLetterGenerated !== 1
+                            div.py-2
+                                label(for="" class="input-label-title") 
+                                    i.fa-solid.fa-money-bill-1-wave
+                                    |&nbsp;My Applications (माझे अर्ज)
+                            table.table.table-bordered.text-center
+                                thead
+                                    tr
+                                        th(class='input-label' width='2%') #
+                                        th(class='input-label' width='2%') Form Status
+                                        th(class='input-label' width='7%') Applied Post
+                                        th(class='input-label' width='8%') Application Number
+                                        th(class='input-label' width='8%') Created
+                                        th(class='input-label' width='2%') Fee
+                                        th(class='input-label' width='5%') Fee Status
+                                        th(class='input-label' width='5%') Action
+                                tbody.font-weight-bolder#examList
+                                    tr
+                                        td(colspan="10")
+                                            h5.text-danger No Application Found
+
+                        //- result
+
+                        if resultDetails.length >= 1 && isResultGenerated === 1
+                            -
+                                let {   
+                                    roll_number, 
+                                    f_id, 
+                                    r_id,
+                                    ca_post_name, 
+                                    marks_gain, 
+                                    ca_batch_time, 
+                                    ca_exam_date,
+                                    ca_photo,
+                                    ca_sign
+                                } = resultDetails[0]
+
+                            div.py-4
+                                label(for="" class="input-label-title") 
+                                    i.fa-solid.fa-money-bill-1-wave
+                                    span &nbsp;Result
+                                br
+                                label(for="" class="input-label-title") (निकाल)
+
+                            table.table-bordered.w-50.result-table
+                                tbody
+                                    tr
+                                        td(colspan="4" style="width: 40rem; height: 6rem; overflow: hidden; border: 1px solid black; border-radius: 10px; margin: 0.4rem 0;")
+                                            img(src="/assets/images/brand-name.jpg" alt="" class="header-image" style='height: 100%; width: 100%;')
+                                    tr
+                                        td(colspan="1" width="20%") Post Name
+                                        td(colspan="3" width="80%") #{ca_post_name}
+                                    tr
+                                        td(colspan="1" width="20%") Exam Time
+                                        td(colspan="3" width="80%") #{ca_batch_time}
+                                    tr
+                                        td(colspan="1" width="20%") Exam Date
+                                        td(colspan="3" width="80%") #{ca_exam_date}
+
+                                    tr
+                                        td(colspan="4" class="text-center fw-bold") Result
+
+                                    tr
+                                        td(colspan="1" width="20%") Full Name
+                                        td(colspan="2" width="50%") #{userName}
+
+                                        td(rowspan="3" colspan="1" width="30%") 
+
+                                            img(src=s3BucketUrl+'/'+ca_photo, alt="" class="w-50 h-50")
+                                            img(src=s3BucketUrl+'/'+ca_sign, alt="" class="w-50 h-50")
+                                    tr
+                                        td(colspan="1" width="20%") User ID
+                                        td(colspan="3" width="80%") #{r_id}
+                                    tr
+                                        td(colspan="1" width="20%") Application ID
+                                        td(colspan="3" width="80%") #{f_id} 
+                                    tr.text-center
+                                        td.fw-bold(colspan="2" width="50%") Total Marks
+                                        td.fw-bold(colspan="2" width="50%") Obtained Marks
+                                    tr.text-center
+                                        td.fw-bold(colspan="2" width="50%") 90
+                                        td.fw-bold(colspan="2" width="50%") #{marks_gain.split('/')[0]}
+
+                        if interviewDetails.length >= 1 && isInterviewLetterGenerated === 1
+                            div.flex-column.align-items-center.d-flex.justify-content-center
+                                p.fw-bold.fs-3 Congratulations, you are selected for interview. 
+                                a.btn.btn-primary.fs-3(href='/call-letter?fid='+interviewDetails[0].f_id target="_blank") Download Interview Call Letter
+
+

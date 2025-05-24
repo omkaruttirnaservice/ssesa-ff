@@ -1,0 +1,55 @@
+.userExperienceContainer {
+	max-width: 125rem !important;
+}
+/* ADD EXPERIENCE MODAL */
+.experienceModalTitle {
+	font-size: 1.8rem;
+	margin-left: 1.2rem;
+}
+
+.experience-year-container,
+#experienceForm {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1rem;
+}
+
+.experienceModalContainer {
+	/* display: grid; 
+    grid-template-columns: 1fr 1fr; */
+}
+
+.grid-el {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.experience-description-box {
+	grid-column: 1 / -1;
+}
+.experience-year-container {
+	grid-column: 1 / -1;
+}
+
+.addExperience button {
+	font-size: 1.8rem;
+	font-weight: bold;
+	margin-left: 1.2rem;
+}
+
+.experienceSaveButtons {
+	display: flex;
+	justify-content: end;
+}
+.experienceSaveButtons button {
+	font-size: 1.8rem;
+	font-weight: bold;
+}
+
+.saveExperienceButton a,
+.saveExperienceButton button {
+	font-size: 1.6rem;
+	font-weight: bold;
+	margin-top: 1.6rem;
+}

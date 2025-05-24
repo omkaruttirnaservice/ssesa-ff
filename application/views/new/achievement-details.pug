@@ -1,0 +1,168 @@
+extends layout_index_new
+
+block css_link
+    link(rel="stylesheet" href="/assets/css/achievement-details/achievement-details.css")
+
+block inline_js
+    script.
+        let regID = Number(#{regIDInt});
+        let regString = '#{regIDString}';
+        let form_id = Number(#{form_id});
+        let achievementList = !{JSON.stringify(achievementList)};
+        console.log(achievementList,'=achievementList')
+
+block js_link 
+    script(src="/assets/js/achievement-details.js" type="module" defer)
+
+block content
+
+    div.container-fluid.mt-1
+        div.container-base
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+
+                a.done-step(href="/new-registration") 
+                    span.step-no 1
+                    span.step-name 
+                        i.fa-regular.fa-file-lines.me-2
+                        | Registration
+                        br
+                        | (नोंदणी)
+
+                a.done-step(href="/user-eligibility/"+regIDString)
+                    span.step-no 2
+                    span.step-name 
+                        i.fa-solid.fa-road-barrier.me-2
+                        | Entry Qualification 
+                        br
+                        | (प्रवेश पात्रता)
+                a.done-step(href="/user-details/"+regIDString)
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-user.me-2
+                        | Candidate Profile 
+                        br
+                        | (उमेदवाराची प्रोफाईल)
+                a.done-step(href="/education-details/"+regIDString)
+                    span.step-no 4
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Education Details
+                        br
+                        | (शैक्षणिक तपशील)
+                a.done-step(href="/experience-details/"+regIDString) 
+                    span.step-no 5
+                    span.step-name 
+                        i.fa-solid.fa-brain.me-2
+                        | Experience Details
+                        br
+                        | (अनुभव तपशील)
+                a.active-step(href="/achievement-details/"+regIDString)
+                    span.step-no 6
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Accomplishments
+                        br
+                        | (गुणवत्ता तपशील)
+                    i(class="fa-solid fa-play active-arrow")
+                a.pending-step(href="#")
+                    span.step-no 7
+                    span.step-name 
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 8
+                    span.step-name 
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application Preview
+                        br
+                        | (अर्ज पूर्वावलोकन)
+
+            div.main-content
+
+                .modal.fade#experienceModal(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true")
+                    div(class="modal-dialog modal-lg")
+                        div.input-card
+                            div.modal-content(style="border: none")
+                                div.modal-header.input-card-heading
+                                    h1.modal.achievementModalTitle.newTitle(style="background-color: transparent")
+                                    button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                                div.modal-body
+                                    form#achievementForm
+                                        div.position-relative
+                                            label.input-label(for="particulars") 
+                                                | Category Name *
+                                                br
+                                                | (श्रेणी नाव) *
+                                            input.input-element(type="text" name="particulars" placeholder="Enter Particulars")
+                                        div.position-relative
+                                            label.input-label(for="award") 
+                                                | Award Certificate / Scholarship *
+                                                br
+                                                | (पुरस्कार प्रमाणपत्र / शिष्यवृत्ती) *
+                                            input.input-element(type="text" name="award" placeholder="Enter Award")
+                                        div.position-relative
+                                            label.input-label(for="proficiency_1") 
+                                                | Proficiency in Games/Sports *
+                                                br
+                                                | (खेळ/क्रीडा मध्ये प्राविण्य) *
+                                            input.input-element(type="text" name="proficiency_1" placeholder="Enter Proficiency in Games/Sports")
+
+                                        div.position-relative
+                                            label.input-label(for="proficiency_2") 
+                                                | Proficiency in literacy work/art/culture *
+                                                br
+                                                | (साक्षरता कार्य/कला/संस्कृतीत प्रवीणता) *
+                                            input.input-element(type="text" name="proficiency_2" placeholder="Enter Proficiency in literacy work/art/culture")
+
+                                        div.achievementSaveButton.d-flex.justify-content-center.pt-2(style="grid-column: 1/-1;")
+                                            button.mx-2.c-button.c-btn-success(type="button" data-bs-dismiss="modal") Close
+                                            button.mx-2.c-button.c-btn-primary(type="submit") Save
+
+
+                <section>
+                    div.py-2.d-flex
+                        div.w-50
+                            i.fa-solid.fa-rocket.me-2
+                            label(for="addNewDetails" class="input-label-title")
+                                | Accomplishments (गुणवत्ता)
+
+                        button.c-button.c-btn-success#addNewDetails.w-50
+                            i.fa-solid.fa-plus
+                            | &nbsp;Add Accomplishment
+
+
+
+                    div
+                        <table class="table table-bordered table-striped small">
+                            <thead>
+                                <tr class='text-center'>
+                                    <th class='input-label text-sm' width="20%" valign="middle">Particulars (विशेष)</th>
+                                    <th class='input-label text-sm' width="25%">
+                                        | Award /Certificate / Scholarship
+                                        br
+                                        | (पुरस्कार / प्रमाणपत्र / शिष्यवृत्ती)   
+                                    </th>
+                                    <th class='input-label text-sm' width="25%">Proficiency in Games/Sports</th>
+                                    <th class='input-label text-sm' width="25%">Proficiency in literacy  work/art/culture</th>
+                                    <th class='input-label text-sm' width="5%" valign="middle">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="educationTbody">
+                            </tbody>
+                        </table>
+
+
+                </section>
+                <section class="text-center d-flex justify-content-end achievementSaveButton pt-4" id='achievementSaveButton'>
+                    - var link = '/document-upload/'+regIDString;
+                    a(class="c-button c-btn-success mx-2 achieve-skip-btn text-decoration-none" href=link) Skip
+                    //- <button class="btn btn-success " id="skipAchievementDetails">Skip</button>
+                    <button class="c-button c-btn-primary" id="saveEducationDetails">Save</button>
+                </section>
+                </div>
+    </section>   

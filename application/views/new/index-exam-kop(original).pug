@@ -1,0 +1,225 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		include ./favicon.pug
+	
+		title Form Filling
+
+		link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer")
+		script(src='/plugins/jquery/jquery.min.js')
+		script(src='/plugins/jquery_validation/jquery.validate.min.js')
+		script(src='/plugins/jquery_validation/additional-methods.js')
+		script.
+			$(document).on("click", "#show-password", function (e) {
+				// $(this).toggleClass('fa-lock fa-unlock');
+				let passwordEl = $("#password");
+				if (passwordEl.attr("type") === "password") {
+					passwordEl.attr("type", "text");
+				} else {
+					passwordEl.attr("type", "password");
+				}
+			});
+
+		style.
+			@keyframes bling {
+				0%, 100% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0.5;
+				}
+			}
+
+			@keyframes growShrink {
+				0%, 100% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.1); /* Vertically grow by 20% */
+				}
+			}
+
+			.animate-bling {
+				animation: bling 1.5s infinite ease-in-out;
+			}
+
+			.animate-growShrink {
+				animation: growShrink 1.5s infinite ease-in-out;
+			}
+
+			.scrollBar::-webkit-scrollbar {
+				display: none; /* Hide the scrollbar */
+			}
+
+			/* Hide scrollbar for Firefox */
+			.scrollBar {
+				scrollbar-width: none; /* Hide scrollbar */
+			}
+			input::-ms-reveal,
+			input::-ms-clear {
+				display: none;
+			}
+		script(src="https://cdn.tailwindcss.com")
+
+	body
+		.wrapper.relative.bg-white
+			//- Navbar
+			nav.sticky.top-0.left-0.w-full.bg-white.px-10.py-5(style="z-index:1000;")
+				div.flex.justify-between.items-center
+					div(style="width: 40rem; height: 5rem; overflow: hidden; ")
+						img(src="/assets/images/brand-name.jpg" alt="" class="header-image" style='height: 100%; width: 100%;')
+					.new-application-button.hidden
+						a(href="/new-registration").px-4.py-3.bg-emerald-400.text-white.font-bold.tracking-wider.text-lg.rounded-lg New Application / Registration
+					div
+						- let portalYear = '2025-26'
+						p.font-semibold.text-xl Online Application Portal for Recruitment Process #{portalYear}
+						p.font-semibold.text-xl भरती प्रक्रिया #{portalYear} साठीचे ऑनलाईन अर्ज पोर्टल
+
+			section
+				.mx-auto.px-8
+					.grid.grid-cols-8.gap-8
+						//- left
+						div(class="col-span-3 lg:col-span-2 relative")
+							div(class="sticky left-0 top-[80px] w-fit")
+								.scrollBar.overflow-auto
+									.flex.flex-col.gap-4
+										.w-full.max-w-md.px-5.py-5.space-y-4.bg-white.shadow-lg.border.rounded-xl
+											p.text-xs.text-center.text-gray-600 Already Registered Candidates 
+												br
+												| (नोंदणीकृत उमेदवारांसाठी)
+
+
+											form(action='/login' method="POST")
+												// Username Input with Floating Label
+												.relative.z-0.w-full.mb-6.group
+
+													input#userId(value='' name="utrUserName" type="text" class="skip-caps-letter block py-3 px-4 w-full text-sm text-gray-900 bg-transparent border-2 border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " )
+													label(for="userId" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-4 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-600") User ID (यूजर आयडी)
+													i.fas.fa-user.absolute.right-4.top-3.text-gray-400
+
+												// Password Input with Floating Label
+												.relative.z-0.w-full.mb-6.group
+													input#password(value='' type="password" name="utrPassword" class="skip-caps-letter block py-3 px-4 w-full text-sm text-gray-900 bg-transparent border-2 border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " )
+													label(for="password" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 left-4 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-600") Password (पासवर्ड)
+													i.fas.fa-lock.absolute.right-4.top-3.text-gray-400
+													div.flex.items-center.gap-2.mt-3
+														input(type="checkbox" id="show-password") 
+														label(for="show-password") Show Password 
+
+													if (message)
+														span.absolute.text-red-600.text-center.text-xs.font-medium.pb-3.inline-block #{message}
+
+												// Buttons
+												.space-y-4
+													button(type="submit" class="w-full px-4 py-3 text-white text-lg bg-sky-500 rounded-lg hover:bg-sky-600 font-medium")
+														i.fas.fa-sign-in-alt.mr-2 
+														|&nbsp;Login (लॉगिन)
+													button(type="reset" class="w-full px-4 py-3 text-white text-lg bg-rose-500 rounded-lg hover:bg-rose-600 font-medium")
+														i.fas.fa-sync-alt.mr-2 
+														| &nbsp;Reset (रीसेट)
+
+											// Forgot Password
+											.flex.items-center.justify-between.mt-4
+												a.text-xs(href="/forget-username" class="text-sm text-blue-500 hover:underline") 
+													| Forgot User ID? 
+													br 
+													| यूजर आयडी विसरलात?
+												a.text-xs(href="/forget-password" class="text-sm text-blue-500 hover:underline") 
+													| Forgot Password? 
+													br 
+													| पासवर्ड विसरलात?
+
+											// Footer
+											.text-center.text-gray-500.text-sm
+												p © 2024 All rights reserved.
+
+											// Technical Help
+											.flex.flex-col.items-center.gap-4.shadow.border.bg-gray-100.py-5.px-6.rounded-xl.text-lg
+												p.text-purple-600.tracking-wider.text-sm For Technical Help Only <br>(फक्त तांत्रिक मदतीसाठी)
+												a(href="tel:+91 7756846549" class="font-semibold text-orange-500 animate-bling animate-growShrink inline-block")
+													span 
+													i.fa-solid.fa-phone
+													| +91 #{p.help_mobile_number}
+												p.text-indigo-600.text-sm (11:00 AM to 5:00 PM)
+												a.text-sm(href=`mailto:${p.help_email_id}` class="animate-bling animate-growShrink inline-block")
+													span.pe-2 
+													i.fa-solid.fa-envelope
+													| &nbsp;#{p.help_email_id}
+
+						// right
+						.col-span-5(class="lg:col-span-6")
+							- let notice = p.scrolling_notice_name
+							- let isBlink = p.is_show_scrolling_notice
+							div.border.py-1.px-2.important-notes.flex.items-center.rounded-md.mb-3(class=`${isBlink == 1 ? '' : 'hidden'}` )
+								div.bg-red-600.py-1.px-2.text-white.font-semibold.rounded-md IMPORTANT
+
+								marquee(class=`${isBlink == 1 ? '' : 'hidden'}` direction="alternate" scrollamount="5" scrolldelay="20" onmouseover="stop()" onmouseleave="start()")
+									| &nbsp;&nbsp;#{notice}
+							.flex.flex-col
+							// Important Event Section
+							div
+								.w-full.rounded-lg.shadow-lg.p-6.bg-white.border
+									h2.text-2xl.font-bold.text-center.text-gray-700.mb-6.uppercase.tracking-wider Important Events (महत्वाच्या घटना)
+									// Event Grid
+									div(class="w-4/5 mx-auto")
+										// Header Row
+										.grid.grid-cols-3.bg-sky-500.text-white.text-lg.rounded-lg.p-4.tracking-widest
+											div.font-bold.col-span-2 Important Events (महत्वाच्या घटना)
+											div.font-bold.text-right.col-span-1 Dates (दिनांक)
+										// Event Rows
+										.flex.flex-col.gap-2.text-gray-700
+											if p.important_dates.length > 0
+												each date in p.important_dates
+													.grid.grid-cols-3.p-4.shadow-md.p-4.shadow-md.rounded-lg(class=" hover:scale-[1.03] transition-transform")
+														span.col-span-2 
+															span #{date.title}
+															br
+															span #{date.secondary_title}
+														span.text-right.col-span-1
+															span #{date.date}
+															br
+															span #{date.time} #{date.time_am_pm}
+
+
+							// important notices
+							.py-4.flex.justify-center
+								.w-full.flex.flex-col.items-center.mx-auto.bg-white.shadow-lg.rounded-lg.p-6.border
+									h2.text-2xl.font-bold.text-center.text-gray-700.mb-6.uppercase.tracking-wider Important Notices (महत्वाच्या सूचना)
+									// Heading Row
+									.bg-sky-500.text-white.text-lg.font-bold.p-4.rounded-lg(class="w-[840.312px]")
+										h2.text-center.tracking-wider Notices (सूचना)
+									// Notice Grid with Serial Numbers
+									div(class="w-[840.312px] flex flex-col gap-2 max-w-[840.312px]")
+										//- - let notices = JSON.parse(p.imp_notices)?.notices || [] 
+										- let notices = p?.notices || [] 
+										if (notices.length >= 1)
+											each notice in notices
+												div(class="flex items-center bg-gray-50 text-gray-700 shadow-md rounded-lg p-4 hover:scale-[1.03] transition-transform")
+													a(target="_blank" href=`${s3BucketUrl}/${notice.aws_file_path}` class="position-relative ") #{notice.file_name}
+													img(class=`${notice.file_blink != 1 ? 'hidden': ''}` src="/assets/images/new-blinking.gif" alt="" width="50")
+
+							// helpline container
+							.flex.justify-center.py-2.hidden
+								.helpline-container.w-full.p-4.bg-white.shadow-md.rounded-lg.border
+									p.text-blue-600.text-lg.font-bold.text-center How to apply? (अर्ज कसा करावा ?)
+										a(href="/doc/how-to-apply.pdf" target="_blank" class="text-blue-500.underline.ml-2.hover:text-blue-700.uppercase.tracking-wider") &nbsp;Click here
+
+							// Disclaimer section
+							.flex.py-3.hidden
+								.p-6.max-w-6xl.bg-white.shadow-lg.rounded-lg.border
+									p.font-bold.text-red-600.text-xl.uppercase.mb-4.text-center.tracking-wider Disclaimer (अस्वीकृती)
+									p(class="text-xs lg:text-lg mb-4") Complete Recruitment process relies on the advertisement produced by the respective department. Candidates are advised to read the advertisement carefully and refer to the process on the main page.
+									p(class="text-xs lg:text-lg mb-4") संपूर्ण भरती प्रक्रिया संबंधित विभागाद्वारे तयार केलेल्या जाहिरातीवर अवलंबून आहे. उमेदवारांना जाहिरात काळजीपूर्वक वाचण्याचा आणि मुख्य पृष्ठावर दिलेल्या प्रक्रियेचा संदर्भ घेण्याची सूचना केली जाते.
+
+							// Important section
+							.flex.justify-center.py-3.hidden
+								.helpline-container.w-full.p-6.bg-white.shadow-md.rounded-lg.border
+									p.text-blue-600.text-xl.font-bold.mb-4.uppercase.text-center.tracking-widest Important (महत्वाचे)
+									p(class="text-xs lg:text-lg mb-4") For the best experience, use a desktop or laptop computer to fill out the form. The form is best viewed on 
+										span.font-bold.text-blue-600 Chrome 126+ or Firefox 126+.
+										span.font-bold.text-red-600 &nbsp;We recommend avoiding mobile devices for form filling.
+									p(class="text-xs lg:text-lg mb-4") अधिक चांगल्या अनुभवासाठी, कृपया डेस्कटॉप किंवा लॅपटॉप संगणकाचा वापर करावा. फॉर्म Chrome 126+ किंवा Firefox 126+ वर सर्वात चांगला पाहिला जातो. फॉर्म भरण्यासाठी मोबाइल डिव्हाइसेसचा वापर करू नये.
+
+		script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous")

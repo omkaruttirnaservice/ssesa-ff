@@ -1,0 +1,201 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(http-equiv='Cache-control' content='no-cache')
+        meta(http-equiv='Expires' content='-1')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0')
+        include ./favicon.pug
+
+        link(rel="stylesheet" href='/plugins/bs-532/css/bootstrap.min.css')
+        link(rel="stylesheet" href="/assets/css/common-styles/common-styles.css")
+
+        script(src='/plugins/jquery/jquery.min.js')
+        script(src='/plugins/jquery_validation/jquery.validate.min.js')
+        script(src='/plugins/jquery_validation/additional-methods.js')
+        script(src='/plugins/popper/popper.min.js')
+        script(src='/plugins/bs-532/js/bootstrap.bundle.min.js')
+
+        title Form Filling
+
+        link(rel="stylesheet" href="assets/css/index-exam.css")
+        style.
+            .blink {
+                animation-name: blink;
+                animation-iteration-count: infinite;
+                animation-duration: 0.5s;
+                color: black !important;
+                font-weight: bold;
+            }
+
+            .blink:hover {
+                animation-duration: 0s;
+                color: white !important;
+            }
+
+            @keyframes blink {
+                0%,
+                100% {
+                    background-color: #198754;
+                }
+                50% {
+                    background-color: #c2f009;
+                }
+            }
+
+    body
+
+        include ./includes/header.pug
+        #loader-backdrop.d-none
+        #loader.d-none
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+
+        .container.mx-auto.pt-4
+            section(class="row")
+
+                .col-md-8
+
+                    .row.g-4
+
+                        .col-md-12
+                            - let notice = p.scrolling_notice_name
+                            - let isBlink = p.is_show_scrolling_notice
+                            div.important-notes.d-flex.align-items-center(class=`${isBlink == 1 ? '' : 'd-none'}` )
+                                div IMPORTANT
+
+                                marquee(class=`${isBlink == 1 ? '' : 'd-none'}` direction="alternate" scrollamount="5" scrolldelay="20" onmouseover="stop()" onmouseleave="start()")
+                                    | &nbsp;&nbsp;#{notice}
+
+                        .col-md-12
+                            section
+                                table(style="border-radius: 10px;" class="table table-bordered table-hover")
+                                    thead
+                                        tr.table-heading-row
+                                            th.table-heading(width="75%") Important Events (महत्वाच्या घटना)
+                                            th.table-heading(width="25%") Dates (दिनांक)
+
+                                    tbody(class='table-body fs-5')
+                                        if p.important_dates.length > 0
+                                            each date in p.important_dates
+                                                tr
+                                                    td.event-name(scope='row') 
+                                                        | #{date.title}
+                                                        br
+                                                        | #{date.secondary_title}
+                                                    td.event-date #{date.date} #{date.time} #{date.time_am_pm}
+                        .col-md-12(style='margin:0;')
+                            section
+                                table(class="table table-bordered table-hover" id="imp-notices-table")
+                                    thead
+                                        tr.table-heading-row
+                                            th.table-heading.text-primary(width="75%") Important Notices (महत्वाच्या सूचना)
+
+                                    tbody
+                                        - let notices = p?.notices || [] 
+                                        if (notices.length >= 1)
+                                            each notice in notices
+                                                tr(class=`${notice.file_show != 1 ? 'd-none' : ''}`)
+                                                    td
+                                                        a(target="_blank" href=`${s3BucketUrl}/${notice.aws_file_path}` class=`position-relative`) #{notice.file_name}
+                                                            img(class=`${notice.file_blink != 1 ? 'd-none': ''}` src="/assets/images/new-blinking.gif" alt="" width="50")
+                        .col-md-12
+                            p.fw-bold.text-danger
+                                em Disclaimer
+                            p
+                                | Complete Recruitment process rely on the advertisement producted by the respective department.
+                                | Candidates are advised to read the advertisement carefully and refer process on the main page.
+
+                            p
+                                | संपूर्ण भरती प्रक्रिया संबंधित विभागाद्वारे तयार केलेल्या जाहिरातीवर अवलंबून आहे.
+                                | उमेदवारांना जाहिरात काळजीपूर्वक वाचण्याचा आणि मुख्य पृष्ठावर दिलेल्या प्रक्रियेचा संदर्भ घेण्याची सूचना केली जाते.
+
+                        .col-md-12
+                            div.helpline-container
+                                p.mb-0.text-primary.fw-bold How to apply? (अर्ज कसा करावा ?)
+                                    a.fw-bold.bg-secondary.p-2.text-white.rounded(href='/doc/how-to-apply.pdf' target="_blank" style="font-style: italic") Click here
+
+                        .col-md-12
+                            p.fw-bold.text-danger
+                                em Helpline details 
+                            div.helpline-container
+                                p.text-primary.fw-bold (For Technical Help only) (फक्त तांत्रिक मदतीसाठी)
+                                p Helpline email: #{p.help_email_id} 
+                                p Helpline mobile: +91 #{p.help_mobile_number} (सकाळी १०:०० ते सायंकाळी ५:०० वा. पर्यंत - सुट्टी चे दिवस वगळून)
+
+                        .col-md-12
+
+                            div.helpline-container
+                                p.text-primary.fw-bold (Important) (महत्वात्चे)
+                                p For the best experience, use a desktop or laptop computer to 
+                                    | fill out the form. The form is best viewed on 
+                                    span.fw-bold.text-primary Chrome 126+ or Firefox 126+. 
+                                    span.fw-bold.text-danger We recommend avoiding mobile devices for form filling.
+                                p
+                                    | अधिक चांगल्या अनुभवासाठी, कृपया डेस्कटॉप किंवा लॅपटॉप संगणकाचा वापर करावा. फॉर्म Chrome 126+ किंवा Firefox 126+ वर सर्वात चांगला पाहिला जातो. फॉर्म भरण्याकरीता मोबाइल डिव्हाइसेसचा वापर करू नये.
+
+
+                .col-md-4
+                    .row.g-2.info-container-box 
+                        .col-md-12
+                            .info-container
+                                h6.text-danger
+                                    span New candidate registration 
+                                    br
+                                    span (नवीन उमेदवार नोंदणी)
+                                div
+                                    h6  &nbsp;&nbsp;&nbsp;&nbsp;Steps to apply online 
+                                    ul
+                                        li
+                                            i.fa-solid.fa-angles-right
+                                            p.mb-0 Apply for online registration
+                                        li  
+                                            i.fa-solid.fa-angles-right
+                                            p.mb-0 Fill Online Application Form
+                                        li 
+                                            i.fa-solid.fa-angles-right
+                                            p.mb-0 Upload Scanned Documents
+                                        li 
+                                            i.fa-solid.fa-angles-right
+                                            p.mb-0 Pay Examination Fees
+                                    div.m-0.p-0.d-flex.justify-content-center
+                                        a.p-2.c-button.c-btn-primary(href="/new-registration") Click Here To Register
+
+
+                        .col-md-12
+
+                            .info-container
+                                h6.text-danger
+                                    span For already registered candidates
+                                    br
+                                    span (नोंदणीकृत उमेदवारांसाठी)
+                                div
+                                    form#login-form(action="/login" method="POST")
+                                        div.d-flex.flex-column.align-items-start.gap-2
+                                            label.input-label(for="exampleInputEmail1") User ID (यूजर आयडी)*
+                                            input.input-element#userid(autocomplete="off" required="true" type='text' name='utrUserName' aria-describedby='helpId' value="" placeholder="User ID (यूजर आयडी)")
+                                        div.d-flex.flex-column.align-items-start.gap-2
+                                            label.input-label(for="exampleInputPassword1") Password (पासवर्ड) *
+                                            input.input-element(autocomplete="off" required="true" type='password' name='utrPassword' id="password" aria-describedby='helpId' value="" placeholder="Passsword (पासवर्ड)")
+                                        div.d-flex.items-center.gap-2
+                                            input.m-0.p-0(type="checkbox" id="show-password") 
+                                            label.m-0.p-0(for="show-password") Show Password 
+
+                                        div.d-flex.justify-content-center.gap-3.mt-2
+                                            button.c-button.c-btn-primary(type="submit") Login (लॉगिन)
+                                            button.c-button.c-btn-success(type="reset") Reset (रिसेट)
+
+                                        span.text-center.text-danger.fw-bold #{message}
+
+                                        hr
+
+                                        div.d-flex.justify-content-center.gap-3.py-0
+                                            div.d-flex.flex-column.justify-content-center.align-items-center
+                                                a(href='/forget-username') Forgot User Id?
+                                                a(href='/forget-username') यूजर आयडी विसरलात?
+                                            div.d-flex.flex-column.justify-content-center.align-items-center
+                                                a(href='/forget-password') Forgot Password?
+                                                a(href='/forget-password') पासवर्ड विसरलात?
+

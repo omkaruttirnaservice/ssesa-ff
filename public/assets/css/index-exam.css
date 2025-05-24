@@ -1,0 +1,99 @@
+.list-group > a:hover {
+	background-color: rgb(163, 219, 250) !important;
+	color: #000 !important;
+}
+.list-group > a {
+	display: flex;
+	justify-content: space-between;
+}
+.important-notes {
+	display: flex;
+	border: 1px solid rgba(128, 128, 128, 0.24);
+	border-radius: 10px;
+	overflow: hidden;
+	font-size: 16px;
+	& div {
+		padding: 0.7rem;
+	}
+}
+
+.important-notes > div:nth-child(1) {
+	background-color: #f6223f;
+	font-weight: bold;
+	color: #fff;
+	display: flex;
+	position: relative;
+}
+
+/* important table heading */
+.table-heading-row {
+	text-align: center;
+}
+
+.table-heading {
+	font-size: 1rem;
+	font-weight: bold;
+	letter-spacing: 1px;
+}
+tr {
+	height: 4rem !important;
+	vertical-align: middle !important;
+}
+.table-body {
+	font-weight: bold;
+	font-size: 1rem;
+}
+.event-name {
+	padding-left: 2rem !important;
+	font-size: 1rem;
+}
+.event-date {
+	text-align: center;
+	font-size: 1rem;
+}
+.information-section {
+	margin-bottom: 3.2rem;
+}
+
+.card-title {
+	display: inline-block;
+	font-size: 1rem;
+	font-weight: bold;
+	text-align: center;
+	letter-spacing: 0.75px;
+	background-color: var(--main-color) !important;
+	margin: 0;
+	padding: 0.5rem;
+	color: var(--text-color-tint);
+
+	vertical-align: middle !important;
+}
+.list-item {
+	font-size: 1rem;
+	letter-spacing: 0.65px;
+}
+
+.info-container {
+	padding: 1rem !important;
+	border-radius: 10px;
+	border: 1px solid gray;
+
+	ul > li {
+		display: flex;
+		align-items: center;
+		gap: 0.2rem;
+		
+		margin-bottom: 0.3rem;
+	}
+}
+
+#login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+table th,
+table td  {
+	border-radius: 10px !important;
+}

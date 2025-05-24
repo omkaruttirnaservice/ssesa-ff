@@ -1,0 +1,35 @@
+#newRegDetails {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.namePrintHallticket {
+	grid-column: 1/-1;
+}
+
+.alternative-mobile {
+
+	grid-column: 1/-1;
+
+	& input {
+		width: 50%
+
+	}
+}
+
+.grid-el {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+
+
+/* about you */
+.about-you-grid,
+.contact-details-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1rem;
+}

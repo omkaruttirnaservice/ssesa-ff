@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Error
+        style.
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            .container {
+                max-width: 768px;
+                margin-inline: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 3rem;
+            }
+
+            .button {
+                padding: 0.3rem;
+
+            }
+
+
+    body     
+        .container 
+            h4 #{errorTitle}
+            p #{errorMessage}
+            a.button(href="/home") Go To Homepage

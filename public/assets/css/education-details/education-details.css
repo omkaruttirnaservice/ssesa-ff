@@ -1,0 +1,65 @@
+.education-details-container {
+    max-width: 125rem !important;
+}
+
+.addQualification {
+    /* display: flex;
+    flex-direction: column;
+    margin-bottom: 1.3rem; */
+}
+.addQualification button {
+    /* width: 20%; */
+}
+#addNewDetails {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.qualificationDropdownBox {
+    /* display: flex;
+    align-items: center;
+    gap: 1.8rem; */
+}
+.qualificationDropdown {
+    width: 40%;
+    height: 10% !important;
+}
+
+/* EDUCATION TABLE  */
+.educationDetailsTable {
+    margin-bottom: 1.3rem;
+}
+
+#saveEducationDetails {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+/* ADD EDUCATION DETAILS FORM  */
+.educationDetailsAddForm,
+#newOtherEducation {
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* gap: 1rem; */
+}
+
+.otherEducationDetailsModalButtons {
+    grid-column: 1 / -1; 
+    column-span: 2;
+}
+
+.educationDetailsDecleration {
+    margin-top: 3.2rem;
+    font-size: 1.8rem;
+
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.educationDetailsModalButtons button {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+

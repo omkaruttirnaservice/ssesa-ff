@@ -1,0 +1,389 @@
+extends layout_index_new
+block css_link
+block inline_css
+    link(rel="stylesheet" href="/assets/css/application-preview.css")
+block inline_js
+    script.
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        var form_id = Number(#{form_id});
+
+block js_link
+    script(src="/assets/js/application-preview.js" type="module" defer)
+block content
+
+    div.container-fluid.mt-1
+        div.container-base
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+
+                a.done-step(href="/new-registration") 
+                    span.step-no 1
+                    span.step-name 
+                        i.fa-regular.fa-file-lines.me-2
+                        | Registration
+                        br
+                        | (नोंदणी)
+
+                a.done-step(href="/user-eligibility/"+regIDString)
+                    span.step-no 2
+                    span.step-name 
+                        i.fa-solid.fa-road-barrier.me-2
+                        | Entry Qualification 
+                        br
+                        | (प्रवेश पात्रता)
+                a.done-step(href="/user-details/"+regIDString)
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-user.me-2
+                        | Candidate Profile 
+                        br
+                        | (उमेदवाराची प्रोफाईल)
+                a.done-step(href="/education-details/"+regIDString)
+                    span.step-no 4
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Education Details
+                        br
+                        | (शैक्षणिक तपशील)
+                a.done-step(href="/experience-details/"+regIDString) 
+                    span.step-no 5
+                    span.step-name 
+                        i.fa-solid.fa-brain.me-2
+                        | Experience Details
+                        br
+                        | (अनुभव तपशील)
+                a.done-step(href="/achievement-details/"+regIDString)
+                    span.step-no 6
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Accomplishments
+                        br
+                        | (गुणवत्ता तपशील)
+                a.done-step(href="/document-upload/"+regIDString)
+                    span.step-no 7
+                    span.step-name 
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.active-step(href="/application-preview/"+regIDString)
+                    span.step-no 8
+                    span.step-name 
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application Preview
+                        br
+                        | (अर्ज पूर्वावलोकन)
+                    i(class="fa-solid fa-play active-arrow")
+
+            div.main-content
+                div
+                    div.my-2
+                        label(for="addNewDetails" class="input-label-title") 
+                            i.fa-solid.fa-paperclip.me-2
+                            | Candidate Application Form (उमेदवाराचा अर्ज)
+
+                    .card
+                        .card-body
+                            table
+                                tbody
+
+                                    tr
+                                        td.section-heading(width='25%') General Details (अर्जदार तपशील)
+                                    t
+                                        td(width='25%') Application Id (अर्ज क्र.)
+                                        td #{preview_data.application_id}
+                                    tr
+                                        td(width='15%') Aadhaar Number (आधार क्र.)
+                                        td #{preview_data.aadhaar}
+                                    tr.d-none
+                                        td(width='15%') PAN Card (पॅन क्र.)
+                                        td #{preview_data.pan_number === "" ? '-':preview_data.pan_number}
+                                    tr
+                                        td(width='15%') Full Name (संपूर्ण नाव)
+                                        td  #{preview_data.full_name}
+                                    tr
+                                        td(width='15%') Bank Name (बँक नाव)
+                                        td #{preview_data.ca_detailsMainPost}
+                                    tr
+                                        td(width='15%') Post (पोस्ट नाव)
+                                        td #{preview_data.post_name}
+                                    tr
+                                        td.section-heading(colspan='2') Fee Details (शुल्क तपशील)
+                                    tr
+                                        td(width='15%') Application Charges (अर्ज शुल्क)
+                                        td(colspan='2') 
+                                            i.fa-solid.fa-indian-rupee-sign.me-2(aria-hidden='true')
+                                            | #{preview_data.post_fee}
+
+                                    tr
+                                        td(width='15%') GST 18% (कर शुल्क १८%)
+                                            td(colspan='2') 
+                                                i.fa-solid.fa-indian-rupee-sign.me-2(aria-hidden='true')
+                                                | #{preview_data.post_fee_tax}
+                                    tr
+                                        td(width='15%') Total Amount
+                                            td(colspan='2') 
+                                                i.fa-solid.fa-indian-rupee-sign.me-2(aria-hidden='true')
+                                                | #{preview_data.post_fee + preview_data.post_fee_tax}
+                                    tr
+                                        td.section-heading(colspan='3') Personal Details (वैयक्तिक तपशील)
+                                    tr
+                                        td(width='15%') Date Of Birth (जन्मतारीख)
+                                        td(colspan='2') #{preview_data.date_of_birth}
+                                    tr
+                                        td(width='15%') Gender (लिंग)
+                                        td(colspan='2') #{preview_data.gender}
+                                    tr
+                                        td(width='15%') 
+                                            | Age As On (#{preview_data.age_as_on})
+                                            | (वय #{preview_data.age_as_on} नुसार)
+                                        td(colspan='2')
+                                            p.m-0 #{preview_data.compareDateAgeString}
+                                    tr
+                                        td(width='15%') Caste (कास्ट)
+                                        td(colspan='2') #{preview_data.catagory}
+                                    tr
+                                        td(width='15%') Sub Category (सब कास्ट)
+                                        td(colspan='2') #{preview_data.detailsSubCategory}
+                                    tr
+                                        td(width='15%') Religion (धर्म)
+                                        td(colspan='2') #{preview_data.detailsReligion}
+                                    tr 
+                                        td(width='55%') Nationality / Citizenship Indian? (राष्ट्रीयत्व / नागरिकत्व भारतीय?)
+                                        td(colspan='2') #{preview_data.detailsNationality}
+                                    tr 
+                                        td(width='15%') Maharashtra Domiciled ? (महाराष्ट्र अधिवासित?)
+                                        td(colspan='2') #{preview_data.detailsDomicile}
+                                    tr
+                                        td(width='15%') Non Creamy Layer (नॉन क्रीमी लेयर)
+                                        td(colspan='2') #{preview_data.detailsNonCreamyLayer == "1" ? 'Yes': 'No'}
+                                    tr
+                                        td(width='15%') Marital Status (वैवाहिक स्थिती)
+                                        td(colspan='2') #{preview_data.marital}
+                                    tr
+                                        td(width='15%') Father&apos;s /Husband&apos;s Name (वडिलांचे /पतीचे नाव)
+                                        td(colspan='2') #{preview_data.father_name}
+                                    tr
+                                        td(width='15%') Mother's Name (आईचे नाव)
+                                        td(colspan='2') #{preview_data.mother_name}
+                                    tr
+                                        td(width='15%') Father's Name / Husband's Name (वडिलांचे /पतीचे नाव)
+                                        td(colspan='2') #{preview_data.spouse_name}
+                                    tr
+                                        td(width='15%') Address Line 1 (पत्ता लाईन १)
+                                        td(colspan='2') #{preview_data.address}
+                                    tr
+                                        td(width='15%') Address Line 2 (पत्ता लाईन २)
+                                        td(colspan='2') #{preview_data.line_two ? preview_data.line_two : '-'}
+                                    tr
+                                        td(width='15%') Address Line 3  (पत्ता लाईन ३)
+                                        td(colspan='2') #{preview_data.line_three ? preview_data.line_three : '-'}
+                                    tr
+                                        td(width='15%') Taluka (तालुका)
+                                        td(colspan='2') #{preview_data.taluka.toUpperCase()}
+                                    tr
+                                        td(width='15%') District (जिल्हा)
+                                        td(colspan='2') #{preview_data.dist ? preview_data.dist : '-'}
+                                    tr
+                                        td(width='15%') State (राज्य)
+                                        td(colspan='2') #{preview_data.state ? preview_data.state : '-'}
+                                    tr
+                                        td(width='15%') Pin Code (पिन कोड)
+                                        td(colspan='2') #{preview_data.pin_number ? preview_data.pin_number : '-'  }
+                                    tr
+                                        td.section-heading(colspan='3') Contact Details (संपर्क तपशील)
+                                    tr
+                                        td(width='35%') Mobile Number (मोबाईल क्र.)
+                                        td(colspan='2') #{preview_data.mobile_name}
+                                    tr
+                                        td(width='35%') Alternative Number (पर्यायी मोबाईल क्र.)
+                                        td(colspan='2') #{preview_data.alternative_number ? preview_data.alternative_number : '-'}
+                                    tr
+                                        td(width='35%') Email ID (ईमैल आयडी)
+                                        td(colspan='2') #{preview_data.email_id}
+                                    tr
+                                        td.section-heading(colspan='3') Language Known (अवगत भाषा तपशील)
+                            table(style="width: 100%;")
+                                thead
+                                    tr
+                                        td(width='25%') Language (भाषा)
+                                        td(width='25%') Read (बोलता येणे)
+                                        td(width='25%') Write (लिहिता येणे) 
+                                        td(width='25%') Speak  (वाचता येणे)
+                                tbody
+                                    each language in (preview_data.languageDetails)
+                                        tr.small
+                                            td(width='25%') #{language.languageName}
+                                            td(width='25%') #{language.read == 'true' ? 'YES (होय)' :"NO (नाही)"}
+                                            td(width='25%') #{language.write == 'true' ? 'YES (होय)' :"NO (नाही)"}
+                                            td(width='25%') #{language.speak == 'true' ? 'YES (होय)' :"NO (नाही)"}
+
+                            - const educationDetails = preview_data.educational_details ?  (preview_data.educational_details) : []
+                            if (educationDetails.length > 0)
+                                table.w-100
+                                    tbody        
+                                        tr
+                                            td.section-heading(colspan='3') Education Details (शिक्षण तपशील)
+                                        tr
+                                            td(colspan='3')
+                                                table.text-start.col-12
+                                                    thead
+                                                        tr.small
+                                                            th(width='20%')   
+                                                                | Education
+                                                                br
+                                                                | (शिक्षण)
+                                                            th(width='15%') 
+                                                                | Specialization 
+                                                                br
+                                                                | (विशेषीकरण)
+                                                            th(width='34%')
+                                                                small.font-weight-bolder
+                                                                | School/University/Institute 
+                                                                br 
+                                                                | (शाळा /महाविद्यालय नाव)
+                                                            th(width='5%') 
+                                                                | Percentage/CGPA
+                                                                br
+                                                                | (टक्केवारी)
+                                                            th(width='10%') 
+                                                                | Class
+                                                                br
+                                                                | (श्रेणी)
+                                                            th(width='25%') 
+                                                                | Passed Month & Year 
+                                                                br
+                                                                | (पास महिना, वर्ष)
+                                                    tbody
+                                                        each value in educationDetails
+                                                            tr.small
+                                                                td(width='20%')
+                                                                    small #{value.name}
+                                                                td(width='15%')
+                                                                    small #{value.eduSpecialization}
+                                                                td(width='30%')
+                                                                    small.font-weight-bolder
+                                                                        | #{value.eduUniversity}
+                                                                td(width='5%')
+                                                                    - let percentOrCgpaValue = value?.eduPercent ? value.eduPercent + '%' : value.cgpaGained + 'CGPA'
+                                                                    small #{percentOrCgpaValue}
+                                                                td(width='10%')
+                                                                    small #{value.eduClass}
+                                                                td(width='10%') 
+                                                                    small.font-weight-bolder #{value.eduMonth}, #{value.eduYear}
+
+                            - const  experienceList = preview_data.experienceList ? (preview_data.experienceList) : []
+                            if experienceList.length > 0
+                                table(style="width: 100%;")
+                                    tbody        
+                                        tr
+                                            td.section-heading(colspan='3') Experience Details (अनुभव तपशील)
+                                        tr
+                                            td(colspan='3')
+                                                table.col-12
+                                                    thead
+                                                        tr.small
+                                                            td(width='20%') 
+                                                                | Organization Name 
+                                                                br
+                                                                | (संस्थेचे नाव)
+                                                            td(width='25%') 
+                                                                | Designation 
+                                                                br
+                                                                | (पदनाम)
+                                                            td(width='15%') 
+                                                                | Location 
+                                                                br
+                                                                | (स्थान)
+                                                            td(width='15%') 
+                                                                | Total Service Year 
+                                                                br
+                                                                | (एकूण सेवा वर्ष)
+                                                    tbody
+                                                        each experience in  experienceList
+                                                            tr.small
+                                                                td #{experience.organization}
+                                                                td #{experience.designation}
+                                                                td #{experience.location}
+                                                                td #{experience.experience}
+
+                            - const  achievementList = preview_data.achievements  ? (preview_data.achievements) : []
+                            if achievementList.length > 0
+                                table.w-100
+                                    tbody        
+                                        tr
+                                            td.section-heading(colspan='3') Accomplishments Details (गुणवत्ता तपशील)
+                                        tr
+                                            td(colspan='3')
+                                                table.w-100
+                                                    thead
+                                                        tr.small
+                                                            td(width='20%' valign="middle") 
+                                                                | Particulars
+                                                                br 
+                                                                | (विशेष)
+                                                            td(width='25%' valign="middle") 
+                                                                | Award /Certificate / Scholarship
+                                                                br
+                                                                | (पुरस्कार / प्रमाणपत्र / शिष्यवृत्ती)
+                                                            td(width='30%' valign="middle") 
+                                                                | Proficiency in Games/Sports
+                                                                br
+                                                                | (खेळ/क्रीडा क्षेत्रातील प्रवीणता)
+                                                            td(width='25%') 
+                                                                | Proficiency in literacy work/art/culture
+                                                                br
+                                                                | साक्षरता कार्य/कला/संस्कृतीमध्ये प्रवीणता
+                                                    tbody
+                                                        each achievement in  achievementList
+                                                            tr.small
+                                                                td #{achievement.particulars}
+                                                                td #{achievement.award}
+                                                                td #{achievement.proficiency_1}
+                                                                td #{achievement.proficiency_2}
+
+                        div.row.p-0.m-0.py-4
+                            .col-md-6
+                                div.d-flex.align-items-center.gap-3.justify-content-center
+                                    img#imageUploadPreview(src=s3BucketUrl + '/' + preview_data.photo, alt='candidate-photo' style='border: 1px solid gray; width:100px;height:100px;')
+                                    div
+                                        input#chkPhoto(type="checkbox")
+                                        br
+                                        label.input-label(for='chkPhoto') 
+                                            | I confirm this is my photo
+                                            br
+                                            | मी पुष्टी करतो की हा माझा फोटो आहे.
+                            .col-md-6 
+                                div.d-flex.align-items-center.gap-3.justify-content-center
+                                    img#signUploadPreview.img-fluid(src=s3BucketUrl+ '/' +preview_data.sign , alt='candidate-sign' style='border: 1px solid gray; width:120px;height:100px;')
+                                    div
+                                        input#chkSignature(type="checkbox" style="")
+                                        br
+                                        label.input-label(for='chkSignature') 
+                                            | I confirm this is my signature
+                                            br
+                                            | मी पुष्टी करतो की ही माझी सही आहे.
+
+                        div.d-flex.flex-column.gap-3.mx-3
+                            div.row.p-0.m-0
+                                p.note-card.col-md-12.px-3
+                                    | Declaration&nbsp;:&nbsp;I confirm that all the details provided in this application are true, complete, and correct to the best of my knowledge and belief. I understand that any false or incorrect information may lead to the cancellation of my application, and I agree that no changes will be made once the 'SUBMIT' button is clicked.
+                                    br
+                                    | घोषणा&nbsp;:&nbsp;मी पुष्टी करतो की या अर्जामधील सर्व माहिती माझ्या सर्वोत्तम ज्ञानानुसार सत्य, पूर्ण आणि बरोबर आहे. मला समजते की कोणतीही खोटी किंवा चुकीची माहिती अर्ज रद्द होण्यास कारणीभूत ठरू शकते, आणि मी सहमत आहे की 'सबमिट' बटणावर क्लिक केल्यानंतर कोणतेही बदल केले जात नाहीत.
+
+                                div.col-12
+                                    .d-flex.justify-content-start.gap-2.align-items-center
+                                        input#chkIagree(type='checkbox' name='' style='width: 2rem; height: 2rem;')
+                                        div
+                                            label.input-label(for='chkIagree') 
+                                                | I confirm that all the information provided is accurate according to my knowledge, and no changes will be made after this.
+                                                br
+                                                | सर्व माहिती माझ्या ज्ञानानुसार योग्य आहे आणि यानंतर कोणतीही बदल केली जाणार नाहीत, हे मी पुष्टी करत आहे.
+
+                        hr
+                        .mb-3.d-flex.justify-content-center
+                            button#submitPreview.c-button.c-btn-primary
+                                |  Submit

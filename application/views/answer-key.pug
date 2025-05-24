@@ -1,0 +1,83 @@
+extends layout-index
+block css_link
+    style.
+        body {
+            user-select: none;
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none;
+        }
+
+        .question-container {
+            max-width: 30rem;
+            margin-inline:auto;
+            border: 1px solid gray;
+            padding: 9px;
+            overflow: scroll;
+            max-height: 20rem;
+
+        }
+
+
+block content
+    //- nav.navbar.navbar-expand-sm.navbar-dark(style='background-color: #065F9E;')
+        span.navbar-brand.text-light.font-weight-bolder Department Name
+        button.navbar-toggler.d-lg-none(type='button', data-toggle='collapse', data-target='#collapsibleNavId', aria-controls='collapsibleNavId', aria-expanded='false', aria-label='Toggle navigation')
+        #collapsibleNavId.collapse.navbar-collapse
+            ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+                li.nav-item.active.bg-primary
+                    a.nav-link(href='/home')
+                        | Home 
+                    span.sr-only (current)
+    .container
+        h6.text-center.text-white.position-sticky.top-0.left-0.bg-secondary.p-2 Answer key #{ht.ca_detailsMainPost} 
+        .question-container
+            
+            each question in _solorQuestionPaperDetails
+                div
+                    div.d-flex.gap-2
+                        p Q.&rbrack; 
+                            != question.q
+
+                    div.d-flex.gap-2
+                        span A&rbrack; 
+                        != question.q_a
+
+                    div.d-flex.gap-2
+                        span B&rbrack; 
+                        != question.q_b
+
+                    div.d-flex.gap-2
+                        span C&rbrack; 
+                        != question.q_c
+
+                    div.d-flex.gap-2
+                        span D&rbrack;
+                        != question.q_d
+
+                    if question.q_e
+                        div.d-flex.gap-2
+                            span E&rbrack; 
+                            != question.q_e
+                    div.d-flex.gap-2
+                        span Answer&rbrack; 
+                        span.fw-bold #{question.q_ans}
+                        
+                hr
+
+    script.
+        $(document).bind("contextmenu", function(e) {
+            return false;
+        });
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        }, false);
+
+
+        // Block keyboard shortcuts like Ctrl+S (Save), Ctrl+P (Print)
+        document.addEventListener('keydown', function (e) {
+            // Prevent Ctrl+S (Save) and Ctrl+P (Print)
+            if ((e.ctrlKey && e.key === 's') || (e.ctrlKey && e.key === 'p')) {
+                e.preventDefault();
+                alert("Saving and printing are disabled on this page.");
+            }
+        });

@@ -1,0 +1,357 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/education-details/education-details.css")
+block inline_js
+    script.
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        var form_id = Number(#{form_id});
+        var educationDetails = '!{educationDetails}';
+        educationDetails = JSON.parse(educationDetails)
+
+        var postDetails = '!{postDetails}'
+
+        postDetails = JSON.parse(postDetails);
+        postDetails = postDetails[0]
+        const _eduTypes = !{JSON.stringify(_eduTypes)};
+        const _eduCourses = !{JSON.stringify(_eduCourses)};
+        const _eduUni = !{JSON.stringify(_eduUni)};
+
+        console.log(_eduTypes);
+block js_link
+    script(src="/assets/js/education-details.js" type="module" defer)
+block content
+
+    div.container-fluid
+        div.container-base
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+
+                a.done-step(href="/new-registration") 
+                    span.step-no 1
+                    span.step-name 
+                        i.fa-regular.fa-file-lines.me-2
+                        | Registration
+                        br
+                        | (नोंदणी)
+
+                a.done-step(href="/user-eligibility/"+regIDString)
+                    span.step-no 2
+                    span.step-name 
+                        i.fa-solid.fa-road-barrier.me-2
+                        | Entry Qualification 
+                        br
+                        | (प्रवेश पात्रता)
+                a.done-step(href="/user-details/"+regIDString)
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-user.me-2
+                        | Candidate Profile 
+                        br
+                        | (उमेदवाराची प्रोफाईल)
+                a.active-step(href="/education-details/"+regIDString)
+                    span.step-no 4
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Education Details
+                        br
+                        | (शैक्षणिक तपशील)
+                    i(class="fa-solid fa-play active-arrow")
+                a.pending-step(href="#") 
+                    span.step-no 5
+                    span.step-name 
+                        i.fa-solid.fa-brain.me-2
+                        | Experience Details
+                        br
+                        | (अनुभव तपशील)
+                a.pending-step(href="#")
+                    span.step-no 6
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Accomplishments
+                        br
+                        | (गुणवत्ता तपशील)
+                a.pending-step(href="#")
+                    span.step-no 7
+                    span.step-name 
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 8
+                    span.step-name 
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application Preview
+                        br
+                        | (अर्ज पूर्वावलोकन)
+
+            div.main-content
+
+                section(class="container-primary education-details-container")
+                    <section>
+                        <div class="addQualification my-2">
+                            i.fa-solid.fa-graduation-cap.me-2
+                            label.input-label-title Education Details (शैक्षणिक तपशील)
+
+                        div.qualificationDropdownBox.d-flex.gap-3.mb-3
+                            select(name="" id="qualificationList" class="input-element input-sm qualificationDropdown w-50")
+                                option(value="") ---Select Education---
+
+                            button.c-button.c-btn-success.btn-sm1#addNewDetails.w-50
+                                i.fa-solid.fa-plus
+                                | &nbsp;Add Details
+
+                        div.inputBoxContainer.educationDetailsTable
+                            <table class="table table-bordered table-striped small c-table">
+                                <thead>
+                                    <tr class='text-center' style="background-color: #000 !important;">
+                                        <th class='input-label' width="15%">Education (शिक्षण)</th>
+                                        <th class='input-label' width="15%">Course (कोर्स)</th>
+                                        <th class='input-label' width="30%">Board / University (बोर्ड/विद्यापीठ) </th>
+                                        <th class='input-label' width="8%">Percentage (टक्केवारी)</th>
+                                        <th class='input-label' width="8%">Class (श्रेणी)</th>
+                                        <th class='input-label' width="11%">Passing Year (पास वर्ष)</th>
+                                        <th class='input-label' width="5%">Action (क्रिया)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="educationTbody">
+                                </tbody>
+                            </table>
+
+                        <section class="text-center mb-2">
+                            button.c-button.c-btn-primary.fs-4.fw-bold#saveEducationDetails Save
+                        </section>
+                    </section>
+
+
+                    //- other qualification add modal
+                    .modal.fade#newOtherQualification(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true")
+                        div(class="modal-dialog modal-xl")
+                            div.input-card
+                                div(class="modal-content" style="border: none")
+                                    div(class="modal-header input-card-heading")
+                                        h1(class="input-label newTitle mb-0")
+                                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                                    div.modal-body
+                                        form#newOtherEducation
+                                            .row.gap-3
+                                                .other-qualification-specilization.position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduSpecialization") 
+                                                        | Education Name *
+                                                        br
+                                                        | (शिक्षण) *
+                                                    input.form-control.form-input.input-element.input-sm#other-qualification-input-box(type="text" name="eduSpecialization" placeholder="Enter Specialization Details")
+
+                                                .position-relative.col-md-4.p-0.m-0
+                                                    label.input-label(for="eduUniversity") 
+                                                        | Institute Name *
+                                                        br
+                                                        | (विद्यालय नाव) *
+                                                    input.form-control.form-input.input-element.input-sm(type="text" name="eduUniversity" placeholder="Enter School/University/Institute Details")
+
+                                                .position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduMonth") 
+                                                        | Passing Month *
+                                                        br
+                                                        | (पास महिना) *
+                                                    select.input-element.input-sm(name="eduMonth" id="newOtherMonth")
+                                                        //- Options can be added here
+
+                                                .position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduYear") 
+                                                        | Passing Year *
+                                                        br
+                                                        | (पास वर्ष) *
+                                                    select.input-element.input-sm(name="eduYear" id="newOtherYear")
+                                                        option(value="") --- Select ---
+                                                        //- Additional options can be added here
+
+                                                .position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduMarksOutOf") 
+                                                        | Total Marks *
+                                                        br
+                                                        | (संपूर्ण गुण) *
+                                                    input.input-element.input-sm(type="text" placeholder="Total Marks" name="eduMarksOutOf" id="newOtherMarks2")
+
+                                                .position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduMarksGain") 
+                                                        | Total Marks Obtained *
+                                                        br
+                                                        | (संपूर्ण मिळालेले गुण) *
+                                                    input.input-element.input-sm(type="text" placeholder="Total Marks Obtained" name="eduMarksGain" id="newOtherMarks1")
+
+                                                .position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduPercent") 
+                                                        | Percentage *
+                                                        br
+                                                        | (टक्केवारी) *
+                                                    input.input-element.input-sm(type="text" placeholder="Percentage" value="" name="eduPercent" id="otherPercent" readonly)
+
+                                                .position-relative.col-md-3.p-0.m-0
+                                                    label.input-label(for="eduClass") 
+                                                        | Class *
+                                                        br
+                                                        | (श्रेणी) *
+                                                    select.greadClass.input-element.input-sm(name="eduClass" type="text" placeholder="add percentage")
+
+                                            .d-flex.justify-content-center.otherEducationDetailsModalButtons.my-4
+                                                button.mx-2.c-button.c-btn-success.fs-4.fw-bold(type="button" data-bs-dismiss="modal") Close
+                                                button.c-button.c-btn-primary.fs-4.fw-bold(type="submit") Save
+
+                    //- Education details add modal
+                    .modal.fade#newQualification(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true")
+                        div(class="modal-dialog modal-lg")
+                            div.input-card
+                                div(class="modal-content" style="border: none")
+                                    div(class="modal-header input-card-heading")
+                                        h1(class="input-label newTitle mb-0")
+                                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+
+                                    div.modal-body
+
+                                        form#newEducation
+                                            <div class="educationDetailsAddForm row gap-3">
+
+                                                <div class="edu-specilization-dropdown col-md-3 p-0 m-0 position-relative">
+                                                    //- <label for="" class="input-label">Specialization1</label>
+                                                    //- <select type="text" name="eduSpecialization" class="input-element input-sm" id="newSpecialization">
+                                                    //-     <option value="">---- Select Option ----</option>
+                                                    //- </select>
+                                                    //- input.input-element.input-sm.d-none.mt-3(type='text' class='manual-specilization-input' placeholder='Enter Specilization')
+                                                </div>
+
+                                                <div class="col-md-3 p-0 m-0 position-relative p-0 m-0" id='school-university-type-dropdown'>
+                                                    //- label.form-label(class='input-label' ) School/University/Institute Name
+                                                    //- <select type="text" class="input-element input-sm" name="eduUniversity" id="newUniversity">
+                                                    //-     <option value="">---- Select Option ----</option>
+                                                    //- </select>
+                                                    //- input.input-element.input-sm.d-none.mt-3(type='text' class='manual-school-university-input' placeholder='Board/University Name')
+                                                </div>
+
+                                                <div class="col-md-3 p-0 m-0 position-relative">
+                                                    <div>
+                                                        label(for="" class="input-label")
+                                                            | Passing Month *
+                                                            br
+                                                            | (पास महिना) *
+
+                                                        <select type="text" class="input-element input-sm" name="eduMonth" id="newMonth">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 p-0 m-0 position-relative">
+                                                    <div>
+                                                        label(for="" class="input-label")
+                                                            | Passing Year *
+                                                            br
+                                                            | (पास वर्ष) *
+
+                                                        <select type="text" class="input-element input-sm" name="eduYear" id="newYear">
+                                                            option(value="") --- Select --- 
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                .col-3.m-0.p-0
+                                                    div
+                                                        label.input-label(for="") 
+                                                            | Result Type *
+                                                            br
+                                                            | (निकालाचा प्रकार) *
+                                                        select#result-type(name="" class="input-element input-sm")
+                                                            //- option(value="") --Select--
+                                                            option(value="PERCENTAGE") Percentage
+                                                            option(value="CGPA") CGPA
+                                                .col-md-9.m-0.p-0
+
+                                                .percentage-type-result-container.col-12.d-none
+                                                    .row.gap-3
+                                                        .col-md-4.col-lg-3.m-0.p-0
+                                                            div.position-relative
+                                                                label.input-label(for="")
+                                                                    | Total Marks *
+                                                                    br
+                                                                    | (संपूर्ण गुण) *
+                                                                input.input-element.input-sm.form-control-input(type="text" placeholder="Total Marks" name="eduMarksOutOf" id="newMarks2")
+
+                                                        .col-md-4.col-lg-3.m-0.p-0
+                                                            div.position-relative
+                                                                label.input-label(for="")
+                                                                    | Total Marks Obtained *
+                                                                    br
+                                                                    | (संपूर्ण मिळालेले गुण) *
+                                                                input.input-element.input-sm.form-control-input(type="text" placeholder="Total Marks Obtained" name="eduMarksGain" id="newMarks1")
+
+                                                        .col-md-4.col-lg-3.m-0.p-0
+                                                            div.position-relative
+                                                                label.input-label(for="") 
+                                                                    | Percentage *
+                                                                    br
+                                                                    | (टक्केवारी) *
+
+                                                                input.input-element.input-sm.form-control-input(type="text" placeholder="percentage" value="" name="eduPercent" id="percent" readonly)
+
+                                                .cgpa-type-result-container.col-12.d-none
+                                                    .row.gap-3
+                                                        .col-3.m-0.p-0
+                                                            div.position-relative
+                                                                label.input-label(for="") 
+                                                                    | Total CGPA *
+                                                                    br
+                                                                    | संपूर्ण सी.जी.पी.ए. *
+                                                                input.input-element.input-sm(type="text" placeholder="" value="10" name="eduCgpaOutOf" id="total-cgpa" readonly)
+
+                                                        .col-3.m-0.p-0
+                                                            div.position-relative
+                                                                label.input-label(for="") 
+                                                                    | Obtained CGPA *
+                                                                    br
+                                                                    | मिळालेला सी.जी.पी.ए. *
+                                                                input.input-element.input-sm(type="text" placeholder="" value="" name="cgpaGained" id="obtained-cgpa" )
+
+
+                                                <div class="col-md-3 p-0 m-0 position-relative">
+                                                    label(for="" class="input-label")
+                                                        | Class *
+                                                        br
+                                                        | (श्रेणी) *
+
+                                                    select.greadClass(type="text" class='input-element input-sm' placeholder="add percentage" name="eduClass")
+                                                </div>
+                                            </div>
+
+                                            //- <div class="hide-check educationDetailsDecleration">
+                                            //-     input.form-check-input#graduationCheckBox(type="checkbox")
+                                            //-     label.form-check-label(for="flexCheckDefault")
+                                            //-         | I Agree, I completed my Graduation in 
+                                            //-         strong.text-danger  First Attempt.
+                                            //- </div>
+                                            div(class="d-flex justify-content-center educationDetailsModalButtons mt-3")
+                                                button.mx-2.c-button.c-btn-success.fs-4.fw-bold(type="button" data-bs-dismiss="modal") Close
+                                                button(type="submit" class="c-button c-btn-primary fs-4 fw-bold") Save
+
+
+
+
+
+
+
+
+    .modal.fade(tabindex="-1" aria-labelledby="" aria-hidden="true" id ='allowed-qualification-list-modal')
+        .modal-dialog(style='min-width:50% !important;')
+            .modal-content.p-2
+                .modal-header.bg-warning 
+                    h1.modal.fs-3(style='background-color:inherit') Note
+                    button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+                .modal-body 
+                    p.fs-3 खाली नमूद केलेल्या यादी नुसार शैकक्षाणिक अहर्ता असणे आवश्यक आहे.
+                    table.fs-3.table.table-striped 
+                        thead 
+                            tr 
+                                th Sr. No. 
+                                th Name
+                        tbody.allowd-qualification-list-table-body

@@ -1,0 +1,205 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/experience-details/experience-details.css")
+
+block inline_js 
+    script.
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        var form_id = Number(#{form_id});
+        let experienceList = !{JSON.stringify(experienceList)};
+
+        let is_post_required_experience = '#{isExpReq}';
+        let totalExpRequiredInYears = '#{totalExpRequiredInYears}'
+
+    script(src="/assets/js/experience-details.js" type="module")
+
+block content
+
+    div.container-fluid.mt-1
+        div.container-base
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+
+                a.done-step(href="/new-registration") 
+                    span.step-no 1
+                    span.step-name 
+                        i.fa-regular.fa-file-lines.me-2
+                        | Registration
+                        br
+                        | (नोंदणी)
+
+                a.done-step(href="/user-eligibility/"+regIDString)
+                    span.step-no 2
+                    span.step-name 
+                        i.fa-solid.fa-road-barrier.me-2
+                        | Entry Qualification 
+                        br
+                        | (प्रवेश पात्रता)
+                a.done-step(href="/user-details/"+regIDString)
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-user.me-2
+                        | Candidate Profile 
+                        br
+                        | (उमेदवाराची प्रोफाईल)
+                a.done-step(href="/education-details/"+regIDString)
+                    span.step-no 4
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Education Details
+                        br
+                        | (शैक्षणिक तपशील)
+                a.active-step(href="/experience-details/"+regIDString) 
+                    span.step-no 5
+                    span.step-name 
+                        i.fa-solid.fa-brain.me-2
+                        | Experience Details
+                        br
+                        | (अनुभव तपशील)
+                    i(class="fa-solid fa-play active-arrow")
+                a.pending-step(href="#")
+                    span.step-no 6
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Accomplishments
+                        br
+                        | (गुणवत्ता तपशील)
+                a.pending-step(href="#")
+                    span.step-no 7
+                    span.step-name 
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 8
+                    span.step-name 
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application Preview
+                        br
+                        | (अर्ज पूर्वावलोकन)
+
+            div.main-content
+
+                div(class="userExperienceContainer")
+                    .modal.fade#experienceModal(data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true")
+                        div(class="modal-dialog modal-xl")
+                            div.input-card
+                                div(class="modal-content" style="border: none")
+                                    div.modal-header.input-card-heading
+                                        h1.modal.input-label.experienceModalTitle.newTitle(style="background-color: transparent")
+                                        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+
+                                    div(class="modal-body")
+                                        form#experienceForm
+
+                                            div.position-relative
+                                                label.input-label(for="organization") 
+                                                    | Company Name *
+                                                    br
+                                                    | (कंपनी नाव) *
+                                                input.input-element.input-sm(type="text" name="organization" placeholder="Enter Organization")
+
+                                            div.position-relative
+                                                label.input-label(for="location") 
+                                                    | Location *
+                                                    br
+                                                    | (स्थान) *
+                                                input.input-element.input-sm(type="text" name="location" placeholder="Enter Working Location")
+
+                                            div.position-relative
+                                                label.input-label(for="designation") 
+                                                    | Post *
+                                                    br
+                                                    | (पदनाम) *
+                                                input.input-element.input-sm(type="text" name="designation" placeholder="Enter Designation")
+
+                                            div.experience-department-dropdown.position-relative
+                                                //- content added through js
+
+                                            div.experience-year-container
+                                                div.position-relative
+                                                    label.input-label(for="experience-start-date") 
+                                                        | Start Date *
+                                                        br
+                                                        | (अनुभव सुरुवात दि.) *
+                                                    input.input-element.input-sm(type="date" class="experience-date" name="experience_starting_date")
+
+                                                div.position-relative
+                                                    label.input-label(for="experience-end-date") 
+                                                        | End Date *
+                                                        br
+                                                        | (अनुभव समाप्त दि.) *
+                                                    input.input-element.input-sm(type="date" class="experience-date" name="experience_end_date" placeholder="End Date")
+
+                                                div.position-relative
+                                                    label.input-label(for="total-experience")  
+                                                        | Total Experience *
+                                                        br
+                                                        | (एकून अनुभव) *
+                                                    input.input-element.input-sm(type="text" id="total-experience" name="experience" placeholder="Experience" readonly)
+
+                                            div.experience-description-box.position-relative
+                                                label.input-label(for="experience-description") 
+                                                    | Experience Description (optional)
+                                                    br
+                                                    | (अनुभव माहिती)
+                                                textarea#experience-description.input-element(name="experience_description" cols="80" rows="7" placeholder="Enter Experience Description")
+
+                                            div.experienceSaveButtons.d-flex.justify-content-center.py-4(style="grid-column: 1/-1;")
+                                                button.mx-2.c-button.c-btn-success(type="button" data-bs-dismiss="modal") Close
+                                                button.mx-2.c-button.c-btn-primary.experienceSaveBtn(type="button" name="save") Save
+                                                button.mx-2.c-button.c-btn-primary.experienceSaveBtn(type="button" name="save-continue") Save & Continue
+
+
+
+                    <section>
+                        div.d-flex.w-100.flex-column.py-3
+                            div.d-flex.justify-content-between
+                                div
+                                    i.fa-solid.fa-brain.me-2
+                                    label(for="addNewDetails" class="input-label-title") 
+                                        | Experience Details (अनुभव तपशील)
+
+                                button.c-button.c-btn-success#addNewDetails.w-50
+                                    i.fa-solid.fa-plus
+                                    | &nbsp;Add Experience
+
+                            if isExpReq
+                                div
+                                    p.text-danger.mb-1 Note : #{_candidateExpDetails[0].post_name} is required minimum #{postExpDetails[0].post_experience_years} years of experience
+                                    p.text-danger.mb-1 सूचना: #{_candidateExpDetails[0].post_name} साठी किमान #{postExpDetails[0].post_experience_years} वर्षांचा अनुभव आवश्यक आहे.
+
+                        div
+                            <table class="table table-bordered table-striped small">
+                                <thead>
+                                    <tr class='text-center'>
+                                        <th class='input-label' width="30%">
+                                            | Organization (संस्था)
+                                        </th>
+                                        <th class='input-label' width="20%">
+                                            | Location (ठिकाण)</th>
+                                        <th class='input-label' width="16%">Designation (पदनाम) </th>
+                                        <th class='input-label' width="16%">Description (वर्णन)</th>
+                                        <th class='input-label' width="16%">
+                                            | Total Experience (Years) 
+                                            br
+                                            | (एकूण अनुभव वर्षे) 
+                                        </th>
+                                        <th class='input-label' width="5%">Action (कृती)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="educationTbody">
+                                </tbody>
+                            </table>
+
+                        <section class="text-end mb-2 saveExperienceButton">
+                            <button class="c-button c-btn-success d-none" id="skipExperienceDetails">Skip</button>
+                            <button class="c-button c-btn-primary d-none" id="saveEducationDetails">Save</button>
+                        </section>
+                    </section>
+
+    </section>

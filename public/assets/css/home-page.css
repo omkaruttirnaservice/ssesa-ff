@@ -1,0 +1,102 @@
+.list ul {
+  list-style-type: none;
+  margin: 0 0 -3px 35px;
+  padding-top: 10px;
+}
+.list li {
+  padding: 13.5px 0px 5px 25.5px;
+}
+.list h2 {
+  margin: 0;
+  padding: 7px 1px 8px 15px;
+  font-size: 12pt;
+  color: #c82222;
+  font-weight: normal;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: 0px 0px 2px 0px;
+}
+.list {
+  margin: 12px auto;
+  background: url(../../assets/images/formSteps.gif) top center no-repeat;
+  width: 390px;
+}
+
+.master-login {
+  background-color: #fae8b6;
+  border-left: 3px solid #d1d1d1;
+  border-bottom: 3px solid #d1d1d1;
+}
+
+.steps-border {
+  border: 2px solid #f19595 !important;
+  border-radius: 13px;
+  background-color: #f6dfa1;
+}
+
+.ref-docuemnt {
+  border: 2px solid #f6c0c0;
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.d-hand {
+  cursor: pointer;
+}
+
+@keyframes load {
+  0% {
+    left: 0;
+    width: 0px;
+  }
+  50% {
+    left: 150px;
+    width: 150px;
+  }
+  100% {
+    left: 300px;
+    width: 0px;
+  }
+}
+
+#loadMyPage {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  z-index: 99999999999;
+}
+
+#loadMyPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e1f26bd;
+}
+
+#loadMyPage .loader {
+  position: relative;
+  width: 300px;
+  min-height: 8px;
+}
+
+#loadMyPage .loader::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 300px;
+  min-height: 8px;
+  background-color: rgba(11, 11, 11, 0.5);
+}
+
+#loadMyPage .loader::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 30px;
+  min-height: 8px;
+  background-color: orange;
+  animation: load 1.5s linear infinite;
+}

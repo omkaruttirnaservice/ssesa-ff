@@ -1,0 +1,79 @@
+#eligibility-container,
+.dobContainer,
+.entry-qualification-container,
+.postSelectContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.postSelectContainer {
+	& .grid-el:nth-child(1) {
+		/* This is bank / department name input */
+		grid-column: 1/-1;
+	}
+}
+
+.grid-el {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+#exam-fees-container {
+	grid-column: 1/-1;
+}
+
+.dobContainer {
+	& .grid-el:nth-child(1) {
+		grid-column: 1/-1;
+	}
+}
+
+#dob-container {
+	grid-column: 1/-1;
+}
+
+.dobBox {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+
+	margin-bottom: 1rem;
+}
+
+.dobAge {
+	align-self: center;
+	background-color: inherit;
+
+	grid-column: 1/-1;
+}
+
+.dobAge p {
+	margin: 0;
+	font-weight: 600;
+	font-size: var(--main-heading-2-font-size);
+	
+	& .setAgeText {
+		background-color: #e0e0e0;
+		border-radius: var(--border-radius);
+		padding: 0.3rem;
+	}
+}
+
+/* DECLERATION  */
+
+.decleration {
+	/* display: flex;
+    gap: 1.6rem;
+    margin-bottom: 1.8rem;
+    align-items: center; */
+
+	display: flex;
+	align-items: flex-start;
+	gap: 0.7rem;
+
+	& input {
+		margin-top: 0.35rem;
+	}
+}

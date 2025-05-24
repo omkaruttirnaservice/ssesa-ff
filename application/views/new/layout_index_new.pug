@@ -1,0 +1,60 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(http-equiv='Cache-control' content='no-cache')
+        meta(http-equiv='Expires' content='-1')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0')
+
+        link(rel="stylesheet" href='/plugins/bs-532/css/bootstrap.min.css')
+        link(rel="stylesheet" href='/plugins/fontawesome-free-6.7.2-web/css/all.min.css')
+
+        link(rel="stylesheet" href="/assets/css/common-styles/common-styles.css")
+        link(rel="stylesheet" href="/assets/css/navbar/navbar.css")
+        link(rel="stylesheet" href="/assets/css/navbar/progress-navbar.css")
+
+        include ./favicon.pug
+
+        block css_link
+        block aggrement_page_css_link
+        block inline_css
+
+        script(src='/plugins/jquery/jquery.min.js')
+        script(src='/plugins/jquery_validation/jquery.validate.min.js')
+        script(src='/plugins/jquery_validation/additional-methods.js')
+
+        //- script(src='/plugins/popper/popper.min.js')
+
+        script(src='/plugins/bs-532/js/bootstrap.bundle.min.js')
+        script(src='/plugins/sweetalert/sweetalert.min.js')
+
+        //- script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js")
+        //- script(src="https://cdnjs.cloudflare.com/ajax/libs/moment-duration-format/2.2.2/moment-duration-format.min.js")
+
+        script(href='/plugins/fontawesome-free-6.7.2-web/js/all.min.js')
+
+        //- script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js" integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg==" crossorigin="anonymous" referrerpolicy="no-referrer")
+
+        script(src='/assets/js/common.js' type="module")
+        script(src='/assets/js/common-validation.js')
+
+        block inline_js
+
+        block js_link
+
+        title #{title}
+    body
+        #loader-backdrop.d-none
+        #loader.d-none
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        #is-mobile-container.d-none
+            .d-flex.justify-content-center.align-items-center
+                p.fw-bold.fs-5.text-danger.text-center.mt-5.px-2 To ensure an optimal browsing experience, please access the website using a laptop or desktop.
+
+        main
+            include ./includes/header.pug
+
+            block content

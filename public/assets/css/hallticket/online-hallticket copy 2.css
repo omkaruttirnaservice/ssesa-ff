@@ -1,0 +1,687 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* abhishek styles */
+body {
+	background-color: #f5f5f5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 20px;
+}
+
+.container {
+	max-width: 210mm;
+	width: 100%;
+}
+
+.hall-ticket {
+	width: 100%;
+	background-color: white;
+	/* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); */
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+/* Header Section */
+.header {
+	/* background: linear-gradient(to right, #1a4b8c, #0d2e5a); */
+	color: white;
+	padding: 24px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.logo-container {
+	flex-shrink: 0;
+}
+
+.logo {
+	height: 64px;
+	width: 64px;
+	background-color: white;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px;
+}
+
+.logo span {
+	height: 100%;
+	width: 100%;
+	border: 2px solid #1a4b8c;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #1a4b8c;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.title {
+	flex-grow: 1;
+}
+
+.title h1 {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.subtitle {
+	font-size: 16px;
+	opacity: 0.9;
+}
+
+.recruitment {
+	font-size: 14px;
+	margin-top: 4px;
+}
+
+.admit-badge {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background-color: white;
+	color: #1a4b8c;
+	padding: 4px 12px;
+	border-radius: 20px;
+	font-size: 14px;
+	font-weight: bold;
+}
+/* Exam Details - Box Format */
+.exam-details-new {
+	display: none;
+	background-color: #f9f9f9;
+	padding: 24px;
+}
+
+.exam-details-new h2 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 16px;
+}
+
+.exam-boxes {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 16px;
+}
+
+.exam-box {
+	background-color: white;
+	padding: 16px;
+	border-radius: 8px;
+	border-left: 4px solid #1a4b8c;
+	/* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	transition: all 0.2s ease;
+}
+
+.exam-box i {
+	color: #1a4b8c;
+	font-size: 18px;
+	margin-top: 2px;
+}
+
+.exam-box .time {
+	font-size: 14px;
+}
+
+.exam-box .gate-close {
+	font-size: 14px;
+	color: #e53935;
+}
+
+.exam-box .address {
+	font-size: 14px;
+}
+
+/* Instructions - New Layout */
+.instructions-new {
+	padding: 24px;
+	background-color: white;
+}
+
+.instructions-new h2 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 16px;
+	display: flex;
+	align-items: center;
+}
+
+.instructions-new h2 i {
+	color: #1a4b8c;
+	margin-right: 8px;
+}
+
+.instructions-box {
+	background-color: #f9f9f9;
+	padding: 16px;
+	border-radius: 8px;
+	margin-bottom: 16px;
+}
+
+.instructions-box:last-child {
+	margin-bottom: 0;
+}
+
+.instructions-box h3 {
+	font-weight: bold;
+	margin-bottom: 12px;
+}
+
+.instructions-box ol {
+	padding-left: 20px;
+}
+
+.instructions-box li {
+	margin-bottom: 8px;
+	font-size: 14px;
+}
+
+/* Aadhaar Card Section */
+.aadhaar-section {
+	padding: 24px;
+	background-color: #f9f9f9;
+}
+
+.aadhaar-section h2 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 16px;
+	display: flex;
+	align-items: center;
+}
+
+.aadhaar-section h2 i {
+	color: #1a4b8c;
+	margin-right: 8px;
+}
+
+.aadhaar-container {
+	border: 2px dashed #1a4b8c;
+	border-radius: 8px;
+	padding: 16px;
+	background-color: white;
+}
+
+.aadhaar-image {
+	height: 200px;
+	margin-bottom: 16px;
+	background-color: #f0f0f0;
+	padding: 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.aadhaar-details {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+}
+
+.verified {
+	color: #4caf50;
+}
+
+/* Signatures */
+.signatures {
+	padding: 24px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+}
+
+.signature-box {
+	/* border-top: 1px solid #e0e0e0; */
+	padding-top: 8px;
+}
+
+.signature-line {
+	height: 40px;
+	border-bottom: 1px solid #666;
+	margin-top: 4px;
+}
+
+/* Footer */
+.footer {
+	background-color: #0d2e5a;
+	color: white;
+	padding: 16px;
+	text-align: center;
+	font-size: 12px;
+}
+
+/* Media Queries */
+/* @media (max-width: 768px) {
+	.candidate-info-new {
+		flex-direction: column;
+	}
+
+	.info-left,
+	.info-right {
+		flex: 0 0 100%;
+		padding-right: 0;
+	}
+
+	.info-right {
+		margin-top: 24px;
+	}
+
+	.exam-boxes {
+		grid-template-columns: 1fr;
+	}
+
+	.header {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.admit-badge {
+		position: static;
+		margin-top: 12px;
+		align-self: center;
+	}
+
+	.aadhaar-details {
+		grid-template-columns: 1fr;
+	}
+} */
+
+/* Print Styles */
+/* @media print {
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+    
+    .container {
+        max-width: 100%;
+        width: 210mm;
+    }
+    
+    .hall-ticket {
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .exam-box:hover {
+        box-shadow: none;
+        transform: none;
+    }
+    
+    .instructions-box {
+        break-inside: avoid;
+    }
+    
+    .aadhaar-section {
+        break-inside: avoid;
+    }
+} */
+
+/* Base Styles */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Arial", sans-serif;
+}
+
+body {
+	background-color: #f5f5f5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 20px;
+}
+
+.container {
+	width: 210mm;
+	margin: 0 auto;
+}
+
+.hall-ticket {
+	width: 100%;
+	background-color: white;
+	/* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); */
+	border-radius: 8px;
+	overflow: hidden;
+	border: 1px solid #ddd;
+}
+
+/* Header Section */
+/* .header {
+	background: linear-gradient(135deg, #1a4b8c, #0d2e5a);
+	color: white;
+	padding: 15px 20px;
+	display: flex;
+	align-items: center;
+	position: relative;
+} */
+
+.logo-container {
+	margin-right: 15px;
+}
+
+.logo {
+	height: 60px;
+	width: 60px;
+	background-color: white;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.logo span {
+	color: #1a4b8c;
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.title {
+	flex-grow: 1;
+}
+
+.title h1 {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.subtitle {
+	font-size: 14px;
+	opacity: 0.9;
+}
+
+.recruitment {
+	font-size: 12px;
+	margin-top: 4px;
+}
+
+.admit-badge {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background-color: white;
+	color: #1a4b8c;
+	padding: 4px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: bold;
+	/* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+}
+
+/* Main Content with 70/30 Split */
+.main-content {
+	display: flex;
+	border-bottom: 1px solid #eee;
+}
+
+/* Left Section - 70% */
+.left-section {
+	width: 70%;
+	padding: 20px;
+	border-right: 1px solid #eee;
+}
+
+.info-row {
+	display: flex;
+	margin-bottom: 15px;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.info-item {
+	flex: 1;
+	padding: 10px 15px;
+	background-color: #f9f9f9;
+}
+
+.info-item:first-child {
+	border-right: 1px solid #e0e0e0;
+}
+
+.label {
+	font-size: 12px;
+	color: #666;
+	margin-bottom: 4px;
+}
+
+.value {
+	font-weight: 600;
+	color: #333;
+}
+
+.candidate-details {
+	margin-bottom: 20px;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	padding: 15px;
+	background-color: #f9f9f9;
+}
+
+.candidate-details h2 {
+	font-size: 16px;
+	color: #1a4b8c;
+	margin-bottom: 12px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.details-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 15px;
+}
+
+.detail-item:nth-child(1) {
+	grid-column: span 2;
+}
+
+.detail-item {
+	padding-bottom: 5px;
+}
+
+/* Exam Details */
+.exam-details {
+	margin-bottom: 20px;
+}
+
+.exam-details h2 {
+	font-size: 16px;
+	color: #1a4b8c;
+	margin-bottom: 12px;
+}
+
+.exam-box {
+	display: flex;
+	margin-bottom: 10px;
+	border: 1px solid #e0e0e0;
+	border-radius: 6px;
+	overflow: hidden;
+	background-color: #f9f9f9;
+}
+
+.exam-item {
+	flex: 1;
+	padding: 10px 15px;
+}
+
+.exam-item:first-child {
+	/* border-right: 1px solid #e0e0e0; */
+}
+
+.full-width {
+	flex: 1;
+	width: 100%;
+}
+
+.address {
+	font-size: 12px;
+	color: #666;
+	margin-top: 4px;
+}
+
+/* Right Section - 30% */
+.right-section {
+	width: 30%;
+	padding: 20px;
+}
+
+.id-container {
+	display: flex;
+	height: 100%;
+}
+
+.photo-signature {
+	display: flex;
+	flex-direction: column;
+	width: 65%;
+}
+
+.photo-box,
+.signature-box {
+	margin-bottom: 10px;
+}
+
+.photo-label {
+	font-size: 12px;
+	color: #666;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.photo {
+	width: 100%;
+	height: 150px;
+	border: 2px solid #1a4b8c;
+	background-color: #f0f0f0;
+	margin-bottom: 10px;
+	position: relative;
+}
+
+/* .photo::after {
+	content: "Photo";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #999;
+	font-size: 14px;
+} */
+
+.signature {
+	width: 100%;
+	height: 60px;
+	border: 2px solid #1a4b8c;
+	background-color: #f0f0f0;
+	position: relative;
+}
+
+/* .signature::after {
+	content: "Signature";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #999;
+	font-size: 12px;
+} */
+
+.qr-code-box {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+
+}
+
+.qr-code {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 10px;
+	position: relative;
+
+	& img {
+		width: 100%;
+		height: 100%;
+	} 
+}
+
+/* .qr-code::after {
+	content: "QR Code";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #999;
+	font-size: 14px;
+} */
+
+/* Instructions Section */
+.instructions {
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-bottom: 1px solid #eee;
+}
+
+.instructions h2 {
+	font-size: 16px;
+	color: #1a4b8c;
+	margin-bottom: 12px;
+}
+
+.instructions ol {
+	padding-left: 20px;
+}
+
+.instructions li {
+	margin-bottom: 8px;
+	font-size: 13px;
+}
+
+/* Signatures */
+.signatures {
+	display: flex;
+	padding: 20px;
+	border-bottom: 1px solid #eee;
+}
+
+.signatures .signature-box {
+	flex: 1;
+	padding: 0 15px;
+}
+
+.signatures .signature-line {
+	height: 1px;
+	background-color: #333;
+	margin-top: 30px;
+}
+
+/* Footer */
+.footer {
+	background-color: #0d2e5a;
+	color: white;
+	padding: 10px;
+	text-align: center;
+	font-size: 12px;
+}

@@ -1,0 +1,138 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0")
+		include ./favicon.pug
+
+		title Application Portal
+
+		//- link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer")
+		//- script(src='/plugins/jquery/jquery.min.js')
+		//- script(src='/plugins/jquery_validation/jquery.validate.min.js')
+		//- script(src='/plugins/jquery_validation/additional-methods.js')
+		script.
+			document.addEventListener('DOMContentLoaded', function (){ 
+				let showPasswordCheckEl = document.getElementById("show-password")
+				let passwordEl = document.getElementById("password")
+				showPasswordCheckEl.addEventListener('click', function () {
+					const attribute = passwordEl.getAttribute('type')
+					if (attribute === 'password') {
+						passwordEl.setAttribute('type', 'text')
+					} else {
+						passwordEl.setAttribute('type', 'password')
+					}
+				});
+
+				const form = document.getElementById('login-form');
+				const loginBtn = document.getElementById('login-btn');
+
+				form.addEventListener('submit', function () {
+					loginBtn.disabled = true;
+					loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Logging in...';
+				});
+			})
+		script(src="https://cdn.tailwindcss.com")
+		//- script(src="/plugins/tailwind-css-3416/tailwind.js")
+
+	body.font-sans.text-gray-900(class="bg-gray-50")
+		- let portalYear = '2024-25'
+		.wrapper.max-w-7xl.mx-auto.px-4.mb-4
+
+
+			header.py-6.border-b.border-gray-200
+				// Highlighted Title Section
+				.text-center.bg-yellow-100.py-4.px-2.rounded-md.shadow-md
+					p.font-bold.text-gray-900(class="text-sm md:text-xl") Online Portal For Recruitment Process #{portalYear}
+					p.font-bold.text-gray-900(class="text-sm md:text-xl") भरती प्रक्रिया #{portalYear} साठीचे ऑनलाईन पोर्टल
+
+			// Brand Logo and Institution Name
+			div.grid.mt-4.gap-4(class="grid-cols-1 md:grid-cols-3 ")
+				.flex.justify-start.items-center.mt-2.gap-4.col-span-2
+					img(src="/assets/images/brand-name.jpg" alt="Brand Logo" class="w-44 h-44")
+					.text-center
+						p.font-semibold.text-gray-900(class="text-xl md:text-3xl") Shri Shivaji Education Society, Amravati
+
+
+				//- helpline
+				section.text-center.text-lg.rounded-lg.p-4.flex.gap-2.justify-center.flex-col(class="bg-gray-100 ")
+					p.font-medium.text-blue-500 For Technical Help Only (फक्त तांत्रिक मदतीसाठी)
+					a(href=`tel:${p.help_mobile_number}` class="text-orange-500 animate-blink font-bold block")
+						i.fa-solid.fa-phone.mr-2
+						| +91 #{p.help_mobile_number}
+					p.text-blue-500 ( 10:00 AM to 5:00 PM )
+					a(href=`mailto:${p.help_email_id}` class="text-blue-400 animate-blink ")
+						i.fa-solid.fa-envelope.mr-2
+						| #{p.help_email_id}
+					
+
+
+			main(class="grid md:grid-cols-3 gap-4 mt-4")
+
+
+				section(class="md:col-span-2")
+					//- notice list
+					section.p-6.rounded-lg.shadow-sm.border(class="bg-white border-gray-200 mb-4")
+						h2.text-center.text-xl.font-bold.mb-4.text-blue-500 Important Notices (महत्वाच्या सूचना)
+						div.space-y-3
+							if p.notices.length > 0
+								each notice in p.notices
+									div.flex.items-center.justify-between.p-3.rounded-lg.shadow-md(class="bg-gray-100")
+										a(href=`${s3BucketUrl}/${notice.aws_file_path}` target="_blank" class="text-blue-500 hover:underline font-medium") #{notice.file_name}
+										img(src="/assets/images/new-blinking.gif" alt="New" width="40" class=notice.file_blink == 1 ? '' : 'hidden')
+							else
+								p.text-gray-500 No notices available
+
+					//- dates and scrolling notice
+					section(class="md:col-span-2 space-y-6")
+						if p.is_show_scrolling_notice == 1
+							div.bg-yellow-50.border-l-4.border-yellow-400.text-yellow-800.p-4.rounded-lg
+								strong.block.text-sm.font-medium.uppercase Notice:
+								marquee.scrolling-notice.font-semibold.text-sm #{p.scrolling_notice_name}
+
+						div.p-6.rounded-lg.shadow-sm.border(class="bg-white border-gray-200")
+							h2.text-center.text-xl.font-bold.text-blue-500.mb-4 Important Events (महत्वाच्या घटना)
+							div.divide-y(class="divide-gray-200")
+								if p.important_dates.length > 0
+									each date in p.important_dates
+										div.hidden.flex.justify-between.items-center.py-2
+											div
+												p.font-medium.text-gray-900 #{date.title}
+												p.text-sm.text-gray-500 #{date.secondary_title}
+											div.text-right
+												p.text-sm.font-semibold.text-gray-900 #{date.date}
+												p.text-xs.text-gray-500 #{date.time} #{date.time_am_pm}
+
+										div.grid.grid-cols-3.py-2
+											div(class="col-span-2")
+												p.font-medium.text-gray-900 #{date.title}
+												p.text-sm.text-gray-500 #{date.secondary_title}
+											div(class="col-span-1 text-right")
+												p.text-sm.font-semibold.text-gray-900 #{date.date}
+												p.text-xs.text-gray-500 #{date.time} #{date.time_am_pm}
+
+				//- Login Form Right (1/3)
+				aside.shadow-sm.rounded-lg.p-6.space-y-6(class="bg-white border border-gray-200 col-span-1")
+					p.text-center.text-sm.text-gray-500.font-medium Already Registered / नोंदणीकृत उमेदवार
+					form(id="login-form" action='/login' method="POST" class="space-y-4")
+						input#userId(value="" type="text" name="utrUserName" placeholder="User ID" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
+						input#password(value="" type="password" name="utrPassword" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
+						.flex.items-center
+							input#show-password(type="checkbox" class="mr-2")
+							label(for="show-password" class="text-sm text-gray-900") Show Password
+						if message
+							p.text-red-500.text-lg.mt-2 #{message}
+						div.flex.gap-2
+							button(id="login-btn" type="submit" class="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600")
+								i.fas.fa-sign-in-alt.mr-1
+								| Login (लॉगिन)
+							button(type="reset" class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400")
+								i.fas.fa-sync-alt.mr-1
+								| Reset (रीसेट)
+
+					.flex.justify-between.text-lg.text-blue-500
+						a(href="/forget-username" class="hover:underline") Forgot User ID?
+						a(href="/forget-password" class="hover:underline") Forgot Password?
+
+
+

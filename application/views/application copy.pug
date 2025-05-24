@@ -1,0 +1,487 @@
+extends ./new/layout_index_new
+
+block css_link
+    style.
+        @media print {
+            @page{
+                size: A4 portrait;
+                margin-left: 5mm !important;
+                margin-right: 5mm !important;
+                border: 1px solid black; 
+
+            }
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+            .button-hide{
+                display:none;
+            }
+            .container {
+                margin: 0;
+            }
+            .table-bordered th, .table-bordered td,.table thead th{
+                border: 0.5px solid black !important;
+            }
+            .table th > .table  td,.table td > .table  td,.table td > .table  th  {
+                border-bottom: 0px !important;
+            }
+            .table tbody td .table-bordered.table thead .table-bordered,.table-bordered .text-color-alter,.text-color-alter .h3{
+                background-color:gray !important;
+                color:white !important;
+                print-color-adjust: exact;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            .page-break{
+                page-break-inside: avoid;
+            }
+
+            .header-container, 
+            .nav-bar {
+                display: none;
+            }
+            table {
+                border-collapse: collapse !important;
+            }
+
+            .print-full-width {
+                width: 100vw;    
+                position: relative;
+                //- width: 297mm;
+            }
+
+            .print-hide {
+                display: none;
+            }
+        }
+
+        header,
+        .header-container, 
+        .nav-bar {
+            display: none;
+        }
+
+        .print-full-width {
+
+            position: relative;
+            width: 297mm;
+            margin-inline: auto;
+            border: 1px solid rgba(0,0,0,.5);
+            padding: 1.2rem;
+        }
+
+        .footer{
+            border: 0.5px solid gray;
+        }
+
+        .table-bordered th, .table-bordered td,.table thead th{
+            border: 0.5px solid black;
+        }
+
+        .text-color-alter .h3,.text-color-alter{
+            background-color:gray !important;
+            color:white !important;
+            print-color-adjust: exact;
+        }
+
+        .table th > .table  td,.table td > .table  td,.table td > .table  th  {
+            border-bottom: 0px !important;
+        }
+
+        small, span { 
+            background-color: inherit;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        .section-heading {
+            font-weight: 500;
+            font-size: var(--para-label-2-font-size) !important;
+            padding: 0.3rem 0 0 0 !important;
+        }
+
+        td {
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.2rem !important;
+        }
+
+        th {
+            font-size: var(--para-label-font-size) !important;
+            padding: 0rem !important;
+            font-weight: 500;
+        }
+
+        .candidate-photo-sign-container {
+            position: absolute;
+            right: 4rem;
+            top: 12rem;
+            z-index: 999 !important;
+
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+block content
+
+    div.container
+        div.print-hide.my-3
+            a.btn.btn-primary.btn-sm.ml-2.mt-2.mx-3(href="/") HOME
+            button.btn.btn-success.ml-2.mt-2.btn-sm(onclick="window.print();") Print Application
+
+    div.print-full-width
+        .row
+            .col-12.d-flex.justify-content-center
+                div(style="width: 40rem; height: 6rem; overflow: hidden;")
+                    img(src="/assets/images/brand-name.jpg" alt="" class="header-image" style='height: 100%; width: 100%;')
+            .col-12
+                p.text-right.input-label Printed On&nbsp;::&nbsp;#{todaysDate}
+
+                div.candidate-photo-sign-container
+                    img#imageUploadPreview(src=s3BucketUrl + '/' + preview_data.photo, alt='candidate-photo' style='border: 1px solid gray; width:100px;height:100px;')
+                    img#signUploadPreview.img-fluid(src=s3BucketUrl+ '/' +preview_data.sign , alt='candidate-sign' style='border: 1px solid gray; width:100px;height:80px;')
+
+                .card
+                    .card-body
+                        table
+                            tbody
+
+                                tr
+                                    td.section-heading(width='25%') General Details (अर्जदार तपशील)
+                                tr
+                                    td(width='25%') Application Id (अर्ज क्र.)
+                                    td #{preview_data.application_id}
+                                tr
+                                    td(width='15%') Aadhaar Number (आधार क्र.)
+                                    td #{preview_data.aadhaar}
+                                tr.d-none
+                                    td(width='15%') PAN Card (पॅन क्र.)
+                                    td #{preview_data.pan_number === "" ? '-':preview_data.pan_number}
+                                tr
+                                    td(width='15%') Full Name (संपूर्ण नाव)
+                                    td  #{preview_data.full_name}
+                                tr
+                                    td(width='15%') Bank Name (बँक नाव)
+                                    td #{preview_data.ca_detailsMainPost}
+                                tr
+                                    td(width='15%') Post (पोस्ट नाव)
+                                    td #{preview_data.post_name}
+                                tr
+                                    td.section-heading(colspan='2') Fee Details (शुल्क तपशील)
+                                tr
+                                    td(width='15%') Application Charges (अर्ज शुल्क)
+                                    td(colspan='2') 
+                                        i.fa-solid.fa-indian-rupee-sign.me-2(aria-hidden='true')
+                                        | #{preview_data.post_fee}
+
+                                tr
+                                    td(width='15%') GST 18% (कर शुल्क १८%)
+                                        td(colspan='2') 
+                                            i.fa-solid.fa-indian-rupee-sign.me-2(aria-hidden='true')
+                                            | #{preview_data.post_fee_tax}
+                                tr
+                                    td(width='15%') Total Amount
+                                        td(colspan='2') 
+                                            i.fa-solid.fa-indian-rupee-sign.me-2(aria-hidden='true')
+                                            | #{preview_data.post_fee + preview_data.post_fee_tax}
+                                tr
+                                    td.section-heading(colspan='3') Personal Details (वैयक्तिक तपशील)
+                                tr
+                                    td(width='15%') Date Of Birth (जन्मतारीख)
+                                    td(colspan='2') #{preview_data.date_of_birth}
+                                tr
+                                    td(width='15%') Gender (लिंग)
+                                    td(colspan='2') #{preview_data.gender}
+                                tr
+                                    td(width='15%') 
+                                        | Age As On (#{preview_data.age_as_on})
+                                        | (वय #{preview_data.age_as_on} नुसार)
+                                    td(colspan='2')
+                                        p.m-0 #{preview_data.compareDateAgeString}
+                                tr
+                                    td(width='15%') Caste (कास्ट)
+                                    td(colspan='2') #{preview_data.catagory}
+                                tr
+                                    td(width='15%') Sub Category (सब कास्ट)
+                                    td(colspan='2') #{preview_data.detailsSubCategory}
+                                tr
+                                    td(width='15%') Religion (धर्म)
+                                    td(colspan='2') #{preview_data.detailsReligion}
+                                tr 
+                                    td(width='55%') Nationality / Citizenship Indian? (राष्ट्रीयत्व / नागरिकत्व भारतीय?)
+                                    td(colspan='2') #{preview_data.detailsNationality}
+                                tr 
+                                    td(width='15%') Maharashtra Domiciled ? (महाराष्ट्र अधिवासित?)
+                                    td(colspan='2') #{preview_data.detailsDomicile}
+                                tr
+                                    td(width='15%') Non Creamy Layer (नॉन क्रीमी लेयर)
+                                    td(colspan='2') #{preview_data.detailsNonCreamyLayer == "1" ? 'Yes': 'No'}
+                                tr
+                                    td(width='15%') Marital Status (वैवाहिक स्थिती)
+                                    td(colspan='2') #{preview_data.marital}
+                                tr
+                                    td(width='15%') Father&apos;s /Husband&apos;s Name (वडिलांचे /पतीचे नाव)
+                                    td(colspan='2') #{preview_data.father_name}
+                                tr
+                                    td(width='15%') Mother's Name (आईचे नाव)
+                                    td(colspan='2') #{preview_data.mother_name}
+                                tr
+                                    td(width='15%') Father's Name / Husband's Name (वडिलांचे /पतीचे नाव)
+                                    td(colspan='2') #{preview_data.spouse_name}
+                                tr
+                                    td(width='15%') Address Line 1 (पत्ता लाईन १)
+                                    td(colspan='2') #{preview_data.address}
+                                tr
+                                    td(width='15%') Address Line 2 (पत्ता लाईन २)
+                                    td(colspan='2') #{preview_data.line_two ? preview_data.line_two : '-'}
+                                tr
+                                    td(width='15%') Address Line 3  (पत्ता लाईन ३)
+                                    td(colspan='2') #{preview_data.line_three ? preview_data.line_three : '-'}
+                                tr
+                                    td(width='15%') Taluka (तालुका)
+                                    td(colspan='2') #{preview_data.taluka.toUpperCase()}
+                                tr
+                                    td(width='15%') District (जिल्हा)
+                                    td(colspan='2') #{preview_data.dist ? preview_data.dist : '-'}
+                                tr
+                                    td(width='15%') State (राज्य)
+                                    td(colspan='2') #{preview_data.state ? preview_data.state : '-'}
+                                tr
+                                    td(width='15%') Pin Code (पिन कोड)
+                                    td(colspan='2') #{preview_data.pin_number ? preview_data.pin_number : '-'  }
+                                tr
+                                    td.section-heading(colspan='3') Contact Details (संपर्क तपशील)
+                                tr
+                                    td(width='35%') Mobile Number (मोबाईल क्र.)
+                                    td(colspan='2') #{preview_data.mobile_name}
+                                tr
+                                    td(width='35%') Alternative Number (पर्यायी मोबाईल क्र.)
+                                    td(colspan='2') #{preview_data.alternative_number ? preview_data.alternative_number : '-'}
+                                tr
+                                    td(width='35%') Email ID (ईमैल आयडी)
+                                    td(colspan='2') #{preview_data.email_id}
+                                tr
+                                    td.section-heading(colspan='3') Language Known (अवगत भाषा तपशील)
+                        table(style="width: 100%;")
+                            table
+                                thead
+                                    tr
+                                        th(width='25%') Language (भाषा)
+                                        th(width='25%') Read (बोलता येणे)
+                                        th(width='25%') Write (लिहिता येणे) 
+                                        th(width='25%') Speak  (वाचता येणे)
+                                tbody
+                                    if preview_data.languageDetails
+                                        each language in preview_data.languageDetails 
+                                            tr
+                                                td(width='25%') #{language.languageName}
+                                                td(width='25%') #{language.read == 'true' ? 'YES (होय)' :"NO (नाही)"}
+                                                td(width='25%') #{language.write == 'true' ? 'YES (होय)' :"NO (नाही)"}
+                                                td(width='25%') #{language.speak == 'true' ? 'YES (होय)' :"NO (नाही)"}
+
+                        - const educationDetails = preview_data?.educational_details ?  (preview_data.educational_details) : []
+                        if (educationDetails.length > 0)
+                            table.w-100
+                                tbody        
+                                    tr
+                                        td.section-heading(colspan='3') Education Details (शिक्षण तपशील)
+                                    tr
+                                        td(colspan='3')
+                                            table.text-start.col-12
+                                                thead
+                                                    tr
+                                                        th(width='20%')   
+                                                            | Education
+                                                            br
+                                                            | (शिक्षण)
+                                                        th(width='15%') 
+                                                            | Specialization 
+                                                            br
+                                                            | (विशेषीकरण)
+                                                        th(width='30%')
+                                                            small
+                                                            | School/University/Institute 
+                                                            br 
+                                                            | (शाळा /महाविद्यालय नाव)
+                                                        th(width='7%') 
+                                                            | Percentage/CGPA
+                                                            br
+                                                            | (टक्केवारी)
+                                                        th(width='10%') 
+                                                            | Class
+                                                            br
+                                                            | (श्रेणी)
+                                                        th(width='15%') 
+                                                            | Passed Month & Year 
+                                                            br
+                                                            | (पास महिना, वर्ष)
+                                                tbody
+                                                    each value in educationDetails
+                                                        tr
+                                                            td(width='20%')
+                                                                | #{value.name}
+                                                            td(width='15%')
+                                                                | #{value.eduSpecialization}
+                                                            td(width='30%')
+                                                                | #{value.eduUniversity}
+                                                            td(width='5%')
+                                                                - let percentOrCgpaValue = value?.eduPercent ? value.eduPercent + '%' : value.cgpaGained + 'CGPA'
+                                                                | #{percentOrCgpaValue}
+                                                            td(width='10%')
+                                                                | #{value.eduClass}
+                                                            td(width='10%') 
+                                                                | #{value.eduMonth}, #{value.eduYear}
+
+                        - const  experienceList = preview_data?.experienceList ? (preview_data.experienceList) : []
+                        if experienceList.length > 0
+                            table(style="width: 100%;")
+                                tbody        
+                                    tr
+                                        td.section-heading(colspan='3') Experience Details (अनुभव तपशील)
+                                    tr
+                                        td(colspan='3')
+                                            table.col-12
+                                                thead
+                                                    tr.small
+                                                        th(width='20%') 
+                                                            | Organization Name 
+                                                            br
+                                                            | (संस्थेचे नाव)
+                                                        th(width='25%') 
+                                                            | Designation 
+                                                            br
+                                                            | (पदनाम)
+                                                        th(width='15%') 
+                                                            | Location 
+                                                            br
+                                                            | (स्थान)
+                                                        th(width='15%') 
+                                                            | Total Service Year 
+                                                            br
+                                                            | (एकूण सेवा वर्ष)
+                                                tbody
+                                                    each experience in  experienceList
+                                                        tr.small
+                                                            td #{experience.organization}
+                                                            td #{experience.designation}
+                                                            td #{experience.location}
+                                                            td #{experience.experience}
+
+                        - var  achievementList = preview_data?.achievements  ? (preview_data.achievements) : []
+                        if achievementList.length > 0
+                            table.w-100
+                                tbody        
+                                    tr
+                                        td.section-heading(colspan='3') Accomplishments Details (गुणवत्ता तपशील)
+                                    tr
+                                        td(colspan='3')
+                                            table.w-100
+                                                thead
+                                                    tr.small
+                                                        th(width='20%' valign="middle") 
+                                                            | Particulars
+                                                            br 
+                                                            | (विशेष)
+                                                        th(width='25%' valign="middle") 
+                                                            | Award /Certificate / Scholarship
+                                                            br
+                                                            | (पुरस्कार / प्रमाणपत्र / शिष्यवृत्ती)
+                                                        th(width='30%' valign="middle") 
+                                                            | Proficiency in Games/Sports
+                                                            br
+                                                            | (खेळ/क्रीडा क्षेत्रातील प्रवीणता)
+                                                        th(width='25%') Proficiency in literacy work/art/culture
+                                                tbody
+                                                    each achievement in  achievementList
+                                                        tr.small
+                                                            td #{achievement.particulars}
+                                                            td #{achievement.award}
+                                                            td #{achievement.proficiency_1}
+                                                            td #{achievement.proficiency_2}
+
+
+
+        if(preview_data.payment_mode == "ONLINE")
+            .col-12.mt-4
+                table
+                    thead
+                        tr(colspan="4")
+                            th
+                                | Dear Candidate,
+                                br
+                                | Thank you for payment refer details of this transaction
+                        tr(colspan="4")
+                            th
+                                label.input-label.mt-2 Payment Receipt (Online Payment)
+                        tr
+                            th(width='20%')  Process Name
+                            td(width='90%') #{p.name}
+                        tr
+                            th(width='20%') Post Name
+                            td(width='90%') #{preview_data.post_name}
+                        tr
+                            th(width='20%')  Payment Status
+                            td(width='90%') #{preview_data.payment_status == 1 ? 'DONE' : 'PENDING'}
+                        tr
+                            th Amount Paid
+                            td
+                                i.fa-solid.fa-indian-rupee-sign.mr-2(aria-hidden='true')
+                                |  #{preview_data.payment_amount} /-
+                        tr
+                            th Transaction No.
+                            td(colspan='2') #{preview_data.merch_transaction_id}
+                        tr
+                            th Transaction Date
+                            td(colspan='2') #{ preview_data.payment_done_date } 
+                        tr
+                            th Payment Massage
+                            td(colspan='2')  #{preview_data.payment_message}
+
+        if(preview_data.payment_mode == "OFFLINE")
+            .col-12.mt-4
+                table
+                    thead
+                        tr(colspan="4")
+                            th
+                                | Dear Candidate,
+                                br
+                                | Thank you for payment refer details of this transaction
+                        tr(colspan="4")
+                            th 
+                                label.input-label.mt-2 Payment Receipt (Offline Payment)
+                        tr
+                            th(width='20%')  Process Name
+                            td(width='90%') #{p.name}
+                        tr
+                            th(width='20%') Post Name
+                            td(width='90%') #{preview_data.post_name}
+                        tr
+                            th(width='20%')  Payment Status
+                            td(width='90%') #{preview_data.payment_status == 1 ? 'DONE' : 'PENDING'}
+                        tr
+                            th Amount Paid
+                            td
+                                i.fa-solid.fa-indian-rupee-sign.mr-2(aria-hidden='true')
+                                |  #{preview_data.payment_amount} /-
+                        tr
+                            th Transaction No.
+                            td(colspan='2') #{preview_data.merch_transaction_id}
+                        tr
+                            th Transaction Date
+                            td(colspan='2') #{ preview_data.payment_done_date } 
+                        tr
+                            th Payment Massage
+                            td(colspan='2')  #{preview_data.payment_message}
+        hr
+
+        .col-12
+            center
+                button.button-hide.btn.btn-success.ml-2.mt-2(onclick="window.print();") Print Application
+            label.input-label 
+                | Kindly Note
+                br
+                | You also receive an SMS / Email notification with regards to your application.

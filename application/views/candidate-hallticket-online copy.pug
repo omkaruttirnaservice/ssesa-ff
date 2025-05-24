@@ -1,0 +1,142 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Hallticket | Online Exam
+    link(rel='stylesheet' href='/assets/css/hallticket/online-hallticket.css')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js")
+    script(src="/assets/js/hallticket-handler.js" type="module" defer)
+    script.
+      const ht = !{JSON.stringify(ht)}
+      const slot = !{JSON.stringify(slot)}
+      
+      console.log(ht, slot,'-')
+
+  body 
+    div(style="position:fixed;right:20%;top:50%").printBtn
+      button(onclick="window.print();" style="background-color:red;color:white;padding:10px 20px;font-weight:bold;") Print Hall Ticket  
+    div.print-data
+        table
+          tbody
+            tr
+              td(style="width: 210mm; height: 6rem; overflow: hidden;" colspan='6')
+                  img(src="/assets/images/brand-name.jpg" alt="header-image" class="header-image")
+            tr
+              td.title-1(colspan="6")
+                | E-Admit Card 
+
+            tr
+              td(colspan="1" width="15%")
+                p बैठक क्र.
+              td(colspan="1" width="15%")
+                p #{ht.ca_roll_number}
+              td(colspan="1" width="15%")
+                p फॉर्म क्र.
+              td(colspan="1" width="15%")
+                p #{ht.id}
+
+              td(rowspan='4')
+                div.user-profile-img
+                  - var photo = s3BucketUrl+"/"+ht.ca_photo;
+                  img(src=photo alt="user photo")
+
+              td(rowspan='4') 
+                div.user-profile-img
+                  - var sign = s3BucketUrl+"/"+ht.ca_sign;
+                  img(src=sign alt="user sign")
+
+                div.user-profile-img
+                  - var sign = s3BucketUrl+"/"+ht.ca_sign;
+                  span#qr-code
+
+            tr
+              td(colspan="1" width="15%")
+                p User Id
+              td(colspan="1" width="15%")
+                p #{ht.ca_roll_number}
+
+              td(colspan="1" width="15%")
+                p Password 
+              td(colspan="1" width="15%")
+                p #{ht.birth_pass}
+
+            tr
+              td(colspan="1" width="15%")
+                p पदाचे नाव
+              td(colspan="1" width="15%")
+                p #{ht.ca_post_name}
+
+            tr
+              td(colspan="1" width="15%")
+                span लिंग:
+              td(colspan="1" width="15%")
+                span #{ht.ca_gender}
+              td(colspan="1" width="15%")
+                span जन्म तारीख:
+              td(colspan="1" width="15%")
+                span #{ht.birth_date}
+    
+            tr
+              td(colspan="1" width="20%") 
+                span पूर्ण नाव
+              td(colspan="5" width="80%")
+                span &nbsp;#{ca.ub_first_name} #{ca.ub_middle_name} #{ca.ub_last_name}
+
+            tr
+              td(colspan='3' width="50%")
+                span Entry Time&nbsp;:&nbsp;#{slot.entry_time}
+              td(colspan='3' width="50%")
+                span Gate Close Time&nbsp;:&nbsp;#{slot.gate_close_time}
+
+            tr
+              td(colspan='2' width="25%") 
+                span परीक्षा दिनांक व वेळ
+                br
+                span #{ht.exam_date}
+                br
+                span #{ht.ca_batch_time}
+              td(colspan='4' width="75%") 
+                span परीक्षा केंद्राचे नाव व पत्ता
+                br
+                span #{ht.ca_center_name}
+                span #{ht.ca_center_address} 
+
+            tr
+              td(colspan='3' width="50%")
+                span Candidate Signature ::
+                span
+              td(colspan='3' width="50%")
+                span Invigilator Signature ::
+                span
+            tr
+              td(colspan='6')
+                  p.rules-title सूचना
+                  ol
+                    each rule in rulesList
+                      li #{rule.rules.marathi}
+                  span.note नोट:: परीक्षा सुरु झाल्यानंतर किंवा अगोदर काही तांत्रिक कारणामुळे अडचण आल्यास उमेदवारास पुढील वेळ / तारीख देण्यात येईल.
+
+                  p.rules-title Instructions
+                  ol
+                    each rule in rulesList
+                      li #{rule.rules.english}
+                  span.note Note - In case of any technical problem before /after the commencement of the examination, the candidate will be given next date /time. 
+
+            tr
+              td(colspan='6')
+                p.note-2 MOBILE PHONES ARE STRICTLY PROHIBITED
+
+            
+            if p[0].p_is_ht_aadhaar_required === 1
+              tr
+                td(colspan='6')
+                    - var photo = s3BucketUrl+"/"+ht.ca_aadhar_card;
+                    img(src=photo alt="user photo")
+
+            tr
+              td(colspan='6')
+                if rulesFilesList.length > 0
+                  each ruleFile in rulesFilesList
+                    img.rule-image(src=s3BucketUrl+"/"+ruleFile.file_name, alt="")

@@ -1,0 +1,213 @@
+extends ./new/layout_index_new
+
+block css_link
+    style.
+        @media print {
+            @page{
+                size: A4 portrait;
+                margin: 10mm;
+                border: 1px solid lightgray; 
+            }
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+            .button-hide, .header-container, .nav-bar {
+                display:none;
+            }
+            .container {
+                margin: 0;
+            }
+            .table-bordered th, .table-bordered td, .table thead th {
+                border: 0.5px solid lightgray !important;
+            }
+            .text-color-alter, .text-color-alter .h3 {
+                background-color:gray !important;
+                color:white !important;
+                print-color-adjust: exact;
+            }
+            thead {
+                display: table-header-group;
+            }
+            .page-break{
+                page-break-inside: avoid;
+            }
+            table {
+                border-collapse: collapse !important;
+            }
+            //- .print-full-width {
+            //-     width: 100vw;    
+            //-     position: relative;
+            //- }
+            .print-hide {
+                display: none;
+            }
+        }
+
+        header, .header-container, .nav-bar {
+            //- display: none;
+        }
+
+        .print-full-width {
+            position: relative;
+            width: 280mm;
+            margin-inline: auto;
+            //- border: 1px solid rgba(0,0,0,.2);
+            padding: 0;
+        }
+
+        .footer{
+            border: 0.5px solid lightgray;
+        }
+
+        .table-bordered th, .table-bordered td, .table thead th {
+            border: 0.5px solid lightgray;
+        }
+
+        .text-color-alter .h3, .text-color-alter {
+            background-color:gray !important;
+            color:white !important;
+            print-color-adjust: exact;
+        }
+
+        small, span { 
+            background-color: inherit;
+        }
+
+        table {
+            border-collapse: collapse !important;
+        }
+
+        .section-heading {
+            font-weight: 500;
+            font-size: var(--para-label-2-font-size) !important;
+            padding: 0.3rem 0 0 0 !important;
+        }
+
+        td {
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.75rem !important;
+            vertical-align: top;
+        }
+
+        th {
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.75rem !important;
+            font-weight: 500;
+        }
+
+        .candidate-photo-sign {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%; /* ensures container only stretches as needed */
+            gap: 0.5rem;
+        }
+
+        .candidate-photo-sign img {
+            border: 1px solid lightgray;
+            height: 100px;
+            width: 100px;
+            //- object-fit: cover;
+            //- display: block;
+        }
+
+
+        .no-padding {
+            padding: 0 !important;
+        }
+
+block content
+
+
+
+    div.container-fluid.mt-1.print-hide
+        div.container-base
+
+            include ./new/includes/profile-icon.pug
+
+            div.side-navbar
+                a.done-step(href="#")
+                    span.step-no 1
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Verify Details
+                        br
+                        | (तपशिल पडताळणी)
+
+                a.done-step(href="#")
+                    span.step-no 2
+                    span.step-name
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.active-step(href="#")
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application View
+                        br
+                        | (अर्ज) 
+
+    div.container.print-hide
+        div.print-hide.my-3.d-flex.justify-content-center
+            button.btn.btn-success.ml-2.mt-2.btn-sm(onclick="window.print();") Print Application
+
+    div.print-full-width
+        .row
+            .col-12.d-flex.justify-content-center
+                div(style="width: 50rem; height: 6.5rem; overflow: hidden;")
+                    img(src="/assets/images/banner-sses.png" alt="" class="header-image" style="height: 100%; width: 100%;")
+        .row
+            .col-12.text-end.mb-2
+                p.text-right.input-label Printed On&nbsp;::&nbsp;#{todaysDate}
+        .row
+            .col-12
+
+                table.table.table-bordered.w-100
+                    tbody
+                        tr
+                            td(width='25%') Application Id (अर्ज क्र.)
+                            td #{preview_data.application_id}
+                            td(rowspan='13' class='no-padding align-top')
+                                .candidate-photo-sign
+                                    img#imageUploadPreview(src=s3BucketUrl + '/' + preview_data.photo, alt='candidate-photo')
+                                    img#signUploadPreview(src=s3BucketUrl + '/' + preview_data.sign, alt='candidate-sign')
+                        tr
+                            td(width='15%') Full Name (संपूर्ण नाव)
+                            td #{preview_data.full_name}
+                        tr
+                            td(width='15%') Department Name (विभाग नाव)
+                            td #{preview_data.ca_detailsMainPost}
+                        tr
+                            td(width='15%') Post (पोस्ट नाव)
+                            td #{preview_data.post_name}
+                        tr
+                            td(width='15%') Date Of Birth (जन्मतारीख)
+                            td #{preview_data.date_of_birth}
+                        tr
+                            td(width='15%') Gender (लिंग)
+                            td #{preview_data.gender}
+                        tr
+                            td(width='15%') Caste (कास्ट)
+                            td #{preview_data.catagory}
+                        tr
+                            td(width='15%') Sub Category (सब कास्ट)
+                            td #{preview_data.detailsSubCategory}
+                        tr
+                            td(width='15%') Address (पत्ता)
+                            td #{preview_data.address}
+                        tr
+                            td(width='35%') Mobile Number (मोबाईल क्र.)
+                            td #{preview_data.mobile_name}
+                        tr
+                            td(width='35%') Alternative Number (पर्यायी मोबाईल क्र.)
+                            td #{preview_data.alternative_number ? preview_data.alternative_number : '-'}
+                        tr
+                            td(width='35%') Email ID (ईमैल आयडी)
+                            td #{preview_data.email_id}
+        .col-12.mt-3
+            center
+                button.button-hide.btn.btn-success.ml-2.mt-2(onclick="window.print();") Print Application

@@ -1,0 +1,83 @@
+extends layout-index
+block css_link
+    link(rel='stylesheet' href='./assets/css/web-comman.css')
+block content
+    nav.navbar.navbar-expand-sm.navbar-dark(style='background-color: #065F9E;')
+        span.navbar-brand.text-light.font-weight-bolder  #{process.name}
+        button.navbar-toggler.d-lg-none(type='button', data-toggle='collapse', data-target='#collapsibleNavId', aria-controls='collapsibleNavId', aria-expanded='false', aria-label='Toggle navigation')
+        #collapsibleNavId.collapse.navbar-collapse
+            ul.navbar-nav.mr-auto.mt-2.mt-lg-0
+                li.nav-item.active.bg-primary
+                    a.nav-link(href='/home')
+                        | Home 
+                    span.sr-only (current)
+    img.img-fluid(src='./assets/images/brand-name.jpeg' alt='' style='height:230px;width: 100%')
+    .card.d-none
+        .card-header.text-center.h5.text-info
+            | Registration Information
+    .container-fluid
+        .row
+            .col-8.offset-2.mt-2
+                ul.list-unstyled.multi-steps
+                    li.is-active.d-none
+                    li Registration
+                    li Details
+                    li Upload Photo &amp; Signature
+                    li Preview
+                    li Payment
+        .card
+            .card-header.text-danger.font-weight-bolder.h5
+                | General Instructions
+            .card-body
+                center
+                    a(target="new" href="/recruitment-advertisement.pdf").btn.btn-dark.btn-sm
+                        i.fa.fa-download.mr-1(aria-hidden='true')
+                            | View Information Bulletin
+                ul.text-justify.font-weight-bolder.mt-2
+                    li
+                        | read the instructions, procedure and Information Bulletin
+                        | carefully before you start filling the Application Form.
+                    li
+                        | Candidate can apply for &ldquo;#{process.name}&rdquo; recruitment &lsquo;ON-LINE&rsquo; only through
+                        | official website 
+                        a(href=process.site target="new") #{process.site}
+                    li
+                        | note that all the particulars mentioned in the online application including
+                        | Name of the Candidate, Category, Date of Birth, Address, Mobile Number, Email
+                        | ID will be considered as final and no change/modifications will be allowed after
+                        | submission of the online application form. Candidates are hence advised to fill in
+                        | the online application form with the utmost care as no correspondence regarding
+                        | change of details will be entertained. Respective department will not be
+                        | responsible for any consequences arising out of furnishing of incorrect and
+                        | incomplete details in the application.
+                    li
+                        | Every Phase is equally mandatory for the completion of online exam form
+                        | successfully.
+                div.ml-5     
+                        input#i-agree(type="checkbox" style="width:20px;height:20px") 
+                        label(for="i-agree").ml-2.text-danger.font-weight-bold I have read above Information Bulletin very carefully. I accept and proceed.
+                        br
+                        label.ml-4(for="i-agree").text-danger.font-weight-bold मी वरील माहिती बुलेटिन फार काळजीपूर्वक वाचली आहे. मी स्वीकारतो आणि पुढे जात आहे.   
+                center
+                    button#proccessNewReg.btn.btn-primary  Click Here To Proceed
+
+
+    script.
+        $(function(){
+           $('#proccessNewReg').on('click',function(){
+                var status = $('#i-agree').prop('checked');
+                if(!status){
+                    alertjs.warning(
+                        {
+                        t: "Warning",
+
+                        m: "select the check box.",
+                        },
+
+                        function () {}
+                    );
+                    return false;
+                }
+                   window.location.replace('/new-registration');
+             });
+        });

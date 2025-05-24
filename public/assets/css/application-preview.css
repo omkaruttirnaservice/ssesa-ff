@@ -1,0 +1,59 @@
+.application-preview-container {
+	max-width: 120rem;
+}
+
+table {
+	/* font-size: 1rem !important; */
+}
+
+table tr {
+	vertical-align: middle;
+}
+
+table th small {
+	background-color: inherit !important;
+}
+
+.decleration-heading {
+	color: blue;
+	/* font-size: 1rem; */
+	font-weight: 500;
+
+	font-style: italic;
+}
+
+.decleration-text {
+}
+
+input[type="checkbox"] {
+	width: 2rem;
+	height: 2rem;
+}
+
+input[type="checkbox"],
+label {
+	cursor: pointer;
+}
+
+#back,
+#submitPreview {
+	/* font-size: 1rem; */
+	font-weight: bold;
+}
+
+.section-heading {
+	font-weight: 500;
+	font-size: var(--para-label-font-size) !important;
+	padding: 0.3rem 0 0 0 !important;
+}
+
+th {
+	font-size: var(--para-label-2-font-size) !important;
+	padding: 0.2rem !important;
+	font-weight: 500;
+}
+
+td {
+	font-size: var(--para-label-font-size) !important;
+	padding: 0.2rem !important;
+}

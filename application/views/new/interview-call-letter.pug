@@ -1,0 +1,108 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    title Interview Call Letter
+    link(
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    )
+
+    style.
+        body {
+          font-size: 13px;
+        }
+    
+        @media print {
+            .printBtn {
+                display:none;
+            }
+            table,.table,th,td,.table td, .table th{
+            border-color:black !important
+            }
+        }
+      td {
+        padding: 5px;
+      }
+  body
+    button.btn.btn-success.ms-4.mt-4.text-center.printBtn(onclick="window.print()") Print Interview Call-Letter
+    .p-2.position-relative(style="width: 200mm; height: 200mm")
+      //- p.text-center.fw-bold.fs-5.mb-0 The Maharashtra Urban Co-Op. Bank's Federation Ltd.
+      //- p.text-danger.fs-6.text-center.mb-1.fw-bold Recruitment Code - 123
+      //- p.fs-6.text-center.fw-bold.mb-0 The Kunbi Sahakari Bank Ltd., Mumbai.
+      //- p.fs-6.text-center.text-danger.mb-0.fw-bold Head Office of The Kunbi Sahakari Bank Ltd., Abhilasha Shramik Co-op. 
+      //- p.fs-6.text-center.text-danger.mb-0.fw-bold  Housing Society Ltd., Near Kingston Tower, G. D. Ambekar Road, Kalachawki, Mumbai - 400 033
+
+      div(style="width: 40rem; height: 8rem; overflow: hidden; margin: 0.4rem auto;")
+          img(src=s3BucketUrl+"/"+ config.headerImg alt="" class="header-image" style='height: 100%; width: 100%;')
+
+      .d-flex.justify-content-end.me-5
+        //- | दिनांक&nbsp;:&nbsp;#{details.interview_date}
+        | दिनांक&nbsp;:&nbsp;#{config.letterDate}
+      p.fw-bold प्रति,
+      p.mb-0 #{details.ub_first_name} #{details.ub_middle_name} #{details.ub_last_name}
+      p.mb-0 यूजर आय.डी. : #{details.r_id}
+      p.mb-0 अँप्लिकेशन आय.डी. : #{details.f_id}
+      p.mb-0 रोल नं. : #{details.roll_no}
+      p.mb-0 पद  नाव : #{details.ca_post_name}
+      p 
+        span.fw-bold विषय&nbsp;:&nbsp; #{config.subject}
+      div#paragraphs
+        
+      p.fw-bold मुलाखत तपशील :
+      div
+
+        p
+            span मुलाखतीची वेळ&nbsp;:&nbsp;
+            span.fw-bold #{details.interview_time}
+        p
+            span मुलाखतीची दिनांक&nbsp;:&nbsp;
+            span.fw-bold #{details.interview_date} 
+        p
+            span मुलाखतीचे ठिकाण&nbsp;:&nbsp;
+            span.fw-bold #{details.interview_address}
+      .d-flex.gap-3.justify-content-center(style="position: absolute; top: 12rem; right: 4rem;")
+        .border(style="width: 5rem; height: 5rem")
+            img(src=s3BucketUrl+'/'+details.ca_photo, alt="" class="w-100 h-100")
+        .border(style="width: 5rem; height: 5rem")
+            img(src=s3BucketUrl+'/'+details.ca_sign, alt="" class="w-100 h-100")
+      p.fw-bold.text-decoration-underline.mb-1 आवश्यक कागदपत्रे :
+      ul.list-unstyled
+        li १) मुलाखत पत्राची प्रत
+        li २) जन्म तारीख पुरावा मूळ प्रत
+        li ३) सर्व शैक्षणिक कागदपत्रे (दहावी, बारावी, पदवी, पदव्युत्तर परीक्षांचे गुणपत्रक तसेच अन्य कोर्सेस एम.एस.सी.आय.टी. व प्रमाणपत्र इत्यादी) (मूळ प्रती).
+        li ४) पूर्वी कामाचा अनुभव असल्यास त्याबाबतची कागदपत्रे (मूळ प्रती)
+        li ५) आधारकार्ड/पॅनकार्ड/पासपोर्ट
+        li ६) आयकार्ड साईज फोटोग्राफ (दोन)
+        li ७) मुलाखती दिवशी पात्र उमेदवारांनी शैक्षणिक तसेच आवश्यक सर्व कागदपत्रांची झेरॉक्स २ प्रतीमध्ये सादर करणे अनिवार्य राहील. 
+      p उपरोक्त निर्धारित केलेल्या वेळापत्रकानुसार मुलाखतीसाठी उपस्थित राहणे अनिवार्य आहे. आपण मुलाखतीसाठी गैरहजर राहिल्यास, आपली संधी आपोआप संपुष्टात येईल, याची नोंद घ्यावी.
+
+      p.text-danger.mb-0(style="font-size: 10px;")  टीप :
+      p.text-danger.mb-0(style="font-size: 10px;") १: उमेदवाराने मुलाखतीस स्वखर्चाने हजर राहावे. उमेदवारास मुलाखती करिता कुठल्याही प्रकारचा खर्च अदा करण्यात येणार नाही. याची उमेदवाराने नोंद घ्यावी.
+      p.text-danger.mb-0(style="font-size: 10px;") २: मुलाखतीसाठी पात्र असलेल्या उमेदवाराने संबंधित बँकेच्या संचालक मंडळ किंवा अधिकारी यांचेशी नियुक्ती संबंधी संपर्क करू नये.
+
+      div.d-flex.justify-content-end.gap-5.mb-0
+        div.d-flex.justify-content-center.flex-column.align-items-center
+          p Sd/-
+          p मुख्य कार्यकारी अधिकारी 
+
+        div.d-flex.justify-content-center.flex-column.align-items-center
+          p Sd/-
+          p अध्यक्ष
+      p.fw-bold.text-end.mb-1 #{config.bankName}
+
+    script(
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+    )
+
+    script.
+      const config = !{JSON.stringify(config)}
+      console.log(config)
+      const paragraphEl = document.querySelector('#paragraphs')
+      paragraphEl.innerHTML = config.paragraph
+

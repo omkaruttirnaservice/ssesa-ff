@@ -1,0 +1,215 @@
+extends layout_index_new
+block css_link
+    //- link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css")
+
+block inline_js 
+    script.
+        const p = !{JSON.stringify(p)}
+
+        const regID = Number(#{r});
+        const form_id = Number(#{f});
+        const mainTitle = '#{process.name}';
+        const subTitle = '#{process.name} payment for #{payment_data.post_name}';
+        const totalPaymentAmount = '#{payment_data.post_fee + payment_data.post_fee_tax + payment_data.convenience_charge}';
+        const userDetails={
+            name: "#{payment_data.full_name}",
+            email: "#{payment_data.email_id}",
+            contact: "#{payment_data.mobile_name}",
+            post:'#{payment_data.post_name}',
+            totalPayment: '#{payment_data.post_fee + payment_data.post_fee_tax}'
+        };
+
+block js_link
+    script(src="/assets/js/payment-handler-offline.js" defer)
+block inline_css 
+    style. 
+        .section-heading {
+            font-weight: 500;
+            padding: 2rem 0 0.8rem 0 !important;
+        }
+
+        td {
+            padding: 0.7rem !important; 
+        }
+        input[type='checkbox'], 
+        input[type='text'],
+        label {
+            cursor: pointer; 
+        }
+        .input-label-title {
+            margin: 0;
+        }
+        table tr {
+            font-size: 1rem;
+            vertical-align: middle;
+        }
+
+        #makeOfflinePayment {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .decleration-heading {
+            font-style: italic; 
+            font-size: 1rem;
+            color: blue;
+        }
+
+        .decleration-text {
+            color: red;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table-section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            text-align: center;
+            color: #FFF;
+        }
+
+        .paymentDetailsContainer {
+            //- max-width: 125rem;
+        }
+        .section-heading {
+            font-weight: 500;
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.3rem 0 0 0 !important;
+        }
+
+        th {
+            font-size: var(--para-label-2-font-size) !important;
+            padding: 0.2rem !important;
+            font-weight: 500;
+        }
+
+        td {
+            font-size: var(--para-label-font-size) !important;
+            padding: 0.2rem !important;
+        }
+
+block content
+    .modal.fade#transactionModal(tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true")
+        .modal-dialog.modal-lg(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title.text-primary Payment Receipt Preview
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                .modal-body.row
+                    .form-group.col-12 
+                        img(width="100%" height="100%")#img-transaction
+
+    div.container-fluid
+        div.container-base
+            div.side-navbar
+
+                div.profileIcon
+                    div.d-flex.flex-column.gap-2.mb-2.bg-transparent
+                        a.c-button.c-btn-primary(href='/home') Home
+                        button#logout.fw-bold.c-button.c-btn-success Logout
+                    label.input-label User ID : #{regIDInt} 
+                    label.input-label Username : #{userName}
+                    label.input-label.profileName Post : #{regPostName}
+
+            <div class="main-content paymentDetailsContainer">
+                div.py-2
+                    i.fa-solid.fa-graduation-cap.me-2
+                    label.input-label-title Payment Details (पेमेंट तपशील)
+
+                //- offline payment
+                p.bg-secondary.table-section-title Offline Payment
+                table.table.table-bordered.mb-5
+                    tbody
+                        tr
+                            td(colspan="4")
+                                p.note-card परीक्षा शुल्काचा भरणा खालील दिलेल्या बँक खात्यामध्ये NEFT / RTGS / UPI QR CODE द्वारे करावे व पैसे भरल्याची प्रत अपलोड करावी.
+                        tr
+                            td(colspan="3")
+                                p.input-label-title बँक खात्याचा तपशील :
+                                    div.d-flex
+                                        div.input-label Bank Account Name: 
+                                        div.input-label &nbsp;&nbsp;#{p.p_bank_account_name}
+
+                                    div.d-flex
+                                        div.input-label Bank Name: 
+                                        div.input-label &nbsp;&nbsp;#{p.p_bank_name}
+
+                                    div.d-flex
+                                        div.input-label Saving A/c No.:
+                                        div.input-label &nbsp;&nbsp;#{p.p_saving_account_number}
+
+                                    div.d-flex
+                                        div.input-label IFSC code :
+                                        div.input-label &nbsp;&nbsp;#{p.p_ifsc_code}
+
+                            td(colspan="1").bg.text-center.fw-bold 
+                                p.mb-0 Payment QR Code
+                                img(src="/assets/images/qr-code.png" width="150")
+
+                table.table.table-bordered.mb-5
+                    tbody
+                        tr
+                            td.bg-secondary.table-section-title.text-white(colspan='6') Payment Area
+                        tr
+                            td(colspan='2')
+                                p.fw-bold.center fill up below details strictly as per 'Payment Details'. Candidate himself/herself will be responsible for incorrect information.
+                                p.fw-bold.center कृपया 'शुल्क माहिती' तपशील काटेकोरपणे भरा. चुकीच्या माहितीसाठी उमेदवार स्वतःच जबाबदार असतील.
+                        tr
+                            td
+                                label.input-label-title(for="txn-deposit-date") Transaction Deposit Date
+                            td
+                                input.input-element#txn-deposit-date(type="text", name, placeholder="dd-mm-yyyy" aria-describedby="helpId")
+                        tr
+                            td
+                                label.input-label-title(for="utr-number") UTR Number
+                            td
+                                input#utr-number.input-element( type="text", name, placeholder="UTR Number" aria-describedby="helpId" value="" )
+                        tr
+                            td
+                                label.input-label-title(for='confirm-utr-number') Confirm UTR Number 
+                            td
+                                input#confirm-utr-number.input-element( type="text", name, placeholder="Confirm UTR Number" aria-describedby="helpId" value="" )
+                        tr
+                            td(colspan=2)
+                                p.fw-bold.text-center.text-primary.mb-0 OR
+                        tr
+                            td
+                                label.input-label-title(for='txn-id') Transaction ID
+                            td
+                                input#txn-id.input-element( type="text", name, placeholder="Enter Transaction ID" aria-describedby="helpId" value="" )
+                        tr
+                            td
+                                label.input-label-title(for='confirm-txn-id') Confirm Transaction ID
+                            td
+                                input#confirm-txn-id.input-element( type="text", name, placeholder="Confirm Your Transaction ID" aria-describedby="helpId" value="" )
+                        tr
+                            td
+                                label.input-label-title(for="transactionFile") Upload Transaction ID / UTR Number Receipt 
+                            td
+                                input#transactionFile.input-element( type="file" )
+                        tr
+                            td
+                                label.input-label-title(for="txn-receipt-preview") Transaction Receipt Preview
+                            td
+                                img(src="" id="txn-receipt-preview" style="border: 1px solid gray; max-width: 10rem; max-height: 10rem;" alt="Transaction Receipt")
+
+                        tr
+                            td(colspan='2')
+                                .text-justify
+                                    p.decleration-heading Declaration:-
+                                    p.decleration-text
+                                        | I hereby accept all the above details filled are correct. 
+                                    p.decleration-text
+                                        | मी भरलेले वरील सर्व तपशील बरोबर असल्याचे स्वीकारतो.
+                                    div.d-flex.gap-3
+                                        input#confirm-details(type='checkbox' name='' )
+                                        label(for='confirm-details') I Agree
+                                    div.text-center
+                                        button#makeOfflinePayment.btn.btn-primary
+                                            | Save Details
+
+    //- script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js") 

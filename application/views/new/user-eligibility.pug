@@ -1,0 +1,206 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/user-eligibility/user-eligibility.css")
+
+block inline_js 
+    script.
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        var form_id = Number(#{form_id});
+        var updateData  = '!{updateResult}';
+        const categoryList = !{JSON.stringify(categoryList)}
+        const postCategoryList = !{JSON.stringify(postCategoryList)}
+        console.log(postCategoryList ,'==')
+
+        var sammanter = !{sammanter};
+        var postList = !{postList};
+        var is_new = true;
+        if(updateData.length > 0){
+            is_new = false;
+            $('.card').removeClass('d-none');
+        }
+
+block js_link
+    script(src="/assets/js/user-eligibility.js" type="module" defer)
+
+block content
+    div.container-fluid
+        div.container-base
+
+            include ./includes/profile-icon.pug
+
+            div.side-navbar
+
+
+                a.done-step(href="/new-registration") 
+                    span.step-no 1
+                    span.step-name 
+                        i.fa-regular.fa-file-lines.me-2
+                        | Registration
+                        br
+                        | (नोंदणी)
+
+                a.active-step(href="/user-eligibility/"+regIDString)
+                    span.step-no 2
+                    span.step-name 
+                        i.fa-solid.fa-road-barrier.me-2
+                        | Entry Qualification 
+                        br
+                        | (प्रवेश पात्रता)
+                    i(class="fa-solid fa-play active-arrow")
+                a.pending-step(href="#")
+                    span.step-no 3
+                    span.step-name
+                        i.fa-solid.fa-user.me-2
+                        | Candidate Profile 
+                        br
+                        | (उमेदवाराची प्रोफाईल)
+                a.pending-step(href="#")
+                    span.step-no 4
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Education Details
+                        br
+                        | (शैक्षणिक तपशील)
+                a.pending-step(href="#") 
+                    span.step-no 5
+                    span.step-name 
+                        i.fa-solid.fa-brain.me-2
+                        | Experience Details
+                        br
+                        | (अनुभव तपशील)
+                a.pending-step(href="#")
+                    span.step-no 6
+                    span.step-name 
+                        i.fa-solid.fa-graduation-cap.me-2
+                        | Accomplishments
+                        br
+                        | (गुणवत्ता तपशील)
+                a.pending-step(href="#")
+                    span.step-no 7
+                    span.step-name 
+                        i.fa-solid.fa-upload.me-2
+                        | Document Upload
+                        br
+                        | (कागदपत्रे अपलोड)
+
+                a.pending-step(href="#")
+                    span.step-no 8
+                    span.step-name 
+                        i.fa-solid.fa-paperclip.me-2
+                        | Application Preview
+                        br
+                        | (अर्ज पूर्वावलोकन)
+
+
+            section.main-content
+                if(currentPassword != '')
+                    div.input-card.mb-3
+                        h1.input-card-heading 
+                            | PLEASE NOTE IT DOWN
+                        div
+                            span Thank you for registration, note down your User Id and Password.
+                            br
+                            span नोंदणीसाठी धन्यवाद, कृपया तुमचा वापरकर्ता आयडी आणि पासवर्ड लक्षात ठेवा.
+                            br
+                            span.text-danger  User Id&nbsp;:&nbsp;: #{regIDInt}  ||&nbsp;
+                            span.text-primary Password&nbsp;:&nbsp;: #{currentPassword} 
+
+
+                div#eligibility-container
+                    div.input-card
+                        h1.input-card-heading 
+                            i.fa-solid.fa-user
+                            | Entry Qualification (प्रवेश पात्रता तपशील)
+                        div.entry-qualification-container
+                            div.grid-el
+                                label.input-label(for="") Bank Name (बँक नाव)&nbsp;*&nbsp;
+                                select.input-element#detailsMainPost
+                            div.grid-el
+                                label.input-label(for="") Post (पोस्ट नाव)&nbsp;*&nbsp;
+                                select.input-element#detailsPost
+                            div.grid-el.d-none.select-cast-dropdown
+                                label.input-label(for="") Select Caste (कास्ट निवड)&nbsp;*&nbsp;
+                                select.input-element#detailsCategory
+
+                            div.grid-el.select-cast-dropdown.d-none#exam-fees-container
+                                label.input-label(for="") Exam Fees (परीक्षा फी)
+                                span.input-label
+                                    i.fa-solid.fa-indian-rupee-sign
+                                    | &nbsp; Fee (फी)&nbsp;:&nbsp;
+                                    span#exam-fee 0/-
+                                span.input-label
+                                    i.fa-solid.fa-indian-rupee-sign
+                                    | &nbsp; GST 18% (जी.एस.टी. १८%)&nbsp;:&nbsp;
+                                    span#exam-fee-tax 0/-
+                                span.input-label
+                                    i.fa-solid.fa-indian-rupee-sign
+                                    | &nbsp; Transaction charges (ट्रान्झॅक्शन शुल्क)&nbsp;:&nbsp;
+                                    span#exam-fee-txn-charge 10/-
+                                span.input-label
+                                    i.fa-solid.fa-indian-rupee-sign
+                                    | &nbsp; Total Amount (एकून शुल्क)&nbsp;:&nbsp; 
+                                    span#total-exam-fee 0/-
+
+                            div.grid-el.date#dob-container
+                                label.input-label Date of Birth (जन्म तारीख)&nbsp;*&nbsp;
+                                div.dobBox
+                                    div
+                                        select#detailsbday.birth_date(name='detailsbday')
+                                            option Day
+                                    div
+                                        select#detailsmonth.birth_date(name='detailsmonth' )
+                                            option Month
+                                    div
+                                        select#detailsYear.birth_date(name='detailsYear' )
+                                            option Year
+
+                                div.dobAge.grid-el
+                                    span.input-label Your age on date 
+                                        span.input-label.setAgeOfAsOn
+                                        | &nbsp;is&nbsp;:&nbsp;
+                                    span.input-label आपले वय 
+                                        span.input-label.setAgeOfAsOn
+                                        | &nbsp;नुसार&nbsp;:&nbsp;
+                                    p
+                                        span.setAgeText
+
+                    div.decleration-container.d-none
+                        div.input-card
+                            h1.input-card-heading 
+                                i.fa-solid.fa-pen-nib
+                                | Declaration (घोषणा तपशील)
+
+                            div.declerationContainer 
+                                label.input-label 
+                                    | I agree that, 
+                                    br
+                                    | मी घोषित करतो कि, 
+
+                                div.decleration.mb-3(id="elg-tenth" class="d-none")
+                                    input#checkTenth.pointer(type="checkbox")
+                                    label.input-label(for="checkTenth")
+                                        | I have completed my SSC/10th.
+                                        br
+                                        | (माझी इ. १० पूर्ण झाली आहे.)
+
+                                div.decleration.mb-3(id="elg-graduation" class="d-none")
+                                    input#checkGraduation(type="checkbox")
+                                    label.input-label(for="checkGraduation")
+                                        |I have completed my Graduation.
+                                        br
+                                        | (मी माझे पदवीचे शिक्षण पूर्ण केले आहे.)
+
+                                div.decleration(id="elg-citification" class="d-none")
+                                    input#checkCitification(type="checkbox")
+                                    label.input-label(for="checkCitification")
+                                        | I have completed MSCIT or any other equivalent computer certification course.
+                                        br
+                                        | (मी MSCIT किवा इतर समान संगणक कोर्स पूर्ण केला आहे.)
+
+                                div#extra-declerations
+
+                section(class="date d-flex justify-content-center mt-3 gap-1 mb-2")
+                    button(class="c-button c-btn-primary" id="verifyPersonalDetails") Verify Details
+                    button#submitPersonalDetails.c-button.c-btn-success.d-none Submit
+

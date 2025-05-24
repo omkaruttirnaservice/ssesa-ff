@@ -1,0 +1,104 @@
+extends layout-index
+
+block content
+    .container-fluid
+        .row
+            .col-12.mt-5
+                p.h2.text-center.text-info 
+                    u Forgot Username
+                .col-4.offset-4.mt-5
+                    form#forgetPassword
+                        table.table.table-borderless
+                            tbody
+                                tr
+                                    td(colspan="2")
+                                        input#addDhr.form-control.numaric(value="" data-limiter="12" placeholder="Aadhaar Number" name="forAadharNumber")
+                                tr
+                                    td(colspan="2") 
+                                        input#mobile.form-control.numaric(value="" data-limiter="10" placeholder="Mobile Number" name="forgetMobileNumber")
+                                tr
+                                    td.text-center(colspan="2")
+                                        span#showPass.text-danger.font-weight-bolder.h5
+                                tr
+                                    td
+                                        button#recoverPassword.form-control.btn.btn-outline-success Get UserId
+                                    td
+                                        a(href="/").form-control.btn.btn-outline-primary Go To Home
+
+    script.
+        $(function(){
+            $('#recoverPassword').click(function(event){
+                $this = $('#recoverPassword');
+                event.preventDefault();
+                validate
+                if($('#forgetPassword').valid()){
+                    $this.prop('disabled',true).html('Getting Details...')
+                        $.ajax({
+                            method:'post',
+                            url:'/getUsernameRecovery',
+                            data:{
+                                aadharNumber:$('input[name="forAadharNumber"]').val(),
+                                mobileNumber:$('input[name="forgetMobileNumber"]').val()
+                            }
+                            }).done(function(data){
+                                $this.prop('disabled',false).html('Get Username')
+                                var json_data = data;
+                                switch(json_data._call){
+                                    case 1: 
+                                        $('#showPass').html('Your Username is :: '+json_data.data[0].username);
+                                        $('#addDhr').prop('disabled',true)
+                                        $('#mobile').prop('disabled',true)
+                                        var parent =  $this.parent('td');
+                                        $(parent).addClass('d-none');
+                                    break;
+                                    case 0:
+                                        $('#showPass').html('No data found in record, try again.');
+                                        break;
+                                }
+                            }).fail(function(error){
+                                $this.prop('disabled',false).html('Get Username')
+                                $('#showPass').html('Server Error Try Again/Contact Admin.');
+                                console.log(error);
+                            }).always(function(){
+                                console.log('Done');
+                            });
+                }
+
+            })
+        });
+        var validate = $('#forgetPassword').validate({
+        rules: {
+
+            forAadharNumber:{
+                required: true,
+                number:true,
+                minlength:12,
+                maxlength:12
+                },
+            forgetMobileNumber:{
+                required: true,
+                number:true,
+                minlength:10,
+                maxlength:10
+                },
+        },
+        messages: {
+            forAadharNumber: {
+                required: "&nbsp;Enter Aadhaar Card Number.",
+                number:"&nbsp;Invalid Aadhaar Card Number.",
+                minlength: "&nbsp;Aadhaar Card Number Must Be {0} Digits.",
+                maxlength: "&nbsp;Aadhaar Card Number Be At Least {0} Digits.",
+            },
+            forgetMobileNumber:{
+                required: "&nbsp;Enter Mobile Number.",
+                number:"&nbsp;Invalid Mobile Number.",
+                minlength: "&nbsp;Mobile Number Must Be {0} Digits.",
+                maxlength: "&nbsp;Mobile Number Be At Least {0} Digits.",
+            },
+        },
+        errorPlacement: function(error, element) 
+        {
+            error.insertAfter( element );
+            $("label[class='error']").addClass('text-danger font-weight-bolder'); 
+        }
+        });

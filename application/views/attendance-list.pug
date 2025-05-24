@@ -1,0 +1,71 @@
+extends layout_index
+block css_link
+    link(rel='stylesheet' href='/assets/css/hallticket/hallticket.css')
+block content
+    div.print-data
+      img.brand-header(src="/assets/images/brandName.png")
+      table.table.table-bordered.table-inverse.print-table.mb-0
+        tbody
+          tr
+            td(width="8%").p-1.align-middle.font-weight-bold  POST NAME
+            td(width="30%").p-1.align-middle
+              span.font-weight-bold Branch Manager (शाखा अधिकारी)
+          tr
+            td(width="8%").p-1.align-middle
+              span.font-weight-bold EXAM DATE
+            td(width="30%").p-1.align-middle
+              span.font-weight-bold 09/11/2019
+          tr
+            td(width="8%").p-1.align-middle
+              span.font-weight-bold EXAM TIME
+            td(width="30%").p-1.align-middle
+              span.font-weight-bold 09:00 AM TO 10:30 AM
+      table.table.table-striped.table-bordered.table-inverse.print-table.mb-0
+        tbody
+          tr
+            td.header-tag-1.p-1 RESULT
+      table.table.table-bordered.table-inverse.print-table
+        tbody
+          tr
+            td.user-details(colspan="1" width="21%").p-2.align-middle
+              span.font-weight-bold FULL NAME
+            td.user-details(colspan="2").p-2.align-middle
+              span.font-weight-bold  SURAJ GOVIND TIKHE
+            td.user-profile-img(rowspan='4', width='15%').p-2.align-middle
+              img(src="/assets/images/pics/photo_1571570310211.jpg")
+          tr
+            td.user-details(colspan="1" width="21%").p-2.align-middle
+              span.font-weight-bold CAST
+            td.user-details(colspan="2").p-2.align-middle
+              span.font-weight-bold  OBC
+           
+          tr
+            td.user-details(colspan="1").p-2
+              span.font-weight-bold USERNAME
+            td.user-details(colspan="2").p-2
+              span.font-weight-bold 10003
+          tr
+            td.user-details(colspan="1").p-2
+              span.font-weight-bold APPLICATION ID
+            td.user-details(colspan="2").p-2
+              span.font-weight-bold  42
+          tr.text-center
+            td(colspan="3")
+              table(border="1" width="100%").mb-0
+                tbody
+                  tr
+                    td.user-details.p-2
+                      span.font-weight-bold TOTAL MARKS
+                    td.user-details.p-2
+                      span.font-weight-bold CUT OFF
+                    td.user-details.p-2
+                      span.font-weight-bold OBTAINED MARKS
+                  tr
+                    td.user-details.text-center.p-2
+                      span 90
+                    td.user-details.text-center.p-2
+                      span 42
+                    td.user-details.text-center.p-2
+                      span 66
+            td.user-sign-img( width='15%' rowspan="1").p-2
+              img(src="/assets/images/pics/photo_1571571572788.jpeg") 

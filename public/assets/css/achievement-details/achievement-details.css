@@ -1,0 +1,41 @@
+.achievementsContainer {
+    /* max-width: 125rem !important; */
+}
+/* ADD ACHIEVEMENT MODAL */
+.achievementModalTitle {
+    font-size: 1.8rem;
+    margin-left: 1.2rem;
+}
+
+#achievementForm {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1rem;
+}
+
+.achievementModalContainer {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr; */
+}
+
+.achievementSaveButton {
+    display: flex;
+    justify-content: end;
+}
+
+.addAchievement button {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-left: 1.2rem;
+}
+
+.achievementSaveButton a,
+.achievementSaveButton button {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+/* UTILITY CLASSES */
+.text-sm {
+    font-size: 1.2rem;
+}

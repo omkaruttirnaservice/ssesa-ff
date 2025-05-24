@@ -1,0 +1,99 @@
+extends layout_index_new
+block css_link
+    link(rel="stylesheet" href="/assets/css/File_Upload/fileUpload.css")
+block inline_css 
+    style. 
+        #finalizedDoc,
+        #addNewDocument,
+        .upload-extra-doc,
+        .view-extra-doc{
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+block inline_js
+    script.
+        var regID = Number(#{regIDInt});
+        var regString = '#{regIDString}';
+        var form_id = Number(#{form_id});
+        var  documents= !{documents};
+        console.log(documents)
+block js_link
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js" defer)
+    script(src="/assets/js/document-upload-extra.js" defer)
+block content
+    #loadMyPage.d-none
+        .loader
+
+    div.position-relative.set-static-1
+        div.progressBar.set-static-1.mt-4.py-2(style='height: 4rem;')
+            div.leftButton
+                i.fa.fa-arrow-left
+            div.middle 
+                a.done-step(href="/new-registration") 1
+                a.done-step(href="/user-eligibility/"+regIDString) 2
+                a.done-step(href="/user-details/"+regIDString) 3
+                a.done-step(href="/education-details/"+regIDString) 4
+                a.done-step(href="/experience-details/"+regIDString) 5 
+                a.done-step(href="/achievement-details/"+regIDString) 6
+                a.done-step(href="/document-upload/"+regIDString) 7
+                a.active-step(href="/extra-documents/"+regIDString) 8
+                a(href="/application-preview/"+regIDString) 9 
+
+            div.rightButton 
+                i.fa.fa-arrow-right 
+
+        nav.set-static-2.align-items-center.d-flex.justify-content-between.form-container-top-box(aria-label.input-label="breadcrumb")
+            ol.breadcrumb.m-0.p-0
+                li.breadcrumb-item(aria-current="page").h4.m-0.p-0 User
+                li.breadcrumb-item(aria-current="page").h4.m-0.p-0 Documents Uploading
+            div.userProfile
+                p.profileIcon
+                    i.fa.fa-user.mx-2.text-primary
+                    |[#{regIDInt}] &nbsp; #{userName}
+                p.profileName -#{regPostName} 
+                button#logout.fw-bold.c-button.c-btn-success.ms-3 Logout
+
+    <section class="container-base">
+
+        <div class="container-primary">
+
+            div.inputBoxContainer.mb-4
+                p.file-upload-info The document must be in .pdf or .jpeg format. The size of the document must be less than 200 kb and greater than 20 kb.
+
+            <section class="col-12">
+                .d-flex.justify-content-center.align-items-center
+                    table.table-borderless
+                        tbody
+                            tr
+                                td(width='100%')#documentList
+                                    .row
+                                        .col-5
+                                            .input-group
+                                                label.input-group-text(for="inputGroupFile01") Document 
+                                                select.form-control#extraCertificateSelect(type="email" placeholder="" list="data-list")
+                                                    option(value="Cast Certificate") Cast Certificate
+                                        .col-4
+                                            .input-group
+                                                input#imageUpload.form-control(type='file' name='photo' placeholder='' aria-describedby='fileHelpId')
+                                        .col-3
+                                            .input-group
+                                                button.input-group-text.bg-success.text-white(for="inputGroupFile01") Upload
+                                                button.input-group-text.bg-primary.text-white.mx-1
+                                                    span.fa.fa-eye
+                                                button.input-group-text.bg-danger.text-white.btn-sm.mx-1
+                                                    span.fa.fa-trash
+                hr
+                div.d-flex.justify-content-center
+                    .mb-2
+                        button#addNewDocument.btn.btn-info.btn-lg
+                            i.fa.fa-plus.mr-2(aria-hidden='true')
+                            |  Add Other
+                hr  
+                div.d-flex.justify-content-end
+                    .mb-2
+                        button#finalizedDoc.btn.btn-success.pl-5.pr-5.ml-2.mr-2
+                            i.fa.fa-floppy-o.mr-4(aria-hidden='true')
+                            |  Finalize Doc Upload
+            </section>
+        </div>
+    </section>

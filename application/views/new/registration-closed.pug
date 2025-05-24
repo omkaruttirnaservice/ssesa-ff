@@ -1,0 +1,20 @@
+extends layout_index_new
+block css_link
+block inline_css
+    
+
+block content
+
+    .container
+        .row.mt-4
+            .col-md-2
+            .col-md-8
+                .card
+                    .card-body.text-center
+                        h5 Sorry, Registrations for current recruitment are closed.
+                        p.card-text For any enquiries, feel free to contact us at:
+                        p.card-text Email: #{p.help_email_id}
+
+                        a.btn.btn-primary(href='/') Go to Homepage
+
+            .col-md-2
