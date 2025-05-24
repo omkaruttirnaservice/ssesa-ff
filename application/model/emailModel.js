@@ -1,17 +1,5 @@
 var nodemailer = require("nodemailer");
 let { google } = require("googleapis");
-// let CLIENT_ID =
-// 	"468364105571-96eohhlt30fc33vdib086nf4magqkcb2.apps.googleusercontent.com";
-// let CLIENT_SECRET = "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";
-// let REDIRECT_URI = "https://developers.google.com/oauthplayground";
-// let REFRESH_TOKEN =
-// 	"1//04nKQ5_3CV30XCgYIARAAGAQSNwF-L9IrMCm1Ob4xtOvqv1ztnD0TirRgsaRDGzOp8dY5yktE4UMAXyZvs1YI6Og2z1FlyX1V4-E";
-// const oAuth2Client = new google.auth.OAuth2(
-// 	CLIENT_ID,
-// 	CLIENT_SECRET,
-// 	REDIRECT_URI,
-// );
-
 let CLIENT_ID = "";
 let CLIENT_SECRET = "";
 let REDIRECT_URI = "";
