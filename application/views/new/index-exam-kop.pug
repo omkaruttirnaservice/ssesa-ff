@@ -36,37 +36,22 @@ html(lang="en")
 		//- script(src="/plugins/tailwind-css-3416/tailwind.js")
 
 	body.font-sans.text-gray-900(class="bg-gray-50")
-		- let portalYear = '2024-25'
 		.wrapper.max-w-7xl.mx-auto.px-4.mb-4
 
-
-			//- header.py-6.border-b.border-gray-200
-			//- 	// Highlighted Title Section
-			//- 	.text-center.bg-yellow-100.py-4.px-2.rounded-md.shadow-md
-			//- 		p.font-bold.text-gray-900(class="text-sm md:text-xl") Online Portal For Recruitment Process #{portalYear}
-			//- 		p.font-bold.text-gray-900(class="text-sm md:text-xl") भरती प्रक्रिया #{portalYear} साठीचे ऑनलाईन पोर्टल
-
-			// Brand Logo and Institution Name
-			div.grid.mt-4.gap-4(class="grid-cols-1 md:grid-cols-3 ")
-				
-
-
 			main(class="grid md:grid-cols-3 gap-4 mt-4")
-				div.col-span-2.flex.gap-2.flex-col
-					.flex.justify-start.items-center.mt-2.gap-4.col-span-2.shadow-md
-						img(src="/assets/images/brand-name.jpg" alt="Brand Logo" class="w-full h-32")
-
-
+				div.col-span-2.flex.gap-4.flex-col
+					div.flex.shadow-md.overflow-hidden.w-full.h-32.rounded-lg(style="border: 1px solid #9f0712;")
+						img(src="/assets/images/brand-name.jpg" alt="Brand Logo" class="border-blue-500")
 
 					section(class="md:col-span-2")
 						//- notice list
-						section.p-6.rounded-lg.shadow-sm.border(class="bg-white border-gray-200 mb-4")
+						section.p-6.rounded-lg.shadow-sm.border(class="bg-white border-blue-500 mb-4")
 							h2.text-center.text-xl.font-bold.mb-4.text-blue-500 Important Notices
 							div.space-y-3
 								if p.notices.length > 0
 									each notice in p.notices
 										div.flex.items-center.justify-start.p-3.rounded-lg.shadow-md(class="bg-gray-100")
-											a(href=`${s3BucketUrl}/${notice.aws_file_path}` target="_blank" class="text-blue-500 hover:underline font-medium") #{notice.file_name}
+											a(href=`${s3BucketUrl}/${notice.aws_file_path}` target="_blank" class="text-red-800 hover:underline font-semibold tracking-wider") #{notice.file_name}
 											img(src="/assets/images/new-blinking.gif" alt="New" width="40" class=notice.file_blink == 1 ? '' : 'hidden')
 								else
 									p.text-gray-500 No notices available
@@ -78,7 +63,7 @@ html(lang="en")
 									strong.block.text-sm.font-medium.uppercase Notice:
 									marquee.scrolling-notice.font-semibold.text-sm #{p.scrolling_notice_name}
 
-							div.p-6.rounded-lg.shadow-sm.border(class="bg-white border-gray-200")
+							div.p-6.rounded-lg.shadow-sm.border(class="bg-white border-blue-500")
 								h2.text-center.text-xl.font-bold.text-blue-500.mb-4 Important Events
 								div.divide-y(class="divide-gray-200")
 									if p.important_dates.length > 0
@@ -103,11 +88,11 @@ html(lang="en")
 
 
 
-				aside.shadow-sm.rounded-lg.p-6.space-y-16(class="bg-white border border-gray-200 col-span-1 ")
+				aside.shadow-sm.rounded-lg.p-6.space-y-16(class="bg-white border border-blue-500 col-span-1 ")
 					form(id="login-form" action='/login' method="POST" class="space-y-4")
-						p.text-center.text-gray-500.font-medium.text-lg Already Registered
-						input#userId(value="" type="text" name="utrUserName" placeholder="User ID" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
-						input#password(value="" type="password" name="utrPassword" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
+						p.text-center.text-lg.bg-gray-200.py-1.rounded-md.animate-pulse(class="text-[#333] font-bold") Already Registered
+						input#userId(value="" type="text" name="utrUserName" placeholder="Enter User ID" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
+						input#password(value="" type="password" name="utrPassword" placeholder="Enter Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
 						.flex.items-center
 							input#show-password(type="checkbox" class="mr-2")
 							label(for="show-password" class="text-sm text-gray-900") Show Password
@@ -127,7 +112,7 @@ html(lang="en")
 
 
 					//- helpline
-					section.text-center.text-lg.rounded-lg.p-4.flex.gap-2.justify-center.flex-col(class="bg-gray-100")
+					section.text-center.text-lg.rounded-lg.p-4.flex.gap-2.justify-center.flex-col(class="bg-gray-100 border border-blue-500 shadow-md")
 						p.font-medium.text-blue-500 For Technical Help Only
 						a(href=`tel:${p.help_mobile_number}` class="text-orange-500 animate-blink font-bold block")
 							i.fa-solid.fa-phone.mr-2
