@@ -38,7 +38,7 @@ module.exports = {
 
 		let postName = "Clerk";
 		let clerkPostId = 1;
-		let mainPostName = "SSES";
+		let mainPostName = "Shri Shivaji Education Society, Amravati";
 
 		candidates.forEach((_c, idx) => {
 			regIdStart++;
@@ -1360,7 +1360,10 @@ module.exports = {
                                 ca.ca_photo                                                          as photo,
                                 ca_general_details_done                                              as g_done,
                                 ca_document_details_done                                             as d_done,
-								ca_post_name as post_name
+								ca_post_name as post_name,
+								ca_offline_form_no,
+								ca_detailsMainPost,
+								ca_detailsSubCategory
 
 						FROM utr_candidate_appications as ca
 

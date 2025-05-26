@@ -146,8 +146,8 @@ $(document).ready(() => {
 			}
 
 			const jsonResp = await _resp.json();
-			console.log(jsonResp);
 			alertjs.success({ t: "Successful", m: "Details updated" }, () => {
+				// window.location.reload();
 				window.location.assign(
 					"/v2/document-upload?r=" +
 						candidateInfo.r_id +
@@ -164,15 +164,9 @@ $(document).ready(() => {
 	}
 
 	function compareObjectsDeep(originalData, newData) {
-		console.log(originalData);
-		console.log(newData);
-
 		let isModified = false;
 
 		for (let key in originalData) {
-			console.log(originalData[key], "-original");
-			console.log(newData[key], "-new");
-
 			let isSkipKey =
 				key == "ca_post_id" ||
 				key == "ca_post_name" ||
@@ -194,8 +188,6 @@ $(document).ready(() => {
 		for (let [key, value] of formData) {
 			jsObject[key] = value;
 		}
-
-		console.log(jsObject);
 
 		return jsObject;
 	}

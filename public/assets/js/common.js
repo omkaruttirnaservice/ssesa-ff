@@ -1,13 +1,10 @@
 _showLoader();
 
 function checkIsMobile() {
-	console.log(window.innerWidth);
-	console.log(navigator.userAgent);
 	const _userAgent = navigator.userAgent;
 
 	let isMobile = /mobile|android|iphone|webos/i.test(_userAgent);
 
-	console.log(isMobile);
 	if (isMobile || window.innerWidth < 700) {
 		$("main").addClass("d-none");
 		$("#is-mobile-container").removeClass("d-none");
@@ -197,9 +194,6 @@ window.addEventListener("DOMContentLoaded", function () {
 	let activeStepEl = document.querySelector(".active-step");
 	let stepsContainerEl = document.querySelector(".side-navbar");
 	let isScrolled = false;
-
-	console.log(activeStepEl);
-	console.log(stepsContainerEl);
 
 	const activeStepObserver = new IntersectionObserver(
 		entries => {

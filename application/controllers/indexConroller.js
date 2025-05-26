@@ -1085,7 +1085,7 @@ var indexController = {
 				return res.redirect("/home");
 			}
 
-			res.render("application", {
+			res.render("application.pug", {
 				title: "Application Print",
 				regIDInt: r,
 				regIDString: "",
@@ -1381,14 +1381,14 @@ var indexController = {
 
 	saveGeneralDetails_V2: async (req, res, next) => {
 		let data = req.body;
-		console.log(data, "-req.body");
+		console.log(data, "-req.body===========");
 
 		try {
 			await IndexModel.updateBasicDetails_V2(res.pool, data);
 
 			await IndexModel.updateGeneralDetails_V2(res.pool, data);
 
-			if (data.isUpdated) {
+			if (data.isUpdated == "true") {
 				await IndexModel.addUpdateDetailsLog(res.pool, data);
 			}
 
