@@ -377,8 +377,7 @@ var indexController = {
 
 			const queryParams = `?r=${r}&f=${f}`;
 
-			// if (isGengeralDetailsDone && !isDocumentUploadDone) {
-			if (!isGengeralDetailsDone && !isDocumentUploadDone) {
+			if (isGengeralDetailsDone && !isDocumentUploadDone) {
 				res.redirect(`/v2/document-upload${queryParams}`);
 			} else if (isDocumentUploadDone) {
 				res.redirect(`/v2/application${queryParams}`);
@@ -1382,7 +1381,7 @@ var indexController = {
 
 	saveGeneralDetails_V2: async (req, res, next) => {
 		let data = req.body;
-		console.log(data,'-req.body');
+		console.log(data, "-req.body");
 
 		try {
 			await IndexModel.updateBasicDetails_V2(res.pool, data);
