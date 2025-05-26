@@ -1,7 +1,7 @@
 import { alertjs } from "./common.js";
 
 $(document).ready(() => {
-	$("input, select, textarea").attr("disabled", true);
+	$("input, select, textarea").attr("readonly", true);
 	const candidateForm = $("#candidate-form");
 	const submitButton = $("#candidate-form-submit-btn");
 	const editFormBtn = $("#edit-btn");
@@ -9,7 +9,7 @@ $(document).ready(() => {
 	editFormBtn.on("click", function (e) {
 		e.preventDefault();
 		// $("input:not.no-edit, select, textarea ").attr("disabled", false);
-		$("input:not(.no-edit), select:not(.no-edit), textarea:not(.no-edit)").attr('disabled', false)
+		$("input:not(.no-edit), select:not(.no-edit), textarea:not(.no-edit)").attr('readonly', false)
 
 	});
 
