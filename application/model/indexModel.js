@@ -25,7 +25,8 @@ module.exports = {
 						ca_gender,
 						ca_catagory,
 						ca_detailsSubCategory,
-						ca_address
+						ca_address,
+						ca_offline_form_no
 					) VALUES `;
 
 		let regIdStart = 1050001;
@@ -43,8 +44,12 @@ module.exports = {
 			regIdStart++;
 			appIdStart++;
 			let isLast = candidates.length == idx + 1;
+			let offlineAppNo = String(_c["Application No."]).replace(
+				/['"]/g,
+				"",
+			);
 			userBasicQuery += `(${regIdStart}, "${getPassword()}", "${_c.name?.toUpperCase()}", "${_c["Mobile No."]}", "${_c["E-mail ID"]}")${!isLast ? "," : ""}`;
-			applicationQuery += `(${appIdStart}, ${regIdStart}, ${clerkPostId}, "${postName}", "${mainPostName}", "${_c["Date of Birth"]}", "${_c["Gender"]}", "${_c["Category"]}", "${_c["Cast"]}", "${_c.address}")${!isLast ? "," : ""}`;
+			applicationQuery += `(${appIdStart}, ${regIdStart}, ${clerkPostId}, "${postName}", "${mainPostName}", "${_c["Date of Birth"]}", "${_c["Gender"]}", "${_c["Category"]}", "${_c["Cast"]}", "${_c.address}", "${offlineAppNo}")${!isLast ? "," : ""}`;
 		});
 
 		// truncate all old data
@@ -80,7 +85,8 @@ module.exports = {
 						ca_detailsSubCategory,
 						ca_address,
 						ca_post_name,
-						ca_post_id
+						ca_post_id,
+						ca_offline_form_no
 
 					FROM utr_user_basic as ub
 

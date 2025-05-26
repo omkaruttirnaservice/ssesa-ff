@@ -20,24 +20,24 @@ block content
                     span.step-name
                         i.fa-solid.fa-upload.me-2
                         | Verify Details
-                        br
-                        | (तपशिल पडताळणी)
+                        //- br
+                        //- | (तपशिल पडताळणी)
 
                 a.pending-step(href="#")
                     span.step-no 2
                     span.step-name
                         i.fa-solid.fa-upload.me-2
                         | Document Upload
-                        br
-                        | (कागदपत्रे अपलोड)
+                        //- br
+                        //- | (कागदपत्रे अपलोड)
 
                 a.pending-step(href="#")
                     span.step-no 3
                     span.step-name
                         i.fa-solid.fa-paperclip.me-2
                         | Application View
-                        br
-                        | (अर्ज)
+                        //- br
+                        //- | (अर्ज)
 
             div.main-content
                 form(id="candidate-form" class="container mt-5")
@@ -49,7 +49,14 @@ block content
                             label.form-label(for="ca_post_name") Post Name
                             input#ca_post_name.form-control.no-edit(type="text" value=candidateInfo.ca_post_name disabled )
 
-                        .col-md-6.mb-3
+                        .col-md-3.mb-3
+                            label.form-label(for="ca_offline_form_no") Offline Form Number
+                            input#ca_offline_form_no.form-control.no-edit(type="text" value=candidateInfo.ca_offline_form_no disabled )
+
+
+
+
+                        .col-md-3.mb-3
 
                         .col-md-6.mb-3
                             label.form-label(for="name") Full Name

@@ -173,7 +173,10 @@ $(document).ready(() => {
 			console.log(originalData[key], "-original");
 			console.log(newData[key], "-new");
 
-			let isSkipKey = key == "ca_post_id" || key == "ca_post_name";
+			let isSkipKey =
+				key == "ca_post_id" ||
+				key == "ca_post_name" ||
+				key == "ca_offline_form_no";
 
 			if (!isSkipKey) {
 				if (originalData[key] != newData[key]) {

@@ -38,6 +38,7 @@
 	& .step-name {
 		display: block;
 		color: #333;
+		font-size: 20px;;
 	}
 }
 
