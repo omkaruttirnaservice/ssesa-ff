@@ -21,7 +21,7 @@ $(document).ready(() => {
 
 	candidateForm.validate({
 		rules: {
-			name: {
+			ub_first_name: {
 				required: true,
 				minlength: 2,
 			},
@@ -29,37 +29,37 @@ $(document).ready(() => {
 				required: true,
 				dateISO: true,
 			},
-			gender: {
+			ca_gender: {
 				required: true,
 			},
-			email: {
+			ub_email_id: {
 				required: true,
 				email: true,
 			},
-			"primary-mobile": {
+			ub_mobile_number: {
 				required: true,
 				digits: true,
 				minlength: 10,
 				maxlength: 10,
 			},
-			"alternate-mobile": {
+			ub_alternative_number: {
 				digits: true,
 				minlength: 10,
 				maxlength: 10,
 			},
-			caste: {
+			ca_catagory: {
 				required: true,
 			},
-			subcaste: {
+			ca_detailsSubCategory: {
 				required: true,
 			},
-			adress: {
+			ca_address: {
 				required: true,
 				minlength: 5,
 			},
 		},
 		messages: {
-			name: {
+			ub_first_name: {
 				required: "Full name is required",
 				minlength: "Full name must be at least 2 characters",
 			},
@@ -67,31 +67,31 @@ $(document).ready(() => {
 				required: "Date of birth is required",
 				dateISO: "Enter a valid date in YYYY-MM-DD format",
 			},
-			gender: {
+			ca_gender: {
 				required: "Please select your gender",
 			},
-			email: {
+			ub_email_id: {
 				required: "Email is required",
 				email: "Enter a valid email address",
 			},
-			"primary-mobile": {
+			ub_mobile_number: {
 				required: "Primary mobile number is required",
 				digits: "Only digits are allowed",
 				minlength: "Mobile number must be 10 digits",
 				maxlength: "Mobile number must be 10 digits",
 			},
-			"alternate-mobile": {
+			ub_alternative_number: {
 				digits: "Only digits are allowed",
 				minlength: "Mobile number must be 10 digits",
 				maxlength: "Mobile number must be 10 digits",
 			},
-			caste: {
+			ca_catagory: {
 				required: "Please select your caste",
 			},
-			subcaste: {
+			ca_detailsSubCategory: {
 				required: "Subcaste is required",
 			},
-			adress: {
+			ca_address: {
 				required: "Address is required",
 				minlength: "Address must be at least 5 characters",
 			},
