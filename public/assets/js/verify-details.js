@@ -126,7 +126,6 @@ $(document).ready(() => {
 			formDataToJsObject(formData),
 		);
 
-		alert(isUpdated);
 		formData.set("isUpdated", isUpdated);
 
 		saveGeneralDetails(formData);
