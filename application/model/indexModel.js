@@ -93,14 +93,35 @@ module.exports = {
 		return await runQuery(pool, query);
 	},
 
+	addUpdateDetailsLog: function (pool, data) {
+		return new Promise((resolve, reject) => {
+			let query = `INSERT INTO utr_candidate_details_logs
+							(
+								r_id,
+								f_id,
+								info,
+								timestamp
+							)
+						VALUES (${data.r_id}, ${data.f_id}, '${JSON.stringify(data)}', NOW())`;
+
+			pool.query(query, function (err, result) {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		});
+	},
+
 	updateBasicDetails_V2: function (pool, data) {
 		return new Promise((resolve, reject) => {
 			let query = `UPDATE utr_user_basic
 						SET 
-							ub_first_name = '${data.name}',
-							ub_mobile_number = '${data["primary-mobile"]}',
-							ub_alternative_number = '${data["alternate-mobile"]}',
-							ub_email_id = '${data["email"]}'
+							ub_first_name = '${data.ub_first_name}',
+							ub_mobile_number = '${data["ub_mobile_number"]}',
+							ub_alternative_number = '${data["ub_alternative_number"]}',
+							ub_email_id = '${data["ub_email_id"]}'
 
 						WHERE id = ${data.r_id} `;
 
@@ -119,10 +140,10 @@ module.exports = {
 			let query = `UPDATE utr_candidate_appications
 						SET 
 							ca_dob                                            = '${data.dob}',
-							ca_gender                                         = '${data.gender}',
-							ca_catagory                                       = '${data.caste}',
-							ca_detailsSubCategory 							  = '${data.subcaste}',
-							ca_address                                        = '${data.address}',
+							ca_gender                                         = '${data.ca_gender}',
+							ca_catagory                                       = '${data.ca_catagory}',
+							ca_detailsSubCategory 							  = '${data.ca_detailsSubCategory}',
+							ca_address                                        = '${data.ca_address}',
 							ca_general_details_done                           = '1'
 
 						WHERE ca_reg_id = ${data.r_id}

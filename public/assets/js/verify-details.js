@@ -1,16 +1,22 @@
 import { alertjs } from "./common.js";
 
 $(document).ready(() => {
+	const disabledInputs = $(
+		"input:not(.no-edit), select:not(.no-edit), textarea:not(.no-edit)",
+	);
+
+	disabledInputs.css("pointer-events", "none");
+
 	$("input, select, textarea").attr("readonly", true);
+
 	const candidateForm = $("#candidate-form");
 	const submitButton = $("#candidate-form-submit-btn");
 	const editFormBtn = $("#edit-btn");
 
 	editFormBtn.on("click", function (e) {
 		e.preventDefault();
-		// $("input:not.no-edit, select, textarea ").attr("disabled", false);
-		$("input:not(.no-edit), select:not(.no-edit), textarea:not(.no-edit)").attr('readonly', false)
-
+		disabledInputs.attr("readonly", false);
+		disabledInputs.css("pointer-events", "all");
 	});
 
 	candidateForm.validate({
@@ -114,6 +120,15 @@ $(document).ready(() => {
 		formData.set("r_id", candidateInfo.r_id);
 		formData.set("f_id", candidateInfo.f_id);
 
+		// compare both the objects
+		const isUpdated = compareObjectsDeep(
+			candidateInfo,
+			formDataToJsObject(formData),
+		);
+
+		alert(isUpdated);
+		formData.set("isUpdated", isUpdated);
+
 		saveGeneralDetails(formData);
 	});
 
@@ -147,5 +162,39 @@ $(document).ready(() => {
 			submitButton.html("Submit");
 			submitButton.attr("disabled", false);
 		}
+	}
+
+	function compareObjectsDeep(originalData, newData) {
+		console.log(originalData);
+		console.log(newData);
+
+		let isModified = false;
+
+		for (let key in originalData) {
+			console.log(originalData[key], "-original");
+			console.log(newData[key], "-new");
+
+			let isSkipKey = key == "ca_post_id" || key == "ca_post_name";
+
+			if (!isSkipKey) {
+				if (originalData[key] != newData[key]) {
+					isModified = true;
+				}
+			}
+		}
+
+		return isModified;
+	}
+
+	function formDataToJsObject(formData) {
+		let jsObject = {};
+
+		for (let [key, value] of formData) {
+			jsObject[key] = value;
+		}
+
+		console.log(jsObject);
+
+		return jsObject;
 	}
 });
