@@ -89,3 +89,15 @@
 	grid-column: 1 / -1;
 	width: 100%;
 }
+
+input:read-only,
+select:read-only,
+textarea:read-only {
+	background-color: rgb(236, 236, 236);
+}
+
+input:read-only:focus,
+select:read-only:focus,
+textarea:read-only:focus {
+	background-color: rgb(236, 236, 236);
+}

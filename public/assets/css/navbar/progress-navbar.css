@@ -154,7 +154,7 @@
 	margin-top: 0.7rem;
 	padding: 10px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: end;
 	align-items: center;
 	width: 100%;
 	border-radius: var(--border-radius);
