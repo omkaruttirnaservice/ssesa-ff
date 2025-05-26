@@ -61,7 +61,7 @@ html(lang="en")
 					section(class="md:col-span-2")
 						//- notice list
 						section.p-6.rounded-lg.shadow-sm.border(class="bg-white border-gray-200 mb-4")
-							h2.text-center.text-xl.font-bold.mb-4.text-blue-500 Important Notices
+							h2.text-center.text-xl.font-bold.mb-4.text-blue-500 Important Notices (महत्वाच्या सूचना)
 							div.space-y-3
 								if p.notices.length > 0
 									each notice in p.notices
@@ -79,7 +79,7 @@ html(lang="en")
 									marquee.scrolling-notice.font-semibold.text-sm #{p.scrolling_notice_name}
 
 							div.p-6.rounded-lg.shadow-sm.border(class="bg-white border-gray-200")
-								h2.text-center.text-xl.font-bold.text-blue-500.mb-4 Important Events
+								h2.text-center.text-xl.font-bold.text-blue-500.mb-4 Important Events (महत्वाच्या घटना)
 								div.divide-y(class="divide-gray-200")
 									if p.important_dates.length > 0
 										each date in p.important_dates.slice(4)
@@ -103,9 +103,9 @@ html(lang="en")
 
 
 
-				aside.shadow-sm.rounded-lg.p-6.space-y-16(class="bg-white border border-gray-200 col-span-1 ")
+				aside.shadow-sm.rounded-lg.p-6.space-y-6(class="bg-white border border-gray-200 col-span-1")
+					p.text-center.text-gray-500.font-medium.text-lg Already Registered / नोंदणीकृत उमेदवार
 					form(id="login-form" action='/login' method="POST" class="space-y-4")
-						p.text-center.text-gray-500.font-medium.text-lg Already Registered
 						input#userId(value="" type="text" name="utrUserName" placeholder="User ID" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
 						input#password(value="" type="password" name="utrPassword" placeholder="Password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")
 						.flex.items-center
@@ -116,10 +116,10 @@ html(lang="en")
 						div.flex.gap-2
 							button(id="login-btn" type="submit" class="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600")
 								i.fas.fa-sign-in-alt.mr-1
-								| Login
+								| Login (लॉगिन)
 							button(type="reset" class="w-full py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400")
 								i.fas.fa-sync-alt.mr-1
-								| Reset
+								| Reset (रीसेट)
 
 					//- .flex.justify-between.text-lg.text-blue-500
 					//- 	a(href="/forget-username" class="hover:underline") Forgot User ID?
@@ -127,7 +127,7 @@ html(lang="en")
 
 
 					//- helpline
-					section.text-center.text-lg.rounded-lg.p-4.flex.gap-2.justify-center.flex-col(class="bg-gray-100")
+					section.text-center.text-lg.rounded-lg.p-4.flex.gap-2.justify-center.flex-col(class="bg-gray-100 ")
 						p.font-medium.text-blue-500 For Technical Help Only
 						a(href=`tel:${p.help_mobile_number}` class="text-orange-500 animate-blink font-bold block")
 							i.fa-solid.fa-phone.mr-2
