@@ -1516,18 +1516,48 @@ var indexController = {
 			const data = req.body;
 			console.log(data, "==data==");
 			await IndexModel.savesS3DoumentName(res.pool, data);
+
 			return res
 				.status(201)
 				.json(
 					new ApiResponse(
 						201,
 						true,
-						`${data.img_type} Upload Successful.`,
+						indexController.getDocumentMessage(
+							data.img_type,
+							"UPLOAD",
+						),
 					),
 				);
 		} catch (error) {
 			next(error);
 		}
+	},
+
+	getDocumentMessage(img_type, msgType) {
+		let message = "successfully";
+		if (msgType === "DELETE") {
+			message = "deleted " + message;
+		}
+		if (msgType === "UPLOAD") {
+			message = "uploaded " + message;
+		}
+
+		switch (img_type) {
+			case "aadharCard":
+				message = "Aadhar Card " + message;
+				break;
+
+			case "photo":
+				message = "Photo " + message;
+				break;
+
+			case "sign":
+				message = "Signature " + message;
+				break;
+		}
+
+		return message;
 	},
 
 	delteS3DoumentName: async (req, res, next) => {
@@ -1542,7 +1572,10 @@ var indexController = {
 					new ApiResponse(
 						201,
 						true,
-						`${data.img_type}  deleted successfully`,
+						indexController.getDocumentMessage(
+							data.img_type,
+							"DELETE",
+						),
 					),
 				);
 		} catch (error) {

@@ -122,7 +122,10 @@ $(document).ready(() => {
 		}
 
 		if (!isDeclerationAccepted) {
-			alertjs.warning({ t: "Warning", m: "Please accept decleration" });
+			alertjs.warning({
+				t: "Warning",
+				m: "Please accept the declaration.",
+			});
 			return;
 		}
 

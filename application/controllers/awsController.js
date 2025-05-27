@@ -54,7 +54,7 @@ const awsController = {
 			infoLog(`FILE_UPLOAD_SUCCESSFUL => ${fileName}`);
 
 			return res.json(
-				new ApiResponse(201, true, "File upload successful.", {
+				new ApiResponse(201, true, "File uploaded successfully.", {
 					fileName,
 				}),
 			);

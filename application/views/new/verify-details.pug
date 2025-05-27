@@ -12,48 +12,40 @@ block js_link
     script(src="/assets/js/verify-details.js" type="module" defer)
 block content
 
-    div.container-fluid
-        div.container-base
+        div.container
             include ./includes/profile-icon.pug
 
             div.side-navbar
                 a.active-step(href="#")
                     span.step-no 1
                     span.step-name
-                        i.fa-solid.fa-upload.me-2
                         | Verify Details
-                        //- br
-                        //- | (तपशिल पडताळणी)
 
                 a.pending-step(href="#")
                     span.step-no 2
                     span.step-name
-                        i.fa-solid.fa-upload.me-2
                         | Document Upload
-                        //- br
-                        //- | (कागदपत्रे अपलोड)
 
                 a.pending-step(href="#")
                     span.step-no 3
                     span.step-name
-                        i.fa-solid.fa-paperclip.me-2
                         | Application View
-                        //- br
-                        //- | (अर्ज)
 
             div.main-content
-                form(id="candidate-form" class="container mt-5")
+                form(id="candidate-form" class=" mt-5")
                     .row
                         .col-md-3.mb-3
-                            label.form-label(for="f_id") Form No.
-                            input#f_id.form-control.no-edit(type="text" value=candidateInfo.f_id disabled )
+                            label.form-label(for="ca_offline_form_no") Form Number
+                            input#ca_offline_form_no.form-control.no-edit(type="text" value=candidateInfo.ca_offline_form_no disabled )
+
                         .col-md-3.mb-3
                             label.form-label(for="ca_post_name") Post Name
                             input#ca_post_name.form-control.no-edit(type="text" value=candidateInfo.ca_post_name disabled )
 
                         .col-md-3.mb-3
-                            label.form-label(for="ca_offline_form_no") Offline Form Number
-                            input#ca_offline_form_no.form-control.no-edit(type="text" value=candidateInfo.ca_offline_form_no disabled )
+                            label.form-label(for="f_id") Application Number
+                            input#f_id.form-control.no-edit(type="text" value=candidateInfo.f_id disabled )
+
 
 
 
@@ -120,15 +112,14 @@ block content
                             label.form-label(for="address") Address
                             textarea#address.form-control(type="text" name="ca_address") #{candidateInfo.ca_address}
 
-                    .row.shadow-sm.mt-3
 
-                        .col-md-12.py-3
-                            div.d-flex.gap-3
+                        .col-md-12.my-3.shadow-sm.p-2
+                            div.d-flex.flex-column.gap-3
                                 input.no-disabled(id="decleration" type="checkbox" style="width: 2rem; height: 2rem;" value="")
                                 label.text-danger.fs-6(for="decleration") I confirm that all the information provided above is true and accurate to the best of my knowledge. No changes will be applied once this form is submitted.
                                 label.text-danger.fs-6(for="decleration") वरील सर्व माहिती माझ्या माहितीनुसार खरी आणि अचूक आहे, याची मी खात्री देतो/देते. एकदा अर्ज सबमिट केल्यावर त्यामध्ये कोणताही बदल करता येणार नाही.
 
-                    .row.my-5
+                    .row.my-3
                         .col-12.d-flex.gap-2
                             button.c-button.c-btn-danger(id="edit-btn" type="button") Edit
                             button.c-button.c-btn-primary(id="candidate-form-submit-btn" type="submit") Save

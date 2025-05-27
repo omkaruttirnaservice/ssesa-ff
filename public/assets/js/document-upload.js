@@ -87,7 +87,7 @@ async function readURL(input, id, _this, img_of) {
 	} else {
 		alertjs.warning(
 			{
-				t: img_of.toUpperCase() + " MUST BE JPG / JPEG ONLY only",
+				t: getDocumentMessage(img_of) + " must be JPG / JPEG only",
 				m: "",
 			},
 			function () {
@@ -95,6 +95,26 @@ async function readURL(input, id, _this, img_of) {
 			},
 		);
 	}
+}
+
+function getDocumentMessage(img_type, msgType) {
+	let message = "";
+
+	switch (img_type) {
+		case "aadharCard":
+			message = "Aadhar Card " + message;
+			break;
+
+		case "photo":
+			message = "Photo " + message;
+			break;
+
+		case "sign":
+			message = "Signature " + message;
+			break;
+	}
+
+	return message;
 }
 
 $("#imageUpload").change(function (e) {
@@ -150,7 +170,7 @@ $(document).ready(function () {
 			if (!isDeclerationAccepted) {
 				alertjs.warning({
 					t: "Warning",
-					m: "Please accept decleration",
+					m: "Please accept the declaration.",
 				});
 				return;
 			}
@@ -235,9 +255,12 @@ $(document).ready(function () {
 
 		let file = mediaItems.filter(media => media.type == imgType)?.[0]?.file;
 		if (!file) {
-			alertjs.warning({ t: "Warning", m: `Select ${imgType}.` }, () => {
-				return false;
-			});
+			alertjs.warning(
+				{ t: "Warning", m: `Please select ${getDocumentMessage(imgType)}` },
+				() => {
+					return false;
+				},
+			);
 		}
 
 		let formData = new FormData();
@@ -284,12 +307,9 @@ $(document).ready(function () {
 				body: JSON.stringify(data),
 			});
 			const _jsonResp = await _updateResp.json();
-			alertjs.success(
-				{ t: "Successful", m: _jsonResp.usrMsg.toUpperCase() },
-				() => {
-					window.location.reload();
-				},
-			);
+			alertjs.success({ t: "Successful", m: _jsonResp.usrMsg }, () => {
+				window.location.reload();
+			});
 		} catch (error) {
 			alert("Error in delete file.");
 			console.log(error, "==error==");

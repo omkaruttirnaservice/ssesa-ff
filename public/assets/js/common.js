@@ -14,10 +14,10 @@ function checkIsMobile() {
 	}
 }
 
-checkIsMobile();
+// checkIsMobile();
 
 window.addEventListener("resize", function () {
-	checkIsMobile();
+	// checkIsMobile();
 });
 
 window.addEventListener("DOMContentLoaded", function () {

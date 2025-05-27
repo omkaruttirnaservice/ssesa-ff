@@ -38,10 +38,10 @@ html(lang="en")
 	body.font-sans.text-gray-900(class="bg-gray-50")
 		.wrapper.max-w-7xl.mx-auto.px-4.mb-4
 
-			main(class="grid md:grid-cols-3 gap-4 mt-4")
-				div.col-span-2.flex.gap-4.flex-col
-					div.flex.shadow-md.overflow-hidden.w-full.h-32.rounded-lg(style="border: 1px solid #9f0712;")
-						img(src="/assets/images/brand-name.jpg" alt="Brand Logo" class="border-blue-500" style="width: 100%;")
+			main(class="grid md:grid-cols-3 grid-cols-1 gap-4 mt-4")
+				div.flex.gap-4.flex-col(class="md:col-span-2 col-span-3")
+					div.flex.shadow-md.overflow-hidden.w-full.rounded-lg(style="border: 1px solid #9f0712;" class="h-20 md:h-32")
+						img(src="/assets/images/brand-name.jpg" alt="Brand Logo" class="border-blue-500" style="width: 100%;" )
 
 					section(class="md:col-span-2")
 						//- notice list
@@ -88,7 +88,7 @@ html(lang="en")
 
 
 
-				aside.shadow-sm.rounded-lg.p-6.space-y-16(class="bg-white border border-blue-500 col-span-1 ")
+				aside.shadow-sm.rounded-lg.p-6.space-y-16(class="bg-white border border-blue-500 col-span-3 md:col-span-1 ")
 					form(id="login-form" action='/login' method="POST" class="space-y-4")
 						p.text-center.text-lg.bg-gray-200.py-1.rounded-md.animate-pulse(class="text-[#333] font-bold") Already Registered
 						input#userId(value="" type="text" name="utrUserName" placeholder="Enter User ID" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-gray-900")

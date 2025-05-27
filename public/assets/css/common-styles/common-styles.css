@@ -63,10 +63,19 @@
 
 	--note-card-bg: #f3f4f6; /* gray-100 */
 
-	--para-label-font-size: 1.1rem;
+	--para-label-font-size: 1rem;
 	--main-heading-font-size: 1rem;
 	--main-heading-2-font-size: 1.25rem;
 	--border-radius: 3px;
+}
+
+@media screen and (max-width: 480px) {
+	:root {
+		--para-label-font-size: 0.85rem;
+		--main-heading-font-size: 1rem;
+		--main-heading-2-font-size: 1.25rem;
+		--border-radius: 3px;
+	}
 }
 
 html {
@@ -223,7 +232,7 @@ input::placeholder {
 
 .input-label {
 	font-weight: 500;
-	font-size: 0.75rem !important;
+	font-size: var(--para-label-font-size) !important;
 	cursor: pointer;
 	margin-bottom: 0.3rem;
 }
@@ -290,32 +299,26 @@ input:focus {
 	/* font-size: 1.6rem !important; */
 }
 
-.header-container {
+.brand-img-container {
+	overflow: hidden;
+	border-radius: 3px !important;
+}
+
+.header-marquee {
+	border-radius: 3px;
+	background-color: var(--main-color);
+	color: #fff;
+	font-weight: 600;
+	padding: 0.3rem;
+	font-size: var(--para-label-font-size);
+	height: 100%;
+
 	display: flex;
-	gap: 4px;
-	height: 5rem;
+	flex-direction: column;
 
-	& .brand-img-container {
-		width: 60%;
-		overflow: hidden;
-		border-radius: 3px;
-	}
-
-	& .header-marquee {
-		border-radius: 3px;
-		width: 40%;
-		background-color: var(--main-color);
-		color: #fff;
-		font-weight: 600;
-		padding: 0.4rem;
-
-		display: flex;
-		flex-direction: column;
-
-		& p {
-			margin: 0;
-			padding: 0;
-		}
+	& p {
+		margin: 0;
+		padding: 0;
 	}
 }
 
@@ -331,6 +334,7 @@ input:focus {
 	color: #4d3800;
 
 	font-weight: 600;
+	margin-bottom: 8px;
 }
 
 /* input card */

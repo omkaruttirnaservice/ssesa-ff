@@ -6,7 +6,6 @@ block css_link
             @page{
                 size: A4 portrait;
                 margin: 10mm;
-                border: 1px solid lightgray; 
             }
             body {
                 -webkit-print-color-adjust: exact;
@@ -18,7 +17,7 @@ block css_link
                 margin: 0;
             }
             .table-bordered th, .table-bordered td, .table thead th {
-                border: 0.5px solid lightgray !important;
+                //- border: 0.5px solid lightgray !important;
             }
             .text-color-alter, .text-color-alter .h3 {
                 background-color:gray !important;
@@ -34,25 +33,26 @@ block css_link
             table {
                 border-collapse: collapse !important;
             }
-            //- .print-full-width {
-            //-     width: 100vw;    
-            //-     position: relative;
-            //- }
             .print-hide {
-                display: none;
+                display: none !important;
+            }
+
+            .print--unhide {
+                display: block !important;
             }
         }
 
-        header, .header-container, .nav-bar {
-            //- display: none;
+        .print--unhide {
+            display: none;
         }
 
         .print-full-width {
             position: relative;
             width: 280mm;
             margin-inline: auto;
-            //- border: 1px solid rgba(0,0,0,.2);
             padding: 0;
+            //- border: 1px solid lightgray; 
+
         }
 
         .footer{
@@ -108,8 +108,6 @@ block css_link
             border: 1px solid lightgray;
             height: 100px;
             width: 100px;
-            //- object-fit: cover;
-            //- display: block;
         }
 
 
@@ -122,7 +120,7 @@ block content
 
 
     div.container-fluid.mt-1.print-hide
-        div.container-base
+        div.container
 
             include ./new/includes/profile-icon.pug
 
@@ -130,36 +128,27 @@ block content
                 a.done-step(href="#")
                     span.step-no 1
                     span.step-name
-                        i.fa-solid.fa-upload.me-2
                         | Verify Details
-                        //- br
-                        //- | (तपशिल पडताळणी)
 
                 a.done-step(href="#")
                     span.step-no 2
                     span.step-name
-                        i.fa-solid.fa-upload.me-2
                         | Document Upload
-                        //- br
-                        //- | (कागदपत्रे अपलोड)
 
                 a.active-step(href="#")
                     span.step-no 3
                     span.step-name
-                        i.fa-solid.fa-paperclip.me-2
                         | Application View
-                        //- br
-                        //- | (अर्ज) 
 
     div.container.print-hide
         div.print-hide.my-3.d-flex.justify-content-center
             button.btn.btn-success.ml-2.mt-2.btn-sm(onclick="window.print();") Print Application
 
-    div.print-full-width
-        .row
-            .col-12.d-flex.justify-content-center
-                div(style="width: 50rem; height: 6.5rem; overflow: hidden;")
-                    img(src="/assets/images/brand-name.jpg" alt="" class="header-image" style="height: 100%; width: 100%;")
+    div.print-full-width.print--unhide
+        .row.p-0.m-0
+            .col-12.d-flex.justify-content-center.p-0.m-0
+                div(style="width: 100%; height: 6.5rem; overflow: hidden;")
+                    img(src="/assets/images/brand-name.jpg" alt="" class="" style="height: 100%; width: 100%;")
         .row
             .col-12.text-end.mb-2
                 p.text-right.input-label Printed On&nbsp;::&nbsp;#{todaysDate}
@@ -214,3 +203,46 @@ block content
         .col-12.mt-3
             center
                 button.button-hide.btn.btn-success.ml-2.mt-2(onclick="window.print();") Print Application
+
+
+    //- for mobile
+    div.d-block.container.mt-4.print-hide
+        h5.mb-3.text-center Application Preview
+
+        .row.g-2
+            - 
+                let fields = {
+                'Form Number': preview_data.ca_offline_form_no,
+                'Post': preview_data.post_name,
+                'Application Number': preview_data.application_id,
+                'Full Name': preview_data.full_name,
+                'Date of Birth': preview_data.date_of_birth,
+                'Gender': preview_data.gender,
+                'Email ID': preview_data.email_id,
+                'Mobile Number': preview_data.mobile_name,
+                'Alternative Number': preview_data.alternative_number || '-',
+                'Department Name': preview_data.ca_detailsMainPost,
+                'Caste': preview_data.catagory,
+                'Sub Category': preview_data.ca_detailsSubCategory,
+                'Address': preview_data.address,
+                }
+
+            each field, label in fields
+                .col-12.col-md-4
+                    .card.shadow-sm
+                        .card-body.p-2
+                            small.text-muted= label
+                            div= field
+
+            .col-12.col-md-12
+                .card.shadow-sm
+                    .card-body.text-center
+                        .d-flex.justify-content-center.gap-3.flex-wrap
+                            if preview_data.photo
+                                div.d-flex.flex-column
+                                    img(src=s3BucketUrl + '/' + preview_data.photo, alt="Candidate Photo", class="img-thumbnail", style="height:120px;width:120px;")
+                                    span Photo
+                            if preview_data.sign
+                                div.d-flex.flex-column
+                                    img(src=s3BucketUrl + '/' + preview_data.sign, alt="Candidate Sign", class="img-thumbnail", style="height:120px;width:120px;")
+                                    span Signature

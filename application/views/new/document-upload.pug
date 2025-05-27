@@ -24,8 +24,8 @@ block content
     #loadMyPage.d-none
         .loader
 
-    div.container-fluid.mt-1
-        div.container-base
+    div.mt-1
+        div.container
 
             include ./includes/profile-icon.pug
 
@@ -33,34 +33,25 @@ block content
                 a.done-step(href="#")
                     span.step-no 1
                     span.step-name
-                        i.fa-solid.fa-upload.me-2
                         | Verify Details
-                        //- br
-                        //- | (तपशिल पडताळणी)
 
                 a.active-step(href="#")
                     span.step-no 2
                     span.step-name
-                        i.fa-solid.fa-upload.me-2
                         | Document Upload
-                        //- br
-                        //- | (कागदपत्रे अपलोड)
 
                 a.pending-step(href="#")
                     span.step-no 3
                     span.step-name
-                        i.fa-solid.fa-paperclip.me-2
                         | Application View
-                        //- br
-                        //- | (अर्ज)
 
             div.main-content
                 div(class="d-flex align-items-center justify-content-between my-4")
                     label(for="addNewDetails" class="input-label-title") 
                         i.fa-solid.fa-upload.me-2
                         | Document Upload (कागदपत्रे अपलोड)
-                <section>
-                    div.d-flex
+                section
+                    div.d-flex.flex-column.flex-md-row
                         p.note-card
                             | NOTE&nbsp;:&nbsp;Candidates must upload a recent passport-sized signature in the online application form. The signature should be clear and legible. Any issues or doubts regarding the photograph or signature at any stage of the process may result in disqualification.
                         p.note-card
@@ -85,14 +76,14 @@ block content
                                             div.imagePreviewBox.d-flex.flex-column.align-items-center.gap-2
                                                 div
                                                     span.input-label Sample Aadhaar Photo(आधार नमुना फोटो)*
-                                                img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/aadhar-dummy-image.jpg' alt='' style='width:280px;height:150px' )
+                                                img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/aadhar-dummy-image.jpg' alt='' style='width:280px;height:150px' onerror="this.src='https://placehold.co/600x400/FFFFFF/0F0F0F?text=No%20Image'")
 
                                         div.col-md-6
 
                                             div.d-flex.flex-column.align-items-center.gap-2
                                                 div
-                                                    span.input-label Your Uploaded Aadhaar Photo(तुमचा अपलोड केलेला फोटो)*
-                                                img#aadharUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.aadharCard alt='' style='width:280px;height:150px' )
+                                                    span.input-label Your Uploaded Aadhaar Photo(तुमचा अपलोड केलेला आधार कार्ड फोटो)*
+                                                img#aadharUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.aadharCard alt='' style='width:280px;height:150px' onerror="this.src='https://placehold.co/600x400/FFFFFF/0F0F0F?text=No%20Image'")
 
                                             .d-flex.align-items-center.justify-content-center.gap-1.mt-2
                                                 if images.aadharCard
@@ -121,14 +112,14 @@ block content
                                         div.imagePreviewBox.d-flex.flex-column.align-items-center.gap-2
                                             div
                                                 span.input-label Sample photo(नमुना फोटो )*
-                                            img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/profile-photo-demo.jpg' alt='' style='width:270px;height:220px' )
+                                            img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/profile-photo-demo.jpg' alt='' style='width:270px;height:220px' onerror="this.src='https://placehold.co/600x400/FFFFFF/0F0F0F?text=No%20Image'")
 
                                     div.col-md-6
 
                                         div.d-flex.flex-column.align-items-center.gap-2
                                             div
                                                 span.input-label Your uploaded photo(तुमचा अपलोड केलेला फोटो)*
-                                            img#imageUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.photo alt='' style='width:220px;height:220px')
+                                            img#imageUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.photo alt='' style='width:220px;height:220px' onerror="this.src='https://placehold.co/600x400/FFFFFF/0F0F0F?text=No%20Image'")
 
                                         .d-flex.align-items-center.justify-content-center.gap-1.mt-2
                                             if images.photo
@@ -159,14 +150,14 @@ block content
                                         div.imagePreviewBox.d-flex.flex-column.align-items-center.gap-2
                                             div
                                                 span.input-label Sample sign(नमुना सही)*
-                                            img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/demo-signature.jpg' alt='' style='background-color: #fff !important; width:220px;height:130px')
+                                            img.img-fluid.border.border-3.border-dark(src='/assets/images/upload-default/demo-signature.jpg' alt='' style='background-color: #fff !important; width:220px;height:130px' onerror="this.src='https://placehold.co/600x400/FFFFFF/0F0F0F?text=No%20Image'")
 
                                     div.col-md-6
 
                                         div.d-flex.flex-column.align-items-center.gap-2
                                             div
                                                 span.input-label Your uploaded sign(तुमची अपलोड केलेली सही)*
-                                            img#signUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.sign alt='' style='width:220px;height:130px')
+                                            img#signUploadPreview.img-fluid.border.border-3.border-dark(src=images.s3URL+'/'+images.sign alt='' style='width:220px;height:130px' onerror="this.src='https://placehold.co/600x400/FFFFFF/0F0F0F?text=No%20Image'")
 
                                         .d-flex.align-items-center.justify-content-center.gap-1.mt-2
                                             input#signUpload.input-element.input-sm.w-50(type='file' name='sign' placeholder='' aria-describedby='fileHelpId')
@@ -180,10 +171,10 @@ block content
                         hr
 
 
-                        .row.shadow-sm.mt-3
+                        .row.mt-3
 
                             .col-md-12.py-3
-                                div.d-flex.gap-3
+                                div.d-flex.flex-column.flex-md-row.gap-3.note-card
                                     input.no-disabled(id="decleration" type="checkbox" style="width: 2rem; height: 2rem;" value="")
                                     label.text-danger.fs-6(for="decleration") I confirm that all the documents uploaded are correct, belong to me, and are clearly visible. No changes will be made after submission.
                                     label.text-danger.fs-6(for="decleration") मी अपलोड केलेले सर्व कागदपत्रे योग्य, माझे स्वतःचे असून स्पष्ट दिसत आहेत, याची मी खात्री देतो/देते. एकदा अर्ज सबमिट केल्यावर त्यात कोणतेही बदल करता येणार नाही.

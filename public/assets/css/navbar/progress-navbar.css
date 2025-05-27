@@ -1,16 +1,13 @@
+/* Base styles – as in original */
 .side-navbar {
 	overflow-x: auto;
 	gap: 0.7rem;
-
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	padding: 10px 0;
-
 	position: sticky;
 	top: 0;
-
 	background-color: var(--main-color-tint-2);
-
 	z-index: 10;
 }
 
@@ -19,27 +16,29 @@
 	padding: 0.5rem;
 	text-decoration: none;
 	gap: 0.3rem;
-
-	display: inline-block;
 	min-width: 140px;
+
+	flex: 0 0 auto; /* Prevent shrinking */
+	padding: 0.5rem;
+	align-items: center;
 }
 
 .side-navbar a {
 	font-size: var(--para-label-font-size) !important;
+}
 
-	& .step-no {
-		font-weight: bold;
-		background-color: var(--text-color-tint);
-		border-radius: 1000px;
-		font-size: 20px;
-		padding: 0px 14px;
-	}
+.side-navbar a .step-no {
+	font-weight: bold;
+	background-color: var(--text-color-tint);
+	border-radius: 1000px;
+	font-size: 20px;
+	padding: 0px 14px;
+}
 
-	& .step-name {
-		display: block;
-		color: #333;
-		font-size: 20px;;
-	}
+.side-navbar a .step-name {
+	display: block;
+	color: #333;
+	font-size: 12px;
 }
 
 .step-name > .me-2 {
@@ -53,17 +52,14 @@
 .active-step {
 	cursor: pointer;
 	background: var(--main-color) !important;
-
 	font-weight: 500;
-
 	display: flex !important;
 	align-items: center;
-
-	& span {
-		color: #fff !important;
-	}
-
 	position: relative;
+}
+
+.active-step span {
+	color: #fff !important;
 }
 
 .active-step > .step-no {
@@ -85,30 +81,20 @@
 }
 
 .active-arrow {
-	/* cursor: pointer;
-	position: absolute;
-	right: -1rem;
-	top: 40%;
-	font-size: 1rem;
-	transform: trasnlateY(-50%) !important;
-	color: rgba(255, 166, 0, 0.575);
-	color: var(--main-color); */
-
 	display: none;
 }
 
 .done-step {
 	cursor: pointer;
 	background: var(--second-color-tint-2);
-
 	box-shadow: 0 2px 1px 0.3px var(--second-color-tint);
 	font-weight: 500;
 	color: #fff !important;
 	position: relative;
-
 	display: flex !important;
 	align-items: center;
 }
+
 .done-step > .step-no {
 	color: #333 !important;
 }
@@ -142,10 +128,8 @@
 	box-shadow: 0 2px 1px 0.3px var(--main-color);
 	color: #333 !important;
 	font-weight: 500;
-
 	display: flex !important;
 }
-
 
 .pending-step > .step-no {
 	color: var(--gray-50) !important;
@@ -159,22 +143,73 @@
 	align-items: center;
 	width: 100%;
 	border-radius: var(--border-radius);
-
 	background-color: var(--main-color-tint-2);
+}
 
-	& div:nth-child(1) {
+.profileIcon div:nth-child(1) {
+	display: flex;
+	gap: 1rem;
+}
+
+.profileIcon div:nth-child(1) label {
+	font-size: 1rem !important;
+}
+
+.profileIcon div:nth-child(2) {
+	display: flex;
+	gap: 1rem;
+	width: 50%;
+}
+
+/* Responsive updates */
+@media (max-width: 768px) {
+
+	.side-navbar {
 		display: flex;
-		gap: 1rem;
-		/* flex-direction: column; */
-
-		& label {
-			font-size: 1rem !important;
-		}
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		overflow-y: hidden;
+		gap: 0.5rem;
+		padding: 0.5rem;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
 	}
 
-	& div:nth-child(2) {
-		display: flex;
+	.side-navbar > a {
+		flex: 0 0 auto; /* Prevent shrinking */
+		min-width: 140px;
+		padding: 0.5rem;
+		align-items: center;
+	}
+
+	.profileIcon {
+		flex-direction: column;
+		align-items: flex-start;
 		gap: 1rem;
-		width: 50%;
+	}
+
+	.profileIcon div:nth-child(2) {
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px) {
+
+	.side-navbar {
+		gap: 0.4rem;
+	}
+
+	.side-navbar > a {
+		min-width: 120px;
+		padding: 0.4rem;
+	}
+
+	.side-navbar .step-no {
+		font-size: 10px !important;
+		padding: 2px 7px !important;
+	}
+
+	.side-navbar .step-name {
+		font-size: 10px;
 	}
 }
