@@ -1,7 +1,9 @@
 extends layout_index_new
 block css_link
     link(rel="stylesheet" href="/assets/css/user-details/user-details.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css")
 block inline_js
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js")
     script.
         const candidateInfo = !{JSON.stringify(candidateInfo)}
         console.log(candidateInfo)
@@ -64,7 +66,7 @@ block content
 
                         .col-md-3.mb-3
                             label.form-label(for="dob") Date of Birth
-                            input#dob.form-control(type="date" name="dob"  value=candidateInfo.dob)
+                            input#dob.form-control(type="text" name="dob" value=candidateInfo.dob)
                         .col-md-3.mb-3
                             label.form-label(for="gender") Gender
                             select#gender.form-select(name="ca_gender" )
@@ -118,7 +120,15 @@ block content
                             label.form-label(for="address") Address
                             textarea#address.form-control(type="text" name="ca_address") #{candidateInfo.ca_address}
 
-                    .row
+                    .row.shadow-sm.mt-3
+
+                        .col-md-12.py-3
+                            div.d-flex.gap-3
+                                input.no-disabled(id="decleration" type="checkbox" style="width: 2rem; height: 2rem;" value="")
+                                label.text-danger.fs-6(for="decleration") I confirm that all the information provided above is true and accurate to the best of my knowledge. No changes will be applied once this form is submitted.
+                                label.text-danger.fs-6(for="decleration") मी पुष्टी करतो की वरील सर्व माहिती माझ्या माहितीनुसार योग्य आणि अचूक आहे. हा फॉर्म एकदा सबमिट केल्यावर कोणतेही बदल स्वीकारले जाणार नाहीत.
+
+                    .row.my-5
                         .col-12.d-flex.gap-2
-                            button.btn.btn-danger(id="edit-btn" type="button") Edit
-                            button.btn.btn-primary(id="candidate-form-submit-btn" type="submit") Submit
+                            button.c-button.c-btn-danger(id="edit-btn" type="button") Edit
+                            button.c-button.c-btn-primary(id="candidate-form-submit-btn" type="submit") Save

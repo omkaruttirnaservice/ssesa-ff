@@ -1,8 +1,15 @@
 import { alertjs } from "./common.js";
 
 $(document).ready(() => {
+	// add jquery datepicker for date of birth
+	$("#dob").datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: "dd/mm/yy",
+	});
+
 	const disabledInputs = $(
-		"input:not(.no-edit), select:not(.no-edit), textarea:not(.no-edit)",
+		"input:not(.no-edit):not(.no-disabled), select:not(.no-edit):not(.no-disabled), textarea:not(.no-edit):not(.no-disabled)",
 	);
 
 	disabledInputs.css("pointer-events", "none");
@@ -12,6 +19,7 @@ $(document).ready(() => {
 	const candidateForm = $("#candidate-form");
 	const submitButton = $("#candidate-form-submit-btn");
 	const editFormBtn = $("#edit-btn");
+	const declerationInput = $("#decleration");
 
 	editFormBtn.on("click", function (e) {
 		e.preventDefault();
@@ -27,7 +35,6 @@ $(document).ready(() => {
 			},
 			dob: {
 				required: true,
-				dateISO: true,
 			},
 			ca_gender: {
 				required: true,
@@ -65,7 +72,6 @@ $(document).ready(() => {
 			},
 			dob: {
 				required: "Date of birth is required",
-				dateISO: "Enter a valid date in YYYY-MM-DD format",
 			},
 			ca_gender: {
 				required: "Please select your gender",
@@ -108,9 +114,15 @@ $(document).ready(() => {
 
 	candidateForm.on("submit", function (e) {
 		e.preventDefault();
+		const isDeclerationAccepted = declerationInput.is(":checked");
 
 		// validate
 		if (!candidateForm.valid()) {
+			return;
+		}
+
+		if (!isDeclerationAccepted) {
+			alertjs.warning({ t: "Warning", m: "Please accept decleration" });
 			return;
 		}
 

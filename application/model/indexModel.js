@@ -80,7 +80,7 @@ module.exports = {
 
 						ca.id AS f_id,
 						ca.ca_gender,
-						DATE_FORMAT(ca_dob, '%Y-%m-%d') as dob,
+						DATE_FORMAT(ca_dob, '%d/%m/%Y') as dob,
 						ca_catagory,
 						ca_detailsSubCategory,
 						ca_address,
@@ -142,10 +142,12 @@ module.exports = {
 	},
 
 	updateGeneralDetails_V2: function (pool, data) {
+		console.log(data, "-in model");
 		return new Promise((resolve, reject) => {
 			let query = `UPDATE utr_candidate_appications
 						SET 
-							ca_dob                                            = '${data.dob}',
+							ca_dob         = STR_TO_DATE('${data.dob}', '%d/%m/%Y'),
+
 							ca_gender                                         = '${data.ca_gender}',
 							ca_catagory                                       = '${data.ca_catagory}',
 							ca_detailsSubCategory 							  = '${data.ca_detailsSubCategory}',

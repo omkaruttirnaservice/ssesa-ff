@@ -143,6 +143,18 @@ $(document).ready(function () {
 				f_id: form_id,
 				r_id: regID,
 			};
+
+			const declerationInput = $("#decleration");
+			const isDeclerationAccepted = declerationInput.is(":checked");
+
+			if (!isDeclerationAccepted) {
+				alertjs.warning({
+					t: "Warning",
+					m: "Please accept decleration",
+				});
+				return;
+			}
+
 			updateDocumentDetailsDone(sendData);
 		}
 	});
