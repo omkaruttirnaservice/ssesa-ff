@@ -55,12 +55,20 @@ module.exports = {
 		// truncate all old data
 		const truncateBasicTableQuery = `TRUNCATE utr_user_basic`;
 		const trucnateApplicationTableQuery = `TRUNCATE utr_candidate_appications`;
+		const truncateLoginLogsQuery = `TRUNCATE utr_login_logs`;
+		const truncateApplicationLogsQuery = `TRUNCATE utr_candidate_details_logs`;
 
 		console.log("Truncating basic table");
 		await runQuery(pool, truncateBasicTableQuery);
 
 		console.log("Truncating application table");
 		await runQuery(pool, trucnateApplicationTableQuery);
+
+		console.log("Truncating login logs");
+		await runQuery(pool, truncateLoginLogsQuery);
+
+		console.log("Truncating application updation logs");
+		await runQuery(pool, truncateApplicationLogsQuery);
 
 		console.log("Inserting basic data");
 		await runQuery(pool, userBasicQuery);
@@ -111,7 +119,7 @@ module.exports = {
 								info,
 								timestamp
 							)
-						VALUES (${data.r_id}, ${data.f_id}, '${JSON.stringify(data)}', NOW())`;
+						VALUES (${data.r_id}, ${data.f_id}, '${data.info}', NOW())`;
 
 			pool.query(query, function (err, result) {
 				if (err) {
