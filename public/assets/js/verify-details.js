@@ -138,13 +138,19 @@ $(document).ready(() => {
 		formData.set("r_id", candidateInfo.r_id);
 		formData.set("f_id", candidateInfo.f_id);
 
+		const newDataJson = formDataToJsObject(formData);
 		// compare both the objects
-		const isUpdated = compareObjectsDeep(
-			candidateInfo,
-			formDataToJsObject(formData),
-		);
+		const isUpdated = compareObjectsDeep(candidateInfo, newDataJson);
 
 		console.log(isUpdated, "=isUpated");
+
+		if (isUpdated) {
+			const infoObject = {
+				old: { ...candidateInfo },
+				new: { ...newDataJson },
+			};
+			formData.set("info", JSON.stringify(infoObject));
+		}
 
 		formData.set("isUpdated", isUpdated);
 
