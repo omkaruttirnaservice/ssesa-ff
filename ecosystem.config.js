@@ -4,7 +4,7 @@ module.exports = {
 		{
 			name: `${process.env.PROCESS_NAME}`,
 			script: "app.js",
-			instances: 4,
+			instances: 1,
 			autorestart: true,
 			watch: false,
 			max_memory_restart: "2G",
