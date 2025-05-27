@@ -278,11 +278,15 @@ var indexController = {
 				f,
 			);
 
+			console.log(candidateInfo, "-info");
+
 			if (candidateInfo.length === 0) {
 				return res.redirect("/logout");
 			}
 
-			console.log(candidateInfo, "-info");
+			if (candidateInfo[0].g_done == 1) {
+				return res.redirect(`/v2/document-upload?r=${r}&f=${f}`);
+			}
 
 			res.render("new/verify-details.pug", {
 				title: "Verify Your Details",
@@ -858,9 +862,6 @@ var indexController = {
 	},
 
 	documentUploadView_V2: async (req, res, next) => {
-		console.log(1, "==1==");
-		console.log(req.session);
-
 		const { r, f } = req.query;
 
 		if (!r || !f) return res.redirect("/");
@@ -872,8 +873,6 @@ var indexController = {
 			cfi: f,
 		};
 
-		console.log(data);
-
 		try {
 			const result = await IndexModel.selectDocumentDetails(
 				res.pool,
@@ -884,7 +883,9 @@ var indexController = {
 				return res.redirect("/");
 			}
 
-			console.log(result, "=result");
+			if (result[0].d_done == 1) {
+				return res.redirect(`/v2/application?r=${r}&f=${f}`);
+			}
 
 			let images = {
 				// photo: "/assets/images/upload-default/image.jpg",
@@ -919,7 +920,6 @@ var indexController = {
 				}
 			}
 
-			console.log(images, "==images==");
 			res.render("new/document-upload.pug", {
 				title: "Document Upload",
 				regIDInt: req.session.cri,

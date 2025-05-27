@@ -86,7 +86,9 @@ module.exports = {
 						ca_address,
 						ca_post_name,
 						ca_post_id,
-						ca_offline_form_no
+						ca_offline_form_no,
+						ca_general_details_done as g_done,
+						ca_document_details_done as d_done
 
 					FROM utr_user_basic as ub
 
