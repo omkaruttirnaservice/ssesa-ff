@@ -58,7 +58,7 @@ block content
 
                         .col-md-3.mb-3
                             label.form-label(for="dob") Date of Birth
-                            input#dob.form-control(type="text" name="dob" value=candidateInfo.dob)
+                            input#dob.form-control.no-edit(type="text" name="dob" value=candidateInfo.dob autocomplete="off")
                         .col-md-3.mb-3
                             label.form-label(for="gender") Gender
                             select#gender.form-select(name="ca_gender" )
