@@ -5,7 +5,7 @@ $(document).ready(() => {
 	$("#dob").datepicker({
 		changeMonth: true,
 		changeYear: true,
-		dateFormat: "dd/mm/yy",
+		dateFormat: "dd-mm-yy",
 	});
 
 	const disabledInputs = $(
@@ -122,10 +122,13 @@ $(document).ready(() => {
 		}
 
 		if (!isDeclerationAccepted) {
-			alertjs.warning({
-				t: "Warning",
-				m: "Please accept the declaration.",
-			});
+			alertjs.warning(
+				{
+					t: "Warning",
+					m: "Please accept the declaration.",
+				},
+				() => {},
+			);
 			return;
 		}
 
@@ -140,6 +143,8 @@ $(document).ready(() => {
 			candidateInfo,
 			formDataToJsObject(formData),
 		);
+
+		console.log(isUpdated, "=isUpated");
 
 		formData.set("isUpdated", isUpdated);
 
@@ -161,15 +166,19 @@ $(document).ready(() => {
 			}
 
 			const jsonResp = await _resp.json();
-			alertjs.success({ t: "Successful", m: "Details updated" }, () => {
-				// window.location.reload();
-				window.location.assign(
-					"/v2/document-upload?r=" +
-						candidateInfo.r_id +
-						"&f=" +
-						candidateInfo.f_id,
-				);
-			});
+			alertjs.success(
+				{ t: "Successful", m: "Details updated" },
+				() => {
+					// window.location.reload();
+					window.location.assign(
+						"/v2/document-upload?r=" +
+							candidateInfo.r_id +
+							"&f=" +
+							candidateInfo.f_id,
+					);
+				},
+				() => {},
+			);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -185,7 +194,9 @@ $(document).ready(() => {
 			let isSkipKey =
 				key == "ca_post_id" ||
 				key == "ca_post_name" ||
-				key == "ca_offline_form_no";
+				key == "ca_offline_form_no" ||
+				key == "g_done" ||
+				key == "d_done";
 
 			if (!isSkipKey) {
 				if (originalData[key] != newData[key]) {
@@ -203,6 +214,8 @@ $(document).ready(() => {
 		for (let [key, value] of formData) {
 			jsObject[key] = value;
 		}
+
+		console.log(jsObject, "-new");
 
 		return jsObject;
 	}

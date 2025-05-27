@@ -6,7 +6,7 @@ block inline_js
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js")
     script.
         const candidateInfo = !{JSON.stringify(candidateInfo)}
-        console.log(candidateInfo)
+        console.log(candidateInfo, '-old')
 
 block js_link
     script(src="/assets/js/verify-details.js" type="module" defer)
@@ -62,11 +62,11 @@ block content
                         .col-md-3.mb-3
                             label.form-label(for="gender") Gender
                             select#gender.form-select(name="ca_gender" )
-                                - let gender = candidateInfo.ca_gender.toLowerCase()
+                                - let gender = candidateInfo.ca_gender
                                 option(value="") Select Gender
-                                option(value="male" selected=gender == 'male' ) Male
-                                option(value="female" selected=gender == 'female') Female
-                                option(value="other" selected=gender == 'other') Other
+                                option(value="Male" selected=gender == 'Male' ) Male
+                                option(value="Female" selected=gender == 'Female') Female
+                                option(value="Other" selected=gender == 'Other') Other
 
 
                     .row
