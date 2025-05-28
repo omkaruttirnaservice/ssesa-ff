@@ -31,14 +31,16 @@ html(lang="en")
 
 				//- modal open close
 				const modal = document.getElementById('customModal');
-				const openBtn = document.getElementById('openModal');
+				//- const openBtn = document.getElementById('openModal');
 				const closeBtns = [ ...modal.getElementsByClassName('modal-close')];
 				const checkbox = document.getElementById('confirmCheck');
 				const confirmBtn = document.getElementById('confirmBtn');
 
-				openBtn.addEventListener('click', () => {
-					modal.classList.remove('hidden');
-				});
+
+				modal.classList.remove('hidden');
+				//- openBtn.addEventListener('click', () => {
+				//- 	modal.classList.remove('hidden');
+				//- });
 
 				confirmBtn.addEventListener('click', () => {
 					modal.classList.remove('hidden');
@@ -219,7 +221,7 @@ html(lang="en")
 								| #{p.help_email_id}
 
 			//- Trigger Button
-			button#openModal.btn(style="margin: 2rem;") Show Instructions
+			//- button#openModal.btn(style="margin: 2rem;") Show Instructions
 
 			//- Modal Overlay
 			div#customModal.modal-overlay.hidden
